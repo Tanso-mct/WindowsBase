@@ -3,6 +3,9 @@
 
 #include "windows_base/include/collection.h"
 
+#include "windows_base/include/console_log.h"
+#include "windows_base/include/error_handler.h"
+
 namespace wb
 {
     class WINDOWS_BASE_API ComponentCollection : public IComponentCollection
@@ -47,14 +50,32 @@ namespace wb
     };
 
     template <typename COMPONENT>
-    class ComponentStaticRegister
+    class ComponentRegistrar
     {
     public:
-        ComponentStaticRegister(size_t componentID)
+        ComponentRegistrar(size_t componentID)
         {
+            static bool registered = false;
+            if (registered)
+            {
+                std::string err = CreateErrorMessage
+                (
+                    __FILE__, __LINE__, __FUNCTION__,
+                    {"Component with ID ", std::to_string(componentID), " is already registered."}
+                );
+
+                ConsoleLogErr(err);
+                ErrorNotify("WINDOWS_BASE", err);
+                ThrowRuntimeError(err);
+            }
+
+            registered = true;
+
             ComponentCollection collection;
             collection.AddFactory(componentID, std::make_unique<ComponentFactory<COMPONENT>>());
         }
     };
+
+    #define WB_REGISTER_COMPONENT(COMPONENT, ID) static wb::ComponentRegistrar<COMPONENT> componentRegistrar##T(ID)
 
 } // namespace wb

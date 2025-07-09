@@ -24,8 +24,7 @@ namespace
         }
     };
 
-    static wb::ComponentStaticRegister<MockComponent> mockComponentRegister(MockComponentID());
-
+    WB_REGISTER_COMPONENT(MockComponent, MockComponentID());
 }
 
 TEST(ComponentCollection, GetFactory)
