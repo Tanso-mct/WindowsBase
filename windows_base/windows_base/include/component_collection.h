@@ -19,11 +19,11 @@ namespace wb
         ComponentCollection(const ComponentCollection &) = delete;
         ComponentCollection &operator=(const ComponentCollection &) = delete;
 
-        // シングルトンパターン
+        // Singleton pattern
         static ComponentCollection &GetInstance();
 
         /***************************************************************************************************************
-         * IComponentCollectionの実装
+         * IComponentCollection implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory) override;
