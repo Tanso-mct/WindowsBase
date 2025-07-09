@@ -149,6 +149,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\type_cast.cpp" />
+    <ClCompile Include="src\windows_helper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\collection.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\factory.h" />
     <ClInclude Include="include\type_cast.h" />
+    <ClInclude Include="include\windows_helper.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

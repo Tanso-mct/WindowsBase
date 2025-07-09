@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/console_log.h"
 
-std::string wb::CreateMessage(const std::initializer_list<std::string_view> &messages)
+WINDOWS_BASE_API std::string wb::CreateMessage(const std::initializer_list<std::string_view> &messages)
 {
     std::string msg = "";
     for (const auto &message : messages)
@@ -12,7 +12,7 @@ std::string wb::CreateMessage(const std::initializer_list<std::string_view> &mes
     return msg;
 }
 
-std::string wb::CreateErrorMessage
+WINDOWS_BASE_API std::string wb::CreateErrorMessage
 (
     const std::string &file, int line, const std::string &function, 
     const std::initializer_list<std::string_view> &messages
@@ -30,7 +30,7 @@ std::string wb::CreateErrorMessage
     return errMsg;
 }
 
-void wb::ConsoleLog(std::string_view message)
+WINDOWS_BASE_API void wb::ConsoleLog(std::string_view message)
 {
 #ifndef NDEBUG
     // Log to Windows Console
@@ -44,7 +44,7 @@ void wb::ConsoleLog(std::string_view message)
 #endif
 }
 
-void wb::ConsoleLogWrn(std::string_view message)
+WINDOWS_BASE_API void wb::ConsoleLogWrn(std::string_view message)
 {
 #ifndef NDEBUG
     // Log to Windows Console
@@ -57,7 +57,7 @@ void wb::ConsoleLogWrn(std::string_view message)
 #endif
 }
 
-void wb::ConsoleLogErr(std::string_view message)
+WINDOWS_BASE_API void wb::ConsoleLogErr(std::string_view message)
 {
     static bool alreadyLogged = false;
 
