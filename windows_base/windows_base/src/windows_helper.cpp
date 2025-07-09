@@ -156,3 +156,38 @@ WINDOWS_BASE_API void wb::GetWindowSize(HWND hWnd, UINT &width, UINT &height)
         wb::ThrowRuntimeError(err);
     }
 }
+
+WINDOWS_BASE_API std::unique_ptr<unsigned char[]> wb::LoadFileData(std::string_view filePath, fpos_t &size)
+{
+    FILE* fp = nullptr;
+	errno_t error;
+
+	error = fopen_s(&fp, filePath.data(), "rb");
+	if (error != 0)
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"Failed to open file: ", std::string(filePath)}
+        );
+
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
+
+	// Move the file pointer to the end to get the size
+	fseek(fp, 0L, SEEK_END);
+	fgetpos(fp, &size);
+
+	// Move the file pointer back to the beginning
+	fseek(fp, 0L, SEEK_SET);
+
+	std::unique_ptr<unsigned char[]> buff = std::make_unique<unsigned char[]>(size);
+
+	// Read the file data into the buffer
+	fread(buff.get(), 1, size, fp);
+	fclose(fp);
+
+    return buff;
+}

@@ -36,3 +36,13 @@ TEST(WindowsHelper, GetWindowSize)
     EXPECT_GT(height, 0);
 }
 
+TEST(WindowsHelper, LoadFileData)
+{
+    fpos_t size = 0;
+    std::string_view filePath = "resources/sample.txt";
+    std::unique_ptr<unsigned char []> data = wb::LoadFileData(filePath, size);
+
+    EXPECT_NE(data, nullptr);
+    EXPECT_GT(size, 0);
+}
+

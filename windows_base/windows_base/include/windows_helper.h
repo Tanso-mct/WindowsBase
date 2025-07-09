@@ -3,6 +3,8 @@
 #include "windows_base/include/dll_config.h"
 
 #include <Windows.h>
+#include <memory>
+#include <string_view>
 
 namespace wb
 {
@@ -16,5 +18,7 @@ namespace wb
     WINDOWS_BASE_API void CreateStandardConsole();
 
     WINDOWS_BASE_API void GetWindowSize(HWND hWnd, UINT& width, UINT& height);
+
+    WINDOWS_BASE_API std::unique_ptr<unsigned char[]> LoadFileData(std::string_view filePath, fpos_t &size);
 
 }
