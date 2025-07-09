@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="console_log_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="component_collection_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="error_handler_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="type_cast_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="windows_helper_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="tests">
+      <UniqueIdentifier>{0b193a69-7d71-4ccd-9cc3-03022029ba59}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

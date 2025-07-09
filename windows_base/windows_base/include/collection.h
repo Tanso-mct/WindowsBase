@@ -17,7 +17,7 @@ namespace wb
         virtual void AddFactory(size_t id, std::unique_ptr<FACTORY> factory) = 0;
         virtual FACTORY &GetFactory(size_t id) = 0;
 
-        virtual size_t GetMaxId() const = 0;
+        virtual size_t GetMaxID() const = 0;
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
