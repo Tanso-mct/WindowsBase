@@ -404,3 +404,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# DirectXTK
+!windows_base/directxtk12/**
+
+# CSO
+*.cso
