@@ -405,12 +405,3 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# DirectXTK
-!windows_base/directxtk12/**
-
-# FBXSDK includes and libraries
-windows_base/fbxsdk/include/**
-windows_base/fbxsdk/lib/**
-
-# CSO
-*.cso
