@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="src\component_collection.cpp" />
     <ClCompile Include="src\console_log.cpp" />
+    <ClCompile Include="src\error_handler.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -153,6 +154,7 @@
     <ClInclude Include="include\component_collection.h" />
     <ClInclude Include="include\console_log.h" />
     <ClInclude Include="include\dll_config.h" />
+    <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\factory.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
