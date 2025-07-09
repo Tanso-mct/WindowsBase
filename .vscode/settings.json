@@ -68,5 +68,7 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "string_view": "cpp"
-    }
+    },
+    "commentTranslate.hover.enabled": true,
+    "commentTranslate.targetLanguage": "en"
 }
