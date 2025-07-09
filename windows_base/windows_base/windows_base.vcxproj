@@ -147,6 +147,7 @@
     <ClCompile Include="src\console_log.cpp" />
     <ClCompile Include="src\error_handler.cpp" />
     <ClCompile Include="src\id_factory.cpp" />
+    <ClCompile Include="src\optional_value.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -159,10 +160,15 @@
     <ClInclude Include="include\component.h" />
     <ClInclude Include="include\component_collection.h" />
     <ClInclude Include="include\console_log.h" />
+    <ClInclude Include="include\container.h" />
+    <ClInclude Include="include\container_dynamic.h" />
+    <ClInclude Include="include\container_impl.h" />
+    <ClInclude Include="include\container_static.h" />
     <ClInclude Include="include\dll_config.h" />
     <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\factory.h" />
     <ClInclude Include="include\id_factory.h" />
+    <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="include\system_collection.h" />
     <ClInclude Include="include\type_cast.h" />

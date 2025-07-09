@@ -20,6 +20,15 @@
     <ClCompile Include="system_collection_test.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="optional_value_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="container_static_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="container_dynamic_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
