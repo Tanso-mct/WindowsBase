@@ -10,3 +10,13 @@ size_t wb::IDFactory::CreateComponentID()
 
     return createdId;
 }
+
+size_t wb::IDFactory::CreateSystemID()
+{
+    static size_t idCounter = 0;
+
+    size_t createdId = idCounter;
+    idCounter++;
+
+    return createdId;
+}

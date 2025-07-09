@@ -22,5 +22,6 @@ namespace wb
     };
 
     using IComponentCollection = ICollection<IComponentFactory>;
+    using ISystemCollection = ICollection<ISystemFactory>;
 
 } // namespace wb

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "windows_base/include/component.h"
+#include "windows_base/include/system.h"
 
 namespace wb
 {
@@ -13,5 +14,6 @@ namespace wb
     };
 
     using IComponentFactory = IFactory<IComponent>;
+    using ISystemFactory = IFactory<ISystem>;
 
 }

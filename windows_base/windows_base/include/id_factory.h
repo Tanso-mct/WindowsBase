@@ -10,6 +10,7 @@ namespace wb
         ~IDFactory() = default;
 
         static size_t CreateComponentID();
+        static size_t CreateSystemID();
 
     };
 

@@ -17,6 +17,9 @@
     <ClCompile Include="windows_helper_test.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="system_collection_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

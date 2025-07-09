@@ -1,9 +1,6 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/component_collection.h"
 
-#include "windows_base/include/console_log.h"
-#include "windows_base/include/error_handler.h"
-
 wb::ComponentCollection &wb::ComponentCollection::GetInstance()
 {
     static ComponentCollection instance;

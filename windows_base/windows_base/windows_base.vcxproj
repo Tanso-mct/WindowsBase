@@ -150,6 +150,7 @@
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\system_collection.cpp" />
     <ClCompile Include="src\type_cast.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />
   </ItemGroup>
@@ -162,6 +163,8 @@
     <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\factory.h" />
     <ClInclude Include="include\id_factory.h" />
+    <ClInclude Include="include\system.h" />
+    <ClInclude Include="include\system_collection.h" />
     <ClInclude Include="include\type_cast.h" />
     <ClInclude Include="include\windows_helper.h" />
     <ClInclude Include="src\pch.h" />
