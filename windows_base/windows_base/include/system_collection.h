@@ -22,9 +22,6 @@ namespace wb
         SystemCollection(const SystemCollection &) = delete;
         SystemCollection &operator=(const SystemCollection &) = delete;
 
-        // Singleton pattern
-        static SystemCollection &GetInstance();
-
         /***************************************************************************************************************
          * ISystemCollection implementation
         /**************************************************************************************************************/
@@ -32,9 +29,11 @@ namespace wb
         void AddFactory(size_t systemID, std::unique_ptr<ISystemFactory> systemFactory) override;
         ISystemFactory &GetFactory(size_t systemID) override;
 
-        size_t GetMaxID() const override { return maxId; }
-        const std::vector<size_t> &GetKeys() const override { return keys_; }
+        size_t GetMaxID() const override;
+        const std::vector<size_t> &GetKeys() const override;
     };
+
+    WINDOWS_BASE_API SystemCollection& GetSystemCollectionInstance();
 
     template <typename SYSTEM>
     class SystemFactory : public ISystemFactory
@@ -71,7 +70,7 @@ namespace wb
 
             registered = true;
 
-            SystemCollection collection;
+            SystemCollection &collection = GetSystemCollectionInstance();
             collection.AddFactory(systemID, std::make_unique<SystemFactory<SYSTEM>>());
         }
     };

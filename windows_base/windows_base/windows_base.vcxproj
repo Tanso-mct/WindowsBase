@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="src\component_collection.cpp" />
     <ClCompile Include="src\console_log.cpp" />
+    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\error_handler.cpp" />
     <ClCompile Include="src\id_factory.cpp" />
     <ClCompile Include="src\optional_value.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="include\container_impl.h" />
     <ClInclude Include="include\container_static.h" />
     <ClInclude Include="include\dll_config.h" />
+    <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\factory.h" />
     <ClInclude Include="include\id_factory.h" />

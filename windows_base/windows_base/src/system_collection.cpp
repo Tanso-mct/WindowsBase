@@ -1,16 +1,9 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/system_collection.h"
 
-wb::SystemCollection &wb::SystemCollection::GetInstance()
-{
-    static SystemCollection instance;
-    return instance;
-}
-
 void wb::SystemCollection::AddFactory(size_t systemID, std::unique_ptr<ISystemFactory> systemFactory)
 {
-    wb::SystemCollection &instance = GetInstance();
-    if (instance.systemFactories_.find(systemID) != instance.systemFactories_.end())
+    if (systemFactories_.find(systemID) != systemFactories_.end())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -24,23 +17,21 @@ void wb::SystemCollection::AddFactory(size_t systemID, std::unique_ptr<ISystemFa
     }
 
     // Add the factory to the collection
-    instance.systemFactories_[systemID] = std::move(systemFactory);
+    systemFactories_[systemID] = std::move(systemFactory);
 
     // Save the key
-    instance.keys_.push_back(systemID);
+    keys_.push_back(systemID);
 
     // Update the maximum ID if necessary
-    if (systemID > instance.maxId)
+    if (systemID > maxId)
     {
-        instance.maxId = systemID;
+        maxId = systemID;
     }
 }
 
 wb::ISystemFactory &wb::SystemCollection::GetFactory(size_t systemID)
 {
-    wb::SystemCollection &instance = GetInstance();
-
-    if (instance.systemFactories_.find(systemID) == instance.systemFactories_.end())
+    if (systemFactories_.find(systemID) == systemFactories_.end())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -53,5 +44,22 @@ wb::ISystemFactory &wb::SystemCollection::GetFactory(size_t systemID)
         wb::ThrowRuntimeError(err);
     }
 
-    return *instance.systemFactories_[systemID];
+    return *systemFactories_[systemID];
+}
+
+size_t wb::SystemCollection::GetMaxID() const
+{
+    return maxId;
+}
+
+const std::vector<size_t> &wb::SystemCollection::GetKeys() const
+{
+    return keys_;
+}
+
+static wb::SystemCollection g_componentCollectionInstance;
+
+WINDOWS_BASE_API wb::SystemCollection &wb::GetSystemCollectionInstance()
+{
+    return g_componentCollectionInstance;
 }

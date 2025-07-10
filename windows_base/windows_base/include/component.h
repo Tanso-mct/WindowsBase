@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "windows_base/include/id_factory.h"
+
 namespace wb
 {
     class IComponent

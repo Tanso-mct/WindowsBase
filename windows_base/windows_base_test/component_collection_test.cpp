@@ -29,7 +29,7 @@ namespace
 
 TEST(ComponentCollection, GetFactory)
 {
-    wb::ComponentCollection collection;
+    wb::ComponentCollection &collection = wb::GetComponentCollectionInstance();
 
     wb::IComponentFactory &factory = collection.GetFactory(MockComponentID());
     EXPECT_NE(&factory, nullptr);

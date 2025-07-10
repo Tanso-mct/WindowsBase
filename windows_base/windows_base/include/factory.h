@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "windows_base/include/entity.h"
 #include "windows_base/include/component.h"
 #include "windows_base/include/system.h"
 
@@ -10,10 +11,10 @@ namespace wb
     {
     public:
         virtual ~IFactory() = default;
-        virtual std::unique_ptr<PRODUCT> Create() const = 0;
+        virtual PRODUCT Create() const = 0;
     };
 
-    using IComponentFactory = IFactory<IComponent>;
-    using ISystemFactory = IFactory<ISystem>;
+    using IComponentFactory = IFactory<std::unique_ptr<IComponent>>;
+    using ISystemFactory = IFactory<std::unique_ptr<ISystem>>;
 
 }

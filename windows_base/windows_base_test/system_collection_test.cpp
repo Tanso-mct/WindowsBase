@@ -18,6 +18,11 @@ namespace
         MockSystem() = default;
         ~MockSystem() override = default;
 
+        size_t GetID() const override
+        {
+            return MockSystemID();
+        }
+
         void Update(const wb::SystemArgument &args) override
         {
             // Mock update logic
@@ -25,12 +30,12 @@ namespace
         }
     };
 
-    WB_REGISTER_SYSTEM(MockSystem, MockSystemID());
+    WB_REGISTER_SYSTEM(::MockSystem, ::MockSystemID());
 }
 
 TEST(SystemCollection, GetFactory)
 {
-    wb::SystemCollection collection;
+    wb::SystemCollection &collection = wb::GetSystemCollectionInstance();
 
     wb::ISystemFactory &factory = collection.GetFactory(MockSystemID());
     EXPECT_NE(&factory, nullptr);

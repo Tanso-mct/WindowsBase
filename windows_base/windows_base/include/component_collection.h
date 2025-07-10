@@ -22,9 +22,6 @@ namespace wb
         ComponentCollection(const ComponentCollection &) = delete;
         ComponentCollection &operator=(const ComponentCollection &) = delete;
 
-        // Singleton pattern
-        static ComponentCollection &GetInstance();
-
         /***************************************************************************************************************
          * IComponentCollection implementation
         /**************************************************************************************************************/
@@ -32,9 +29,11 @@ namespace wb
         void AddFactory(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory) override;
         IComponentFactory &GetFactory(size_t componentID) override;
 
-        size_t GetMaxID() const override { return maxId; }
-        const std::vector<size_t> &GetKeys() const override { return keys_; }
+        size_t GetMaxID() const override;
+        const std::vector<size_t> &GetKeys() const override;
     };
+
+    WINDOWS_BASE_API ComponentCollection& GetComponentCollectionInstance();
 
     template <typename COMPONENT>
     class ComponentFactory : public IComponentFactory
@@ -71,7 +70,7 @@ namespace wb
 
             registered = true;
 
-            ComponentCollection collection;
+            ComponentCollection &collection = GetComponentCollectionInstance();
             collection.AddFactory(componentID, std::make_unique<ComponentFactory<COMPONENT>>());
         }
     };

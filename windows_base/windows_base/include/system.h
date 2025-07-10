@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "windows_base/include/id_factory.h"
+
 namespace wb
 {
     class SystemArgument
@@ -15,6 +17,7 @@ namespace wb
     {
     public:
         virtual ~ISystem() = default;
+        virtual size_t GetID() const = 0;
         virtual void Update(const SystemArgument &args) = 0;
     };
 

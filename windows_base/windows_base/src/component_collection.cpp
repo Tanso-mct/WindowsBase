@@ -1,16 +1,9 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/component_collection.h"
 
-wb::ComponentCollection &wb::ComponentCollection::GetInstance()
-{
-    static ComponentCollection instance;
-    return instance;
-}
-
 void wb::ComponentCollection::AddFactory(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory)
 {
-    wb::ComponentCollection &instance = GetInstance();
-    if (instance.componentFactories_.find(componentID) != instance.componentFactories_.end())
+    if (componentFactories_.find(componentID) != componentFactories_.end())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -24,23 +17,21 @@ void wb::ComponentCollection::AddFactory(size_t componentID, std::unique_ptr<ICo
     }
 
     // Add the factory to the collection
-    instance.componentFactories_[componentID] = std::move(componentFactory);
+    componentFactories_[componentID] = std::move(componentFactory);
 
     // Save the key
-    instance.keys_.push_back(componentID);
+    keys_.push_back(componentID);
 
     // Update the maximum ID if necessary
-    if (componentID > instance.maxId)
+    if (componentID > maxId)
     {
-        instance.maxId = componentID;
+        maxId = componentID;
     }
 }
 
 wb::IComponentFactory &wb::ComponentCollection::GetFactory(size_t componentID)
 {
-    wb::ComponentCollection &instance = GetInstance();
-
-    if (instance.componentFactories_.find(componentID) == instance.componentFactories_.end())
+    if (componentFactories_.find(componentID) == componentFactories_.end())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -53,5 +44,22 @@ wb::IComponentFactory &wb::ComponentCollection::GetFactory(size_t componentID)
         wb::ThrowRuntimeError(err);
     }
 
-    return *instance.componentFactories_[componentID];
+    return *componentFactories_[componentID];
+}
+
+size_t wb::ComponentCollection::GetMaxID() const
+{
+    return maxId;
+}
+
+const std::vector<size_t> &wb::ComponentCollection::GetKeys() const
+{
+    return keys_;
+}
+
+static wb::ComponentCollection g_componentCollectionInstance;
+
+WINDOWS_BASE_API wb::ComponentCollection &wb::GetComponentCollectionInstance()
+{
+    return g_componentCollectionInstance;
 }

@@ -94,6 +94,9 @@ namespace wb
      * Container interfaces
     /******************************************************************************************************************/
 
+    class IEntity;
+    using IEntityContainer = IDynamicContainer<IEntity>;
+
     class IComponent;
     using IComponentContainer = IDynamicContainer<IComponent>;
 
