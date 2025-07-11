@@ -9,12 +9,21 @@ namespace wb
     class SystemArgument
     {
     public:
-        SystemArgument() = default;
+        SystemArgument
+        (
+            IEntityContainer &entityContainer,
+            IComponentContainer &componentContainer,
+            EntityIDView &entityIDView
+        ): 
+            entityContainer_(entityContainer),
+            componentContainer_(componentContainer),
+            entityIDView_(entityIDView)
+        {
+        }
         virtual ~SystemArgument() = default;
 
         IEntityContainer &entityContainer_;
         IComponentContainer &componentContainer_;
-
         EntityIDView &entityIDView_;
 
         // TODO: Add any necessary data members or methods for system arguments
