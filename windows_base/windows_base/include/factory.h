@@ -1,9 +1,5 @@
 ﻿#pragma once
 
-#include "windows_base/include/entity.h"
-#include "windows_base/include/component.h"
-#include "windows_base/include/system.h"
-
 namespace wb
 {
     template <typename PRODUCT>
@@ -14,7 +10,10 @@ namespace wb
         virtual PRODUCT Create() const = 0;
     };
 
+    class IComponent;
     using IComponentFactory = IFactory<std::unique_ptr<IComponent>>;
+
+    class ISystem;
     using ISystemFactory = IFactory<std::unique_ptr<ISystem>>;
 
 }

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "windows_base/include/dll_config.h"
 
-#include "windows_base/include/id_factory.h"
 #include "windows_base/include/optional_value.h"
 #include "windows_base/include/container.h"
 #include "windows_base/include/factory.h"

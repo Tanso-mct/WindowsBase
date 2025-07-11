@@ -1,12 +1,13 @@
 ﻿#pragma once
+#include "windows_base/include/dll_config.h"
 
-#include "windows_base/include/id_factory.h"
 #include "windows_base/include/container.h"
 #include "windows_base/include/entity.h"
 
 namespace wb
 {
-    class SystemArgument
+
+    class WINDOWS_BASE_API SystemArgument
     {
     public:
         SystemArgument
@@ -14,13 +15,8 @@ namespace wb
             IEntityContainer &entityContainer,
             IComponentContainer &componentContainer,
             EntityIDView &entityIDView
-        ): 
-            entityContainer_(entityContainer),
-            componentContainer_(componentContainer),
-            entityIDView_(entityIDView)
-        {
-        }
-        virtual ~SystemArgument() = default;
+        );
+        ~SystemArgument() = default;
 
         IEntityContainer &entityContainer_;
         IComponentContainer &componentContainer_;

@@ -152,6 +152,7 @@
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\system.cpp" />
     <ClCompile Include="src\system_collection.cpp" />
     <ClCompile Include="src\type_cast.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />

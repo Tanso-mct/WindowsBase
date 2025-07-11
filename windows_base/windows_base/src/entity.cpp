@@ -2,6 +2,8 @@
 #include "windows_base/include/entity.h"
 
 #include "windows_base/include/component_collection.h"
+#include "windows_base/include/component.h"
+
 #include "windows_base/include/container_static.h"
 
 #include "windows_base/include/console_log.h"
