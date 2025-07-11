@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "windows_base/include/id_factory.h"
+#include "windows_base/include/container.h"
+#include "windows_base/include/entity.h"
 
 namespace wb
 {
@@ -9,6 +11,11 @@ namespace wb
     public:
         SystemArgument() = default;
         virtual ~SystemArgument() = default;
+
+        IEntityContainer &entityContainer_;
+        IComponentContainer &componentContainer_;
+
+        EntityIDView &entityIDView_;
 
         // TODO: Add any necessary data members or methods for system arguments
     };
