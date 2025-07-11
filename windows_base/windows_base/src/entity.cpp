@@ -167,7 +167,23 @@ const std::vector<std::unique_ptr<wb::OptionalValue>> &wb::EntityIDView::operato
     return entityIDsPerComponent_[componentID];
 }
 
-WINDOWS_BASE_API wb::IEntity &wb::CreateEntity(IEntityContainer &entityCont, EntityIDView &entityIDView)
+wb::CreatingEntity::CreatingEntity(IEntity &entity, EntityIDView &entityIDView) :
+    entity_(entity), entityIDView_(entityIDView)
+{
+}
+
+wb::CreatingEntity::~CreatingEntity()
+{
+    // Register the entity in the ID view when the CreatingEntity goes out of scope.
+    entityIDView_.RegisterEntity(entity_);
+}
+
+wb::IEntity &wb::CreatingEntity::operator()()
+{
+    return entity_;
+}
+
+WINDOWS_BASE_API wb::CreatingEntity wb::CreateEntity(IEntityContainer &entityCont, EntityIDView &entityIDView)
 {
     std::unique_ptr<wb::OptionalValue> id = nullptr;
     {
@@ -183,10 +199,7 @@ WINDOWS_BASE_API wb::IEntity &wb::CreateEntity(IEntityContainer &entityCont, Ent
     // Set the ID for the entity
     entity.SetID(id->Clone());
 
-    // Register the entity in the ID view
-    entityIDView.RegisterEntity(entity);
-
-    return entity;
+    return wb::CreatingEntity(entity, entityIDView);
 }
 
 WINDOWS_BASE_API void wb::DestroyEntity

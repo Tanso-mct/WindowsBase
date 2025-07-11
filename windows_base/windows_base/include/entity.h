@@ -73,7 +73,23 @@ namespace wb
         const std::vector<std::unique_ptr<OptionalValue>> &operator()(size_t componentID) const;
     };
 
-    WINDOWS_BASE_API IEntity& CreateEntity(IEntityContainer &entityCont, EntityIDView &entityIDView);
+    class WINDOWS_BASE_API CreatingEntity
+    {
+    private:
+        IEntity & entity_;
+        EntityIDView &entityIDView_;
+    
+    public:
+        CreatingEntity(IEntity &entity, EntityIDView &entityIDView);
+        ~CreatingEntity();
+
+        CreatingEntity(const CreatingEntity &) = delete;
+        CreatingEntity &operator=(const CreatingEntity &) = delete;
+
+        IEntity &operator()();
+    };
+
+    WINDOWS_BASE_API CreatingEntity CreateEntity(IEntityContainer &entityCont, EntityIDView &entityIDView);
 
     WINDOWS_BASE_API void DestroyEntity
     (
