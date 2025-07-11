@@ -65,3 +65,37 @@ TEST(Entity, CreateAndDestroy)
     EXPECT_EQ(componentCont->GetSize(), 0); // The component container should also be empty
 }
 
+TEST(Entity, AddAndGetComponent)
+{
+    // Create containers
+    std::unique_ptr<wb::IEntityContainer> entityCont = std::make_unique<wb::EntityContainer>();
+    std::unique_ptr<wb::IComponentContainer> componentCont = std::make_unique<wb::ComponentContainer>();
+
+    // Create an EntityIDView
+    wb::EntityIDView entityIDView;
+
+    // Create an entity
+    wb::IEntity &entity = wb::CreateEntity(*entityCont, entityIDView);
+
+    // Add a component to the entity
+    entity.AddComponent(MockComponentID(), *componentCont);
+    EXPECT_EQ(entity.GetComponentIDs().size(), 1);
+    EXPECT_EQ(entity.GetComponentIDs()[0], MockComponentID());
+
+    // Get the component from the entity
+    wb::IComponent *component = entity.GetComponent(MockComponentID(), *componentCont);
+    EXPECT_NE(component, nullptr);
+    EXPECT_EQ(component->GetID(), MockComponentID());
+
+    // Verify the component value
+    ::IMockComponent *mock = dynamic_cast<IMockComponent *>(component);
+    ASSERT_NE(mock, nullptr);
+    EXPECT_EQ(mock->GetValue(), MOCK_COMPONENT_VALUE);
+
+    // Clean up
+    wb::DestroyEntity(&entity, entityIDView, *entityCont, *componentCont);
+
+    EXPECT_EQ(entityCont->GetSize(), 0); // The entity should be removed from the container
+    EXPECT_EQ(componentCont->GetSize(), 0); // The component container should also be empty
+}
+

@@ -29,9 +29,9 @@ namespace wb
     class WINDOWS_BASE_API Entity : public IEntity
     {
     private:
-        std::unique_ptr<OptionalValue> id_;
+        std::unique_ptr<OptionalValue> id_ = nullptr;
 
-        std::unique_ptr<IStaticContainer<OptionalValue>> componentIndicesInCont_;
+        std::unique_ptr<IStaticContainer<OptionalValue>> componentIndicesInCont_ = nullptr;
         std::vector<size_t> componentIDs_;
 
     public:
