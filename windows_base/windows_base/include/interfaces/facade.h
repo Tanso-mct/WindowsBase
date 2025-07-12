@@ -10,7 +10,7 @@ namespace wb
     {
     public:
         virtual ~IFacade() = default;
-        virtual bool SetContext(std::unique_ptr<IContext> context) = 0;
+        virtual void SetContext(std::unique_ptr<IContext> context) = 0;
         virtual bool CheckIsReady() const = 0;
     };
 

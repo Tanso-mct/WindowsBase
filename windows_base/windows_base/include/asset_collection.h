@@ -11,7 +11,9 @@ namespace wb
     class WINDOWS_BASE_API AssetCollection : public IAssetCollection
     {
     private:
-        std::unordered_map<size_t, std::unique_ptr<IAssetFactory>> assetFactories_;
+        std::unordered_map<size_t, size_t> factoryIDs_;
+        std::unordered_map<size_t, size_t> fileLoaderIDs_;
+        std::unordered_map<size_t, std::string> filePaths_;
         size_t maxId = 0;
         std::vector<size_t> keys_;
 
@@ -26,9 +28,11 @@ namespace wb
          * IAssetCollection implementation
         /**************************************************************************************************************/
 
-        void AddFactory(size_t assetID, std::unique_ptr<IAssetFactory> assetFactory) override;
-        IAssetFactory &GetFactory(size_t assetID) override;
-
+        void Add(size_t id, size_t factoryID, size_t fileLoaderID, std::string_view filePath) override;
+        const size_t &GetFactoryID(size_t id) const override;
+        const size_t &GetFileLoaderID(size_t id) const override;
+        std::string_view GetFilePath(size_t id) const override;
+        
         size_t GetMaxID() const override;
         const std::vector<size_t> &GetKeys() const override;
     };
@@ -38,11 +42,11 @@ namespace wb
     class WINDOWS_BASE_API AssetRegistrar
     {
     public:
-        AssetRegistrar(size_t assetID, std::unique_ptr<IAssetFactory> assetFactory);
+        AssetRegistrar(size_t assetID, size_t factoryID, size_t fileLoaderID, std::string_view filePath);
     };
 
-    #define WB_REGISTER_ASSET(ASSET_FACTORY, ID) \
-        static wb::AssetRegistrar assetRegistrar##T(ID, std::make_unique<ASSET_FACTORY>());
+    #define WB_REGISTER_ASSET(ID, FACTORY_ID, FILE_LOADER_ID, FILE_PATH) \
+        static wb::AssetRegistrar assetRegistrar##T(ID, FACTORY_ID, FILE_LOADER_ID, FILE_PATH);
 
 
 } // namespace wb

@@ -23,7 +23,20 @@ namespace wb
 
     using IComponentCollection = IFactoryCollection<IComponentFactory>;
     using ISystemCollection = IFactoryCollection<ISystemFactory>;
-    using IAssetCollection = IFactoryCollection<IAssetFactory>;
+    
+    class IAssetCollection
+    {
+    public:
+        virtual ~IAssetCollection() = default;
+
+        virtual void Add(size_t id, size_t factoryID, size_t fileLoaderID, std::string_view filePath) = 0;
+        virtual const size_t &GetFactoryID(size_t id) const = 0;
+        virtual const size_t &GetFileLoaderID(size_t id) const = 0;
+        virtual std::string_view GetFilePath(size_t id) const = 0;
+
+        virtual size_t GetMaxID() const = 0;
+        virtual const std::vector<size_t> &GetKeys() const = 0;
+    };
 
     template <typename LOADER>
     class ILoaderCollection
@@ -31,7 +44,7 @@ namespace wb
     public:
         virtual ~ILoaderCollection() = default;
 
-        virtual void AddLoader(size_t id, std::unique_ptr<LOADER> factory) = 0;
+        virtual void AddLoader(size_t id, std::unique_ptr<LOADER> loader) = 0;
         virtual LOADER &GetLoader(size_t id) = 0;
 
         virtual size_t GetMaxID() const = 0;

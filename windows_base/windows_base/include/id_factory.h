@@ -14,6 +14,7 @@ namespace wb
 
         static size_t CreateFileLoaderID();
         static size_t CreateAssetID();
+        static size_t CreateAssetFactoryID();
 
     };
 

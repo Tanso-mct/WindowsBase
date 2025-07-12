@@ -27,8 +27,8 @@ namespace wb
          * IFileLoaderCollection implementation
         /**************************************************************************************************************/
 
-        void AddLoader(size_t id, std::unique_ptr<IFileLoader> loader) override;
-        IFileLoader &GetLoader(size_t id) override;
+        void AddLoader(size_t type, std::unique_ptr<IFileLoader> loader) override;
+        IFileLoader &GetLoader(size_t type) override;
 
         size_t GetMaxID() const override;
         const std::vector<size_t> &GetKeys() const override;

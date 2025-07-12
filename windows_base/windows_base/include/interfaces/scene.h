@@ -78,8 +78,8 @@ namespace wb
          * Sets ids for the current scene and the window it belongs to.
         /**************************************************************************************************************/
 
-        virtual bool SetBelongWindowID(const size_t &belongWindowID) = 0;
-        virtual bool SetCurrentSceneID(const size_t &currentSceneID) = 0;
+        virtual void SetBelongWindowID(const size_t &belongWindowID) = 0;
+        virtual void SetCurrentSceneID(const size_t &currentSceneID) = 0;
         virtual bool CheckIsReady() const = 0;
 
         /***************************************************************************************************************

@@ -13,41 +13,30 @@ namespace
         return id;
     }
 
-    class MockAsset : public wb::IAsset
+    const size_t &MockAssetFactoryID()
     {
-    public:
-        MockAsset() = default;
-        ~MockAsset() override = default;
+        static size_t id = wb::IDFactory::CreateAssetFactoryID();
+        return id;
+    }
 
-        const size_t &GetID() const override
-        {
-            return MockAssetID();
-        }
-    };
-
-    class MockAssetFactory : public wb::IAssetFactory
+    const size_t &MockFileLoaderID()
     {
-    public:
-        MockAssetFactory() = default;
-        ~MockAssetFactory() override = default;
+        static size_t id = wb::IDFactory::CreateFileLoaderID();
+        return id;
+    }
 
-        std::unique_ptr<wb::IAsset> Create(const wb::IFileData &fileData) const override
-        {
-            // Mock implementation, returning a new MockAsset
-            return std::make_unique<MockAsset>();
-        }
-    };
-
-    WB_REGISTER_ASSET(MockAssetFactory, MockAssetID());
+    constexpr const char* MOCK_FILE_PATH = "mock_file_path";
+    WB_REGISTER_ASSET(MockAssetID(), MockAssetFactoryID(), MockFileLoaderID(), MOCK_FILE_PATH);
 }
 
-TEST(AssetCollection, GetFactory)
+TEST(AssetCollection, GetAssetDetails)
 {
-    wb::IAssetFactory &factory = wb::gAssetCollection.GetFactory(MockAssetID());
-    EXPECT_NE(&factory, nullptr);
+    const size_t &assetFactoryID = wb::gAssetCollection.GetFactoryID(MockAssetID());
+    EXPECT_EQ(assetFactoryID, MockAssetFactoryID());
 
-    std::unique_ptr<wb::IFileData> fileData = nullptr; // Mock file data
-    std::unique_ptr<wb::IAsset> asset = factory.Create(*fileData);
-    EXPECT_NE(asset, nullptr);
-    EXPECT_EQ(asset->GetID(), MockAssetID());
+    const size_t &fileLoaderID = wb::gAssetCollection.GetFileLoaderID(MockAssetID());
+    EXPECT_EQ(fileLoaderID, MockFileLoaderID());
+
+    std::string_view filePath = wb::gAssetCollection.GetFilePath(MockAssetID());
+    EXPECT_EQ(std::string(filePath), std::string(MOCK_FILE_PATH));
 }
