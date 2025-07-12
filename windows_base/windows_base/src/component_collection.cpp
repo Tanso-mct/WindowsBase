@@ -57,9 +57,9 @@ const std::vector<size_t> &wb::ComponentCollection::GetKeys() const
     return keys_;
 }
 
-static wb::ComponentCollection g_componentCollectionInstance;
+WINDOWS_BASE_API wb::ComponentCollection wb::gComponentCollection;
 
-WINDOWS_BASE_API wb::ComponentCollection &wb::GetComponentCollectionInstance()
+wb::ComponentRegistrar::ComponentRegistrar(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory)
 {
-    return g_componentCollectionInstance;
+    wb::gComponentCollection.AddFactory(componentID, std::move(componentFactory));
 }

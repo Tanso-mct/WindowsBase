@@ -33,7 +33,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    WINDOWS_BASE_API ComponentCollection& GetComponentCollectionInstance();
+    extern WINDOWS_BASE_API ComponentCollection gComponentCollection;
 
     template <typename COMPONENT>
     class ComponentFactory : public IComponentFactory
@@ -48,33 +48,13 @@ namespace wb
         }
     };
 
-    template <typename COMPONENT>
-    class ComponentRegistrar
+    class WINDOWS_BASE_API ComponentRegistrar
     {
     public:
-        ComponentRegistrar(size_t componentID)
-        {
-            static bool registered = false;
-            if (registered)
-            {
-                std::string err = CreateErrorMessage
-                (
-                    __FILE__, __LINE__, __FUNCTION__,
-                    {"Component with ID ", std::to_string(componentID), " is already registered."}
-                );
-
-                ConsoleLogErr(err);
-                ErrorNotify("WINDOWS_BASE", err);
-                ThrowRuntimeError(err);
-            }
-
-            registered = true;
-
-            ComponentCollection &collection = GetComponentCollectionInstance();
-            collection.AddFactory(componentID, std::make_unique<ComponentFactory<COMPONENT>>());
-        }
+        ComponentRegistrar(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory);
     };
 
-    #define WB_REGISTER_COMPONENT(COMPONENT, ID) static wb::ComponentRegistrar<COMPONENT> componentRegistrar##T(ID)
+    #define WB_REGISTER_COMPONENT(COMPONENT, ID) \
+        static wb::ComponentRegistrar componentRegistrar##T(ID, std::make_unique<wb::ComponentFactory<COMPONENT>>());
 
 } // namespace wb

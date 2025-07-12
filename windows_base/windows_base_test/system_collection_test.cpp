@@ -39,9 +39,7 @@ namespace
 
 TEST(SystemCollection, GetFactory)
 {
-    wb::SystemCollection &collection = wb::GetSystemCollectionInstance();
-
-    wb::ISystemFactory &factory = collection.GetFactory(MockSystemID());
+    wb::ISystemFactory &factory = wb::gSystemCollection.GetFactory(MockSystemID());
     EXPECT_NE(&factory, nullptr);
 
     std::unique_ptr<wb::ISystem> system = factory.Create();

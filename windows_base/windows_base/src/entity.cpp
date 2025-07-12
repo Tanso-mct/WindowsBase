@@ -11,9 +11,7 @@
 wb::Entity::Entity()
 {
     componentIndicesInCont_ = std::make_unique<wb::StaticContainer<wb::IOptionalValue>>();
-
-    wb::ComponentCollection &componentCollection = wb::GetComponentCollectionInstance();
-    componentIndicesInCont_->Create(componentCollection.GetMaxID() + 1);
+    componentIndicesInCont_->Create(gComponentCollection.GetMaxID() + 1);
 }
 
 void wb::Entity::Destroy(IComponentContainer &componentCont)
@@ -66,8 +64,7 @@ const wb::IOptionalValue &wb::Entity::GetID() const
 
 void wb::Entity::AddComponent(size_t componentID, IComponentContainer &componentCont)
 {
-    wb::ComponentCollection &componentCollection = wb::GetComponentCollectionInstance();
-    wb::IComponentFactory &componentFactory = componentCollection.GetFactory(componentID);
+    wb::IComponentFactory &componentFactory = gComponentCollection.GetFactory(componentID);
 
     // Create a new component using the factory
     std::unique_ptr<wb::IComponent> component = componentFactory.Create();
@@ -98,8 +95,7 @@ wb::IComponent *wb::Entity::GetComponent(size_t componentID, IComponentContainer
 wb::EntityIDView::EntityIDView()
 {
     // Resize the vector with a size based on the maximum component ID available.
-    wb::ComponentCollection &componentCollection = wb::GetComponentCollectionInstance();
-    entityIDsPerComponent_.resize(componentCollection.GetMaxID() + 1);
+    entityIDsPerComponent_.resize(gComponentCollection.GetMaxID() + 1);
 }
 
 void wb::EntityIDView::RegisterEntity(IEntity &entity)

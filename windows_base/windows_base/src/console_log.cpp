@@ -32,7 +32,7 @@ WINDOWS_BASE_API std::string wb::CreateErrorMessage
 
 WINDOWS_BASE_API void wb::ConsoleLog(std::string_view message)
 {
-#ifndef NDEBUG
+#ifdef _DEBUG
     // Log to Windows Console
     std::cout << wb::CONSOLE_TEXT_COLOR_NORMAL;
     std::cout << message;
@@ -46,7 +46,7 @@ WINDOWS_BASE_API void wb::ConsoleLog(std::string_view message)
 
 WINDOWS_BASE_API void wb::ConsoleLogWrn(std::string_view message)
 {
-#ifndef NDEBUG
+#ifdef _DEBUG
     // Log to Windows Console
     std::cout << wb::CONSOLE_TEXT_COLOR_WARNING;
     std::cout << message;
@@ -67,7 +67,7 @@ WINDOWS_BASE_API void wb::ConsoleLogErr(std::string_view message)
     // Set flag to prevent multiple logs
     alreadyLogged = true;
 
-#ifndef NDEBUG
+#ifdef _DEBUG
     // Log to Windows Console
     std::cout << wb::CONSOLE_TEXT_COLOR_ERROR;
     std::cout << message;

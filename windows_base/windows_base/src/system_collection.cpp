@@ -57,9 +57,10 @@ const std::vector<size_t> &wb::SystemCollection::GetKeys() const
     return keys_;
 }
 
-static wb::SystemCollection g_componentCollectionInstance;
+WINDOWS_BASE_API wb::SystemCollection wb::gSystemCollection;
 
-WINDOWS_BASE_API wb::SystemCollection &wb::GetSystemCollectionInstance()
+wb::SystemRegistrar::SystemRegistrar(size_t systemID, std::unique_ptr<ISystemFactory> systemFactory)
 {
-    return g_componentCollectionInstance;
+    gSystemCollection.AddFactory(systemID, std::move(systemFactory));
 }
+

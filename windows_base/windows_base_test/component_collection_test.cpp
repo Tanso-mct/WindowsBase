@@ -30,9 +30,7 @@ namespace
 
 TEST(ComponentCollection, GetFactory)
 {
-    wb::ComponentCollection &collection = wb::GetComponentCollectionInstance();
-
-    wb::IComponentFactory &factory = collection.GetFactory(MockComponentID());
+    wb::IComponentFactory &factory = wb::gComponentCollection.GetFactory(MockComponentID());
     EXPECT_NE(&factory, nullptr);
 
     std::unique_ptr<wb::IComponent> component = factory.Create();

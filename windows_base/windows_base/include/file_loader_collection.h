@@ -42,6 +42,7 @@ namespace wb
         FileLoaderRegistrar(size_t id, std::unique_ptr<IFileLoader> loader);
     };
 
-    #define WB_REGISTER_FILE_LOADER(ID, LOADER) static wb::FileLoaderRegistrar gFileLoaderRegistrar##LOADER(ID, std::make_unique<LOADER>());
+    #define WB_REGISTER_FILE_LOADER(ID, LOADER) \
+        static wb::FileLoaderRegistrar gFileLoaderRegistrar##LOADER(ID, std::make_unique<LOADER>());
 
 } // namespace wb

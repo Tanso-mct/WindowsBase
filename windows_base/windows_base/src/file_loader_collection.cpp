@@ -61,20 +61,5 @@ WINDOWS_BASE_API wb::FileLoaderCollection wb::gFileLoaderCollection;
 
 wb::FileLoaderRegistrar::FileLoaderRegistrar(size_t id, std::unique_ptr<IFileLoader> loader)
 {
-    static bool registered = false;
-    if (registered)
-    {
-        std::string err = wb::CreateErrorMessage
-        (
-            __FILE__, __LINE__, __FUNCTION__,
-            {"File loader with ID ", std::to_string(id), " is already registered."}
-        );
-
-        wb::ConsoleLogErr(err);
-        wb::ErrorNotify("WINDOWS_BASE", err);
-        wb::ThrowRuntimeError(err);
-    }
-
-    registered = true;
     wb::gFileLoaderCollection.AddLoader(id, std::move(loader));
 }

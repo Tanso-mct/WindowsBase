@@ -33,7 +33,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    WINDOWS_BASE_API SystemCollection& GetSystemCollectionInstance();
+    extern WINDOWS_BASE_API SystemCollection gSystemCollection;
 
     template <typename SYSTEM>
     class SystemFactory : public ISystemFactory
@@ -48,33 +48,13 @@ namespace wb
         }
     };
 
-    template <typename SYSTEM>
-    class SystemRegistrar
+    class WINDOWS_BASE_API SystemRegistrar
     {
     public:
-        SystemRegistrar(size_t systemID)
-        {
-            static bool registered = false;
-            if (registered)
-            {
-                std::string err = CreateErrorMessage
-                (
-                    __FILE__, __LINE__, __FUNCTION__,
-                    {"System with ID ", std::to_string(systemID), " is already registered."}
-                );
-
-                ConsoleLogErr(err);
-                ErrorNotify("WINDOWS_BASE", err);
-                ThrowRuntimeError(err);
-            }
-
-            registered = true;
-
-            SystemCollection &collection = GetSystemCollectionInstance();
-            collection.AddFactory(systemID, std::make_unique<SystemFactory<SYSTEM>>());
-        }
+        SystemRegistrar(size_t systemID, std::unique_ptr<ISystemFactory> systemFactory);
     };
 
-    #define WB_REGISTER_SYSTEM(SYSTEM, ID) static wb::SystemRegistrar<SYSTEM> systemRegistrar##T(ID)
+    #define WB_REGISTER_SYSTEM(SYSTEM, ID) \
+        static wb::SystemRegistrar systemRegistrar##T(ID, std::make_unique<wb::SystemFactory<SYSTEM>>());
 
 } // namespace wb
