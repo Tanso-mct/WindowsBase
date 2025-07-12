@@ -35,27 +35,14 @@ namespace wb
 
     extern WINDOWS_BASE_API AssetCollection gAssetCollection;
 
-    template <typename ASSET>
-    class AssetFactory : public IAssetFactory
-    {
-    public:
-        AssetFactory() = default;
-        virtual ~AssetFactory() override = default;
-
-        std::unique_ptr<IAsset> Create(const IFileData &fileData) const override
-        {
-            return std::make_unique<ASSET>(fileData);
-        }
-    };
-
     class WINDOWS_BASE_API AssetRegistrar
     {
     public:
         AssetRegistrar(size_t assetID, std::unique_ptr<IAssetFactory> assetFactory);
     };
 
-    #define WB_REGISTER_ASSET(ASSET, ID) \
-        static wb::AssetRegistrar assetRegistrar##T(ID, std::make_unique<wb::AssetFactory<ASSET>>());
+    #define WB_REGISTER_ASSET(ASSET_FACTORY, ID) \
+        static wb::AssetRegistrar assetRegistrar##T(ID, std::make_unique<ASSET_FACTORY>());
 
 
 } // namespace wb
