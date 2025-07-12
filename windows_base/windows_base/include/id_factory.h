@@ -13,6 +13,7 @@ namespace wb
         static size_t CreateSystemID();
 
         static size_t CreateFileLoaderID();
+        static size_t CreateAssetID();
 
     };
 

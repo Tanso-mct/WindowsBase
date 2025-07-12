@@ -31,14 +31,12 @@ namespace
         }
     };
 
-    WB_REGISTER_FILE_LOADER(MockFileLoader, MockFileLoaderID());
+    WB_REGISTER_FILE_LOADER(MockFileLoaderID(), MockFileLoader);
 }
 
 TEST(FileLoaderCollection, GetLoader)
 {
-    wb::FileLoaderCollection &collection = wb::GetFileLoaderCollectionInstance();
-
-    wb::IFileLoader &loader = collection.GetLoader(MockFileLoaderID());
+    wb::IFileLoader &loader = wb::gFileLoaderCollection.GetLoader(MockFileLoaderID());
     EXPECT_NE(&loader, nullptr);
 
     EXPECT_EQ(loader.GetID(), MockFileLoaderID());

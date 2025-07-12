@@ -30,3 +30,13 @@ size_t wb::IDFactory::CreateFileLoaderID()
 
     return createdId;
 }
+
+size_t wb::IDFactory::CreateAssetID()
+{
+    static size_t idCounter = 0;
+
+    size_t createdId = idCounter;
+    idCounter++;
+
+    return createdId;
+}

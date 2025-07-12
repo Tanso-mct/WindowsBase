@@ -112,7 +112,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;WINDOWSBASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;WINDOWSBASE_EXPORTS;_WINDOWS;_USRDLL;BUILDING_WINDOWS_BASE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -130,7 +130,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;WINDOWSBASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;WINDOWSBASE_EXPORTS;_WINDOWS;_USRDLL;BUILDING_WINDOWS_BASE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -143,6 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\asset_collection.cpp" />
+    <ClCompile Include="src\asset_group.cpp" />
     <ClCompile Include="src\component_collection.cpp" />
     <ClCompile Include="src\console_log.cpp" />
     <ClCompile Include="src\entity.cpp" />
@@ -160,6 +162,8 @@
     <ClCompile Include="src\windows_helper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\asset_collection.h" />
+    <ClInclude Include="include\asset_group.h" />
     <ClInclude Include="include\component_collection.h" />
     <ClInclude Include="include\console_log.h" />
     <ClInclude Include="include\container_dynamic.h" />

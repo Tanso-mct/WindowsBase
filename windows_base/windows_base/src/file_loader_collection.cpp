@@ -57,9 +57,24 @@ const std::vector<size_t> &wb::FileLoaderCollection::GetKeys() const
     return keys_;
 }
 
-static wb::FileLoaderCollection g_fileLoaderCollectionInstance;
+WINDOWS_BASE_API wb::FileLoaderCollection wb::gFileLoaderCollection;
 
-WINDOWS_BASE_API wb::FileLoaderCollection &wb::GetFileLoaderCollectionInstance()
+wb::FileLoaderRegistrar::FileLoaderRegistrar(size_t id, std::unique_ptr<IFileLoader> loader)
 {
-    return g_fileLoaderCollectionInstance;
+    static bool registered = false;
+    if (registered)
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"File loader with ID ", std::to_string(id), " is already registered."}
+        );
+
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
+
+    registered = true;
+    wb::gFileLoaderCollection.AddLoader(id, std::move(loader));
 }

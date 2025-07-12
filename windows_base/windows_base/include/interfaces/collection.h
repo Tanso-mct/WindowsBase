@@ -23,6 +23,7 @@ namespace wb
 
     using IComponentCollection = IFactoryCollection<IComponentFactory>;
     using ISystemCollection = IFactoryCollection<ISystemFactory>;
+    using IAssetCollection = IFactoryCollection<IAssetFactory>;
 
     template <typename LOADER>
     class ILoaderCollection

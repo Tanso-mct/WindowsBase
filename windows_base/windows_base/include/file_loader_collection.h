@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "windows_base/include/dll_config.h"
 
+#include "windows_base/include/interfaces/file.h"
 #include "windows_base/include/interfaces/collection.h"
 
 #include "windows_base/include/console_log.h"
@@ -33,36 +34,14 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    WINDOWS_BASE_API FileLoaderCollection& GetFileLoaderCollectionInstance();
+    extern WINDOWS_BASE_API FileLoaderCollection gFileLoaderCollection;
 
-    template <typename LOADER>
-    class FileLoaderRegistrar
+    class WINDOWS_BASE_API FileLoaderRegistrar
     {
     public:
-        FileLoaderRegistrar(size_t loaderID)
-        {
-            static bool registered = false;
-            if (registered)
-            {
-                std::string err = CreateErrorMessage
-                (
-                    __FILE__, __LINE__, __FUNCTION__,
-                    {"File loader with ID ", std::to_string(loaderID), " is already registered."}
-                );
-
-                ConsoleLogErr(err);
-                ErrorNotify("WINDOWS_BASE", err);
-                ThrowRuntimeError(err);
-            }
-
-            registered = true;
-
-            FileLoaderCollection &collection = GetFileLoaderCollectionInstance();
-            collection.AddLoader(loaderID, std::make_unique<LOADER>());
-        }
-
+        FileLoaderRegistrar(size_t id, std::unique_ptr<IFileLoader> loader);
     };
 
-    #define WB_REGISTER_FILE_LOADER(LOADER, ID) static wb::FileLoaderRegistrar<LOADER> g_fileLoaderRegistrar_##LOADER(ID);
+    #define WB_REGISTER_FILE_LOADER(ID, LOADER) static wb::FileLoaderRegistrar gFileLoaderRegistrar##LOADER(ID, std::make_unique<LOADER>());
 
 } // namespace wb
