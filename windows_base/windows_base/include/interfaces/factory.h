@@ -18,4 +18,12 @@ namespace wb
     class ISystem;
     using ISystemFactory = IFactory<std::unique_ptr<ISystem>>;
 
+    using IEntitiesFactory = IFactory<void>;
+
+    class IEntityIDView;
+    using IEntityIDViewFactory = IFactory<std::unique_ptr<IEntityIDView>>;
+
+    class ISystemContainer;
+    using ISystemsFactory = IFactory<std::unique_ptr<ISystemContainer>>;
+
 }

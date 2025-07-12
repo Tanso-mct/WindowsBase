@@ -103,6 +103,10 @@ namespace wb
     class ISystem;
     using ISystemContainer = IStaticContainer<ISystem>;
 
+    class IAsset;
+    using IAssetContainer = IStaticContainer<IAsset>;
 
+    class ISceneFacade;
+    using ISceneContainer = IStaticContainer<ISceneFacade>;
 
 } // namespace wb
