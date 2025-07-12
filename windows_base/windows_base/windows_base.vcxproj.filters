@@ -131,5 +131,17 @@
     <ClInclude Include="include\interfaces\optional_value.h">
       <Filter>ヘッダー ファイル\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="include\interfaces\asset.h">
+      <Filter>ヘッダー ファイル\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interfaces\context.h">
+      <Filter>ヘッダー ファイル\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interfaces\facade.h">
+      <Filter>ヘッダー ファイル\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

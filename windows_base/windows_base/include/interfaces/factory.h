@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "windows_base/include/interfaces/container.h"
+
 #include <memory>
 
 namespace wb
@@ -23,7 +25,6 @@ namespace wb
     class IEntityIDView;
     using IEntityIDViewFactory = IFactory<std::unique_ptr<IEntityIDView>>;
 
-    class ISystemContainer;
     using ISystemsFactory = IFactory<std::unique_ptr<ISystemContainer>>;
 
 }
