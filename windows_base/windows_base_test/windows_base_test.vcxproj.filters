@@ -32,6 +32,9 @@
     <ClCompile Include="entity_test.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="event_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

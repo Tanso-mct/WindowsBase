@@ -169,6 +169,7 @@
     <ClInclude Include="include\dll_config.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\error_handler.h" />
+    <ClInclude Include="include\event.h" />
     <ClInclude Include="include\factory.h" />
     <ClInclude Include="include\id_factory.h" />
     <ClInclude Include="include\optional_value.h" />
