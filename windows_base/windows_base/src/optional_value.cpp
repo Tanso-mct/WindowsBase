@@ -35,7 +35,7 @@ bool wb::OptionalValue::IsValid() const
     return !value_.expired();
 }
 
-std::unique_ptr<wb::OptionalValue> wb::OptionalValue::Clone() const
+std::unique_ptr<wb::IOptionalValue> wb::OptionalValue::Clone() const
 {
     std::shared_lock<std::shared_mutex> lock(mutex_);
 

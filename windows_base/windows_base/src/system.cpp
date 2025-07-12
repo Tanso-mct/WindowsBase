@@ -4,7 +4,7 @@
 wb::SystemArgument::SystemArgument
 (
     IEntityContainer &entityContainer, IComponentContainer &componentContainer, 
-    EntityIDView &entityIDView
+    IEntityIDView &entityIDView
 ) :
     entityContainer_(entityContainer),
     componentContainer_(componentContainer),

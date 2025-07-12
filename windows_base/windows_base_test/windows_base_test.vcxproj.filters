@@ -3,37 +3,37 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="console_log_test.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="component_collection_test.cpp">
-      <Filter>tests</Filter>
+      <Filter>tests\utility</Filter>
     </ClCompile>
     <ClCompile Include="error_handler_test.cpp">
-      <Filter>tests</Filter>
+      <Filter>tests\utility</Filter>
     </ClCompile>
     <ClCompile Include="type_cast_test.cpp">
-      <Filter>tests</Filter>
+      <Filter>tests\utility</Filter>
     </ClCompile>
     <ClCompile Include="windows_helper_test.cpp">
-      <Filter>tests</Filter>
+      <Filter>tests\utility</Filter>
     </ClCompile>
-    <ClCompile Include="system_collection_test.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="optional_value_test.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="container_static_test.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="container_dynamic_test.cpp">
-      <Filter>tests</Filter>
+    <ClCompile Include="component_collection_test.cpp">
+      <Filter>tests\ecs</Filter>
     </ClCompile>
     <ClCompile Include="entity_test.cpp">
-      <Filter>tests</Filter>
+      <Filter>tests\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="system_collection_test.cpp">
+      <Filter>tests\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="container_dynamic_test.cpp">
+      <Filter>tests\container</Filter>
+    </ClCompile>
+    <ClCompile Include="container_static_test.cpp">
+      <Filter>tests\container</Filter>
+    </ClCompile>
+    <ClCompile Include="optional_value_test.cpp">
+      <Filter>tests\container</Filter>
     </ClCompile>
     <ClCompile Include="event_test.cpp">
-      <Filter>tests</Filter>
+      <Filter>tests\event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +45,18 @@
   <ItemGroup>
     <Filter Include="tests">
       <UniqueIdentifier>{0b193a69-7d71-4ccd-9cc3-03022029ba59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\utility">
+      <UniqueIdentifier>{c11e61d2-f256-433a-91c0-935de8af52fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\ecs">
+      <UniqueIdentifier>{1674062f-19c5-4b5f-98d0-fc99efcbbf8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\container">
+      <UniqueIdentifier>{c99f0504-5a51-4109-808f-3004a4391da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\event">
+      <UniqueIdentifier>{14d33716-a888-4978-bfd1-729523ca6536}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

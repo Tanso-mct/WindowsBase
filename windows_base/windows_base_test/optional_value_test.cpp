@@ -8,9 +8,9 @@ TEST(OptionalValue, Create)
     const size_t SAMPLE_VALUE = 7;
     std::shared_ptr<size_t> value = std::make_shared<size_t>(SAMPLE_VALUE);
 
-    wb::OptionalValue optionalValue(value);
-    EXPECT_TRUE(optionalValue.IsValid());
-    EXPECT_EQ(optionalValue(), SAMPLE_VALUE);
+    std::unique_ptr<wb::IOptionalValue> optionalValue = std::make_unique<wb::OptionalValue>(value);
+    EXPECT_TRUE(optionalValue->IsValid());
+    EXPECT_EQ((*optionalValue)(), SAMPLE_VALUE);
 }
 
 TEST(OptionalValue, Clone)
@@ -18,11 +18,11 @@ TEST(OptionalValue, Clone)
     const size_t SAMPLE_VALUE = 7;
     std::shared_ptr<size_t> value = std::make_shared<size_t>(SAMPLE_VALUE);
 
-    wb::OptionalValue optionalValue(value);
-    EXPECT_TRUE(optionalValue.IsValid());
-    EXPECT_EQ(optionalValue(), SAMPLE_VALUE);
+    std::unique_ptr<wb::OptionalValue> optionalValue = std::make_unique<wb::OptionalValue>(value);
+    EXPECT_TRUE(optionalValue->IsValid());
+    EXPECT_EQ((*optionalValue)(), SAMPLE_VALUE);
 
-    std::unique_ptr<wb::OptionalValue> clonedValue = optionalValue.Clone();
+    std::unique_ptr<wb::IOptionalValue> clonedValue = optionalValue->Clone();
     EXPECT_TRUE(clonedValue->IsValid());
-    EXPECT_EQ(clonedValue->operator()(), SAMPLE_VALUE);
+    EXPECT_EQ((*clonedValue)(), SAMPLE_VALUE);
 }

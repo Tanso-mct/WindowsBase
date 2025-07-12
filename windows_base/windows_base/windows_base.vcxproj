@@ -152,17 +152,15 @@
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\system.cpp" />
     <ClCompile Include="src\system_collection.cpp" />
     <ClCompile Include="src\type_cast.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\collection.h" />
-    <ClInclude Include="include\component.h" />
     <ClInclude Include="include\component_collection.h" />
     <ClInclude Include="include\console_log.h" />
-    <ClInclude Include="include\container.h" />
     <ClInclude Include="include\container_dynamic.h" />
     <ClInclude Include="include\container_impl.h" />
     <ClInclude Include="include\container_static.h" />
@@ -170,8 +168,16 @@
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\event.h" />
-    <ClInclude Include="include\factory.h" />
     <ClInclude Include="include\id_factory.h" />
+    <ClInclude Include="include\interfaces\collection.h" />
+    <ClInclude Include="include\interfaces\component.h" />
+    <ClInclude Include="include\interfaces\container.h" />
+    <ClInclude Include="include\interfaces\entity.h" />
+    <ClInclude Include="include\interfaces\event.h" />
+    <ClInclude Include="include\interfaces\factory.h" />
+    <ClInclude Include="include\interfaces\optional_value.h" />
+    <ClInclude Include="include\interfaces\scene.h" />
+    <ClInclude Include="include\interfaces\system.h" />
     <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="include\system_collection.h" />

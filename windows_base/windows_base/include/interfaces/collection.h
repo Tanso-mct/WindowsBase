@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "windows_base/include/factory.h"
+#include "windows_base/include/interfaces/factory.h"
 
 #include <unordered_map>
 #include <memory>

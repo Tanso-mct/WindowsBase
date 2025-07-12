@@ -1,36 +1,19 @@
 ﻿#pragma once
 #include "windows_base/include/dll_config.h"
 
-#include "windows_base/include/optional_value.h"
-#include "windows_base/include/container.h"
-#include "windows_base/include/factory.h"
+#include "windows_base/include/interfaces/entity.h"
+#include "windows_base/include/interfaces/factory.h"
 
 #include <vector>
 
 namespace wb
 {
-    class IEntity
-    {
-    public:
-        virtual ~IEntity() = default;
-
-        virtual void Destroy(IComponentContainer &componentCont) = 0;
-
-        virtual void SetID(std::unique_ptr<OptionalValue> id) = 0;
-        virtual const OptionalValue &GetID() const = 0;
-
-        virtual void AddComponent(size_t componentID, IComponentContainer &componentCont) = 0;
-        virtual IComponent *GetComponent(size_t componentID, IComponentContainer &componentCont) = 0;
-
-        virtual const std::vector<size_t> &GetComponentIDs() const = 0;
-    };
-
     class WINDOWS_BASE_API Entity : public IEntity
     {
     private:
-        std::unique_ptr<OptionalValue> id_ = nullptr;
+        std::unique_ptr<IOptionalValue> id_ = nullptr;
 
-        std::unique_ptr<IStaticContainer<OptionalValue>> componentIndicesInCont_ = nullptr;
+        std::unique_ptr<IStaticContainer<IOptionalValue>> componentIndicesInCont_ = nullptr;
         std::vector<size_t> componentIDs_;
 
     public:
@@ -43,8 +26,8 @@ namespace wb
 
         void Destroy(IComponentContainer &componentCont) override;
 
-        void SetID(std::unique_ptr<OptionalValue> id) override;
-        const OptionalValue &GetID() const override;
+        void SetID(std::unique_ptr<IOptionalValue> id) override;
+        const IOptionalValue &GetID() const override;
 
         void AddComponent(size_t componentID, IComponentContainer &componentCont) override;
         IComponent *GetComponent(size_t componentID, IComponentContainer &componentCont) override;
@@ -52,12 +35,12 @@ namespace wb
         const std::vector<size_t> &GetComponentIDs() const override { return componentIDs_; }
     };
 
-    class WINDOWS_BASE_API EntityIDView
-    {
+    class WINDOWS_BASE_API EntityIDView : public IEntityIDView
+    { 
     private:
         // Container for entity IDs, indexed by component ID.
         // Outside vector's index is the component ID, and inside vector contains entity IDs.
-        std::vector<std::vector<std::unique_ptr<OptionalValue>>> entityIDsPerComponent_;
+        std::vector<std::vector<std::unique_ptr<IOptionalValue>>> entityIDsPerComponent_;
         
     public:
         EntityIDView();
@@ -66,20 +49,20 @@ namespace wb
         EntityIDView(const EntityIDView &) = delete;
         EntityIDView &operator=(const EntityIDView &) = delete;
 
-        void RegisterEntity(IEntity &entity);
-        void UnregisterEntity(IEntity &entity);
+        void RegisterEntity(IEntity &entity) override;
+        void UnregisterEntity(IEntity &entity) override;
 
-        const std::vector<std::unique_ptr<OptionalValue>> &operator()(size_t componentID) const;
+        const std::vector<std::unique_ptr<IOptionalValue>> &operator()(size_t componentID) const override;
     };
 
     class WINDOWS_BASE_API CreatingEntity
     {
     private:
         IEntity & entity_;
-        EntityIDView &entityIDView_;
+        IEntityIDView &entityIDView_;
     
     public:
-        CreatingEntity(IEntity &entity, EntityIDView &entityIDView);
+        CreatingEntity(IEntity &entity, IEntityIDView &entityIDView);
         ~CreatingEntity();
 
         CreatingEntity(const CreatingEntity &) = delete;
@@ -88,12 +71,12 @@ namespace wb
         IEntity &operator()();
     };
 
-    WINDOWS_BASE_API CreatingEntity CreateEntity(IEntityContainer &entityCont, EntityIDView &entityIDView);
+    WINDOWS_BASE_API CreatingEntity CreateEntity(IEntityContainer &entityCont, IEntityIDView &entityIDView);
 
     WINDOWS_BASE_API void DestroyEntity
     (
         IEntity *entity, 
-        EntityIDView &entityIDView, IEntityContainer &entityCont, IComponentContainer &componentCont
+        IEntityIDView &entityIDView, IEntityContainer &entityCont, IComponentContainer &componentCont
     );
 
 } // namespace wb

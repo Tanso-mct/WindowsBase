@@ -21,10 +21,10 @@ TEST(DynamicContainer, AddAndGet)
         = std::make_unique<wb::DynamicContainer<MockElement>>();
 
     const size_t CONTAINER_SIZE = 5;
-    std::vector<std::unique_ptr<wb::OptionalValue>> indices;
+    std::vector<std::unique_ptr<wb::IOptionalValue>> indices;
     for (size_t i = 0; i < CONTAINER_SIZE; i++)
     {
-        std::unique_ptr<wb::OptionalValue> index = container->Add(std::make_unique<MockElement>(i));
+        std::unique_ptr<wb::IOptionalValue> index = container->Add(std::make_unique<MockElement>(i));
         indices.emplace_back(std::move(index));
     }
     EXPECT_EQ(container->GetSize(), CONTAINER_SIZE);
@@ -37,8 +37,8 @@ TEST(DynamicContainer, AddAndGet)
 
     // Accessing out of bounds should throw an error
     std::shared_ptr<size_t> outOfBoundsIndex = std::make_shared<size_t>(CONTAINER_SIZE);
-    wb::OptionalValue outOfBoundsValue(outOfBoundsIndex);
-    EXPECT_THROW(container->Get(outOfBoundsValue), std::runtime_error);
+    std::unique_ptr<wb::IOptionalValue> outOfBoundsValue = std::make_unique<wb::OptionalValue>(outOfBoundsIndex);
+    EXPECT_THROW(container->Get(*outOfBoundsValue), std::runtime_error);
 }
 
 TEST(DynamicContainer, PtrGet)
@@ -47,10 +47,10 @@ TEST(DynamicContainer, PtrGet)
         = std::make_unique<wb::DynamicContainer<MockElement>>();
 
     const size_t CONTAINER_SIZE = 5;
-    std::vector<std::unique_ptr<wb::OptionalValue>> indices;
+    std::vector<std::unique_ptr<wb::IOptionalValue>> indices;
     for (size_t i = 0; i < CONTAINER_SIZE; i++)
     {
-        std::unique_ptr<wb::OptionalValue> index = container->Add(std::make_unique<MockElement>(i));
+        std::unique_ptr<wb::IOptionalValue> index = container->Add(std::make_unique<MockElement>(i));
         indices.emplace_back(std::move(index));
     }
 
@@ -62,8 +62,8 @@ TEST(DynamicContainer, PtrGet)
 
     // Accessing out of bounds should throw an error
     std::shared_ptr<size_t> outOfBoundsIndex = std::make_shared<size_t>(CONTAINER_SIZE);
-    wb::OptionalValue outOfBoundsValue(outOfBoundsIndex);
-    EXPECT_THROW(container->PtrGet(outOfBoundsValue), std::runtime_error);
+    std::unique_ptr<wb::IOptionalValue> outOfBoundsValue = std::make_unique<wb::OptionalValue>(outOfBoundsIndex);
+    EXPECT_THROW(container->PtrGet(*outOfBoundsValue), std::runtime_error);
 }
 
 TEST(DynamicContainer, ThreadSafeGet)
@@ -72,10 +72,10 @@ TEST(DynamicContainer, ThreadSafeGet)
         = std::make_unique<wb::DynamicContainer<MockElement>>();
 
     const size_t CONTAINER_SIZE = 5;
-    std::vector<std::unique_ptr<wb::OptionalValue>> indices;
+    std::vector<std::unique_ptr<wb::IOptionalValue>> indices;
     for (size_t i = 0; i < CONTAINER_SIZE; i++)
     {
-        std::unique_ptr<wb::OptionalValue> index = container->Add(std::make_unique<MockElement>(i));
+        std::unique_ptr<wb::IOptionalValue> index = container->Add(std::make_unique<MockElement>(i));
         indices.emplace_back(std::move(index));
     }
 
@@ -87,8 +87,8 @@ TEST(DynamicContainer, ThreadSafeGet)
 
     // Accessing out of bounds should throw an error
     std::shared_ptr<size_t> outOfBoundsIndex = std::make_shared<size_t>(CONTAINER_SIZE);
-    wb::OptionalValue outOfBoundsValue(outOfBoundsIndex);
-    EXPECT_THROW(container->ThreadSafeGet(outOfBoundsValue), std::runtime_error);
+    std::unique_ptr<wb::IOptionalValue> outOfBoundsValue = std::make_unique<wb::OptionalValue>(outOfBoundsIndex);   
+    EXPECT_THROW(container->ThreadSafeGet(*outOfBoundsValue), std::runtime_error);
 }
 
 TEST(DynamicContainer, Erase)
@@ -97,10 +97,10 @@ TEST(DynamicContainer, Erase)
         = std::make_unique<wb::DynamicContainer<MockElement>>();
 
     const size_t CONTAINER_SIZE = 5;
-    std::vector<std::unique_ptr<wb::OptionalValue>> indices;
+    std::vector<std::unique_ptr<wb::IOptionalValue>> indices;
     for (size_t i = 0; i < CONTAINER_SIZE; i++)
     {
-        std::unique_ptr<wb::OptionalValue> index = container->Add(std::make_unique<MockElement>(i));
+        std::unique_ptr<wb::IOptionalValue> index = container->Add(std::make_unique<MockElement>(i));
         indices.emplace_back(std::move(index));
     }
 

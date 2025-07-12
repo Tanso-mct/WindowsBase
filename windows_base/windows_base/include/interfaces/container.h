@@ -74,7 +74,7 @@ namespace wb
      * The size of the container can change dynamically.
     /******************************************************************************************************************/
 
-    class OptionalValue;
+    class IOptionalValue;
 
     template <typename T>
     class IDynamicContainer : public IContainer
@@ -82,12 +82,12 @@ namespace wb
     public:
         virtual ~IDynamicContainer() = default;
 
-        virtual T &Get(const OptionalValue &index) = 0;
-        virtual T *PtrGet(const OptionalValue &index) = 0;
-        virtual LockedRef<T> ThreadSafeGet(const OptionalValue &index) = 0;
+        virtual T &Get(const IOptionalValue &index) = 0;
+        virtual T *PtrGet(const IOptionalValue &index) = 0;
+        virtual LockedRef<T> ThreadSafeGet(const IOptionalValue &index) = 0;
 
-        virtual std::unique_ptr<OptionalValue> Add(std::unique_ptr<T> data) = 0;
-        virtual std::unique_ptr<T> Erase(const OptionalValue &index) = 0;
+        virtual std::unique_ptr<IOptionalValue> Add(std::unique_ptr<T> data) = 0;
+        virtual std::unique_ptr<T> Erase(const IOptionalValue &index) = 0;
     };
 
     /*******************************************************************************************************************

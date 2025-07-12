@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "windows_base/include/container.h"
-#include "windows_base/include/optional_value.h"
+#include "windows_base/include/interfaces/container.h"
 
+#include "windows_base/include/optional_value.h"
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
@@ -52,7 +52,7 @@ namespace wb
          * IDynamicContainer implementation
         /**************************************************************************************************************/
 
-        T &Get(const OptionalValue &index) override
+        T &Get(const IOptionalValue &index) override
         {
             std::unique_lock<std::shared_mutex> lock(mutex_);
 
@@ -85,7 +85,7 @@ namespace wb
             return *datas_[index()].first;
         }
 
-        T *PtrGet(const OptionalValue &index) override
+        T *PtrGet(const IOptionalValue &index) override
         {
             std::unique_lock<std::shared_mutex> lock(mutex_);
 
@@ -118,7 +118,7 @@ namespace wb
             return datas_[index()].first.get();
         }
 
-        LockedRef<T> ThreadSafeGet(const OptionalValue &index) override
+        LockedRef<T> ThreadSafeGet(const IOptionalValue &index) override
         {
             std::unique_lock<std::shared_mutex> lock(mutex_);
 
@@ -151,18 +151,18 @@ namespace wb
             return LockedRef<T>{std::move(lock), *datas_[index()].first};
         }
 
-        std::unique_ptr<OptionalValue> Add(std::unique_ptr<T> data) override
+        std::unique_ptr<IOptionalValue> Add(std::unique_ptr<T> data) override
         {
             std::unique_lock<std::shared_mutex> lock(mutex_);
 
             size_t index = datas_.size(); // new element's index
             datas_.emplace_back(std::make_pair(std::move(data), std::make_shared<size_t>(index)));
 
-            std::unique_ptr<OptionalValue> optionalValue = std::make_unique<OptionalValue>(datas_.back().second);
+            std::unique_ptr<IOptionalValue> optionalValue = std::make_unique<OptionalValue>(datas_.back().second);
             return optionalValue;
         }
 
-        std::unique_ptr<T> Erase(const OptionalValue &index) override
+        std::unique_ptr<T> Erase(const IOptionalValue &index) override
         {
             std::unique_lock<std::shared_mutex> lock(mutex_);
 

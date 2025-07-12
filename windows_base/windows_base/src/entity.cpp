@@ -2,16 +2,15 @@
 #include "windows_base/include/entity.h"
 
 #include "windows_base/include/component_collection.h"
-#include "windows_base/include/component.h"
-
 #include "windows_base/include/container_static.h"
+#include "windows_base/include/optional_value.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 wb::Entity::Entity()
 {
-    componentIndicesInCont_ = std::make_unique<wb::StaticContainer<wb::OptionalValue>>();
+    componentIndicesInCont_ = std::make_unique<wb::StaticContainer<wb::IOptionalValue>>();
 
     wb::ComponentCollection &componentCollection = wb::GetComponentCollectionInstance();
     componentIndicesInCont_->Create(componentCollection.GetMaxID() + 1);
@@ -21,7 +20,7 @@ void wb::Entity::Destroy(IComponentContainer &componentCont)
 {
     for (const size_t &componentID : componentIDs_)
     {
-        wb::OptionalValue &index = componentIndicesInCont_->Get(componentID);
+        wb::IOptionalValue &index = componentIndicesInCont_->Get(componentID);
         componentCont.Erase(index);
     }
 
@@ -29,7 +28,7 @@ void wb::Entity::Destroy(IComponentContainer &componentCont)
     componentIDs_.clear();
 }
 
-void wb::Entity::SetID(std::unique_ptr<OptionalValue> id)
+void wb::Entity::SetID(std::unique_ptr<IOptionalValue> id)
 {
     if (id_ != nullptr)
     {
@@ -47,7 +46,7 @@ void wb::Entity::SetID(std::unique_ptr<OptionalValue> id)
     id_ = std::move(id);
 }
 
-const wb::OptionalValue &wb::Entity::GetID() const
+const wb::IOptionalValue &wb::Entity::GetID() const
 {
     if (id_ == nullptr || !id_->IsValid())
     {
@@ -74,7 +73,7 @@ void wb::Entity::AddComponent(size_t componentID, IComponentContainer &component
     std::unique_ptr<wb::IComponent> component = componentFactory.Create();
 
     // Add the component to the container
-    std::unique_ptr<wb::OptionalValue> index = componentCont.Add(std::move(component));
+    std::unique_ptr<wb::IOptionalValue> index = componentCont.Add(std::move(component));
 
     // Store the component ID and index in the entity
     componentIndicesInCont_->Set(componentID, std::move(index));
@@ -84,7 +83,7 @@ void wb::Entity::AddComponent(size_t componentID, IComponentContainer &component
 wb::IComponent *wb::Entity::GetComponent(size_t componentID, IComponentContainer &componentCont)
 {
     // Get the index of the component in the container
-    wb::OptionalValue *index = componentIndicesInCont_->PtrGet(componentID);
+    wb::IOptionalValue *index = componentIndicesInCont_->PtrGet(componentID);
     if (index == nullptr || !index->IsValid())
     {
         return nullptr; // Component not found or index is invalid
@@ -108,13 +107,13 @@ void wb::EntityIDView::RegisterEntity(IEntity &entity)
     const std::vector<size_t> &componentIDs = entity.GetComponentIDs();
 
     // Get the entity's ID.
-    const OptionalValue &entityID = entity.GetID();
+    const IOptionalValue &entityID = entity.GetID();
 
     // Register the entity's ID for each component it has.
     for (const size_t &componentID : componentIDs)
     {
         // Get the entity vector for the component ID.
-        std::vector<std::unique_ptr<OptionalValue>> &entityIDs = entityIDsPerComponent_[componentID];
+        std::vector<std::unique_ptr<IOptionalValue>> &entityIDs = entityIDsPerComponent_[componentID];
 
         // Add the entity's ID
         entityIDs.emplace_back(entityID.Clone());
@@ -126,13 +125,13 @@ void wb::EntityIDView::UnregisterEntity(IEntity &entity)
     const std::vector<size_t> &componentIDs = entity.GetComponentIDs();
 
     // Get the entity's ID.
-    const OptionalValue &entityID = entity.GetID();
+    const IOptionalValue &entityID = entity.GetID();
 
     // Unregister the entity's ID for each component it has.
     for (const size_t &componentID : componentIDs)
     {
         // Get the entity vector for the component ID.
-        std::vector<std::unique_ptr<OptionalValue>> &entityIDs = entityIDsPerComponent_[componentID];
+        std::vector<std::unique_ptr<IOptionalValue>> &entityIDs = entityIDsPerComponent_[componentID];
 
         // Find the entity ID in the vector and remove it.
         for (size_t i = 0; i < entityIDs.size(); i++)
@@ -149,7 +148,7 @@ void wb::EntityIDView::UnregisterEntity(IEntity &entity)
     }
 }
 
-const std::vector<std::unique_ptr<wb::OptionalValue>> &wb::EntityIDView::operator()(size_t componentID) const
+const std::vector<std::unique_ptr<wb::IOptionalValue>> &wb::EntityIDView::operator()(size_t componentID) const
 {
     // Check if the component ID is valid.
     if (componentID >= entityIDsPerComponent_.size())
@@ -169,7 +168,7 @@ const std::vector<std::unique_ptr<wb::OptionalValue>> &wb::EntityIDView::operato
     return entityIDsPerComponent_[componentID];
 }
 
-wb::CreatingEntity::CreatingEntity(IEntity &entity, EntityIDView &entityIDView) :
+wb::CreatingEntity::CreatingEntity(IEntity &entity, IEntityIDView &entityIDView) :
     entity_(entity), entityIDView_(entityIDView)
 {
 }
@@ -185,9 +184,9 @@ wb::IEntity &wb::CreatingEntity::operator()()
     return entity_;
 }
 
-WINDOWS_BASE_API wb::CreatingEntity wb::CreateEntity(IEntityContainer &entityCont, EntityIDView &entityIDView)
+WINDOWS_BASE_API wb::CreatingEntity wb::CreateEntity(IEntityContainer &entityCont, IEntityIDView &entityIDView)
 {
-    std::unique_ptr<wb::OptionalValue> id = nullptr;
+    std::unique_ptr<wb::IOptionalValue> id = nullptr;
     {
         std::unique_ptr<wb::IEntity> entity = std::make_unique<wb::Entity>();
 
@@ -207,7 +206,7 @@ WINDOWS_BASE_API wb::CreatingEntity wb::CreateEntity(IEntityContainer &entityCon
 WINDOWS_BASE_API void wb::DestroyEntity
 (
     IEntity *entity, 
-    EntityIDView &entityIDView, IEntityContainer &entityCont, IComponentContainer &componentCont
+    IEntityIDView &entityIDView, IEntityContainer &entityCont, IComponentContainer &componentCont
 ){
     // Unregister the entity from the ID view
     entityIDView.UnregisterEntity(*entity);

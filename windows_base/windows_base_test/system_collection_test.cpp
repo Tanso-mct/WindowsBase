@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
+#include "windows_base/include/interfaces/system.h"
+#include "windows_base/include/system.h"
 #include "windows_base/include/system_collection.h"
 #include "windows_base/include/entity.h"
 #include "windows_base/include/container_impl.h"
@@ -47,14 +49,14 @@ TEST(SystemCollection, GetFactory)
 
     std::unique_ptr<wb::IEntityContainer> entityCont = std::make_unique<wb::EntityContainer>();
     std::unique_ptr<wb::IComponentContainer> componentCont = std::make_unique<wb::ComponentContainer>();
-    wb::EntityIDView entityIDView;
+    std::unique_ptr<wb::IEntityIDView> entityIDView = std::make_unique<wb::EntityIDView>();
     
     // Call the Update method to ensure the system is functional
     wb::SystemArgument args
     (
         *entityCont,
         *componentCont,
-        entityIDView
+        *entityIDView
     );
     system->Update(args);
 }

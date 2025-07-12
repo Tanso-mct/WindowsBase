@@ -3,7 +3,7 @@
 #include "windows_base/include/entity.h"
 #include "windows_base/include/container_impl.h"
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/component.h"
+#include "windows_base/include/interfaces/component.h"
 #include "windows_base/include/component_collection.h"
 #pragma comment(lib, "windows_base.lib")
 
@@ -51,12 +51,12 @@ TEST(Entity, CreateAndDestroy)
     std::unique_ptr<wb::IComponentContainer> componentCont = std::make_unique<wb::ComponentContainer>();
 
     // Create an EntityIDView
-    wb::EntityIDView entityIDView;
+    std::unique_ptr<wb::IEntityIDView> entityIDView = std::make_unique<wb::EntityIDView>();
 
     // Create an entity
-    std::unique_ptr<wb::OptionalValue> entityID = nullptr;
+    std::unique_ptr<wb::IOptionalValue> entityID = nullptr;
     {
-        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, entityIDView);
+        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, *entityIDView);
         EXPECT_TRUE(entity().GetID().IsValid());
         EXPECT_TRUE(entity().GetID()() == 0); // ID should be 0 since it's the first entity created
         EXPECT_EQ(entity().GetComponentIDs().size(), 0);
@@ -69,7 +69,7 @@ TEST(Entity, CreateAndDestroy)
     {
         // Get the entity using the stored ID
         wb::IEntity *entity = entityCont->PtrGet(*entityID);
-        wb::DestroyEntity(entity, entityIDView, *entityCont, *componentCont);
+        wb::DestroyEntity(entity, *entityIDView, *entityCont, *componentCont);
     }
 
     EXPECT_NE(entityID->IsValid(), true); // The entity ID should no longer be valid after destruction
@@ -84,12 +84,12 @@ TEST(Entity, AddAndGetComponent)
     std::unique_ptr<wb::IComponentContainer> componentCont = std::make_unique<wb::ComponentContainer>();
 
     // Create an EntityIDView
-    wb::EntityIDView entityIDView;
+    std::unique_ptr<wb::IEntityIDView> entityIDView = std::make_unique<wb::EntityIDView>();
 
     // Create an entity
-    std::unique_ptr<wb::OptionalValue> entityID = nullptr;
+    std::unique_ptr<wb::IOptionalValue> entityID = nullptr;
     {
-        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, entityIDView);
+        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, *entityIDView);
         EXPECT_TRUE(entity().GetID().IsValid());
         EXPECT_TRUE(entity().GetID()() == 0); // ID should be 0 since it's the first entity created
         EXPECT_EQ(entity().GetComponentIDs().size(), 0);
@@ -121,7 +121,7 @@ TEST(Entity, AddAndGetComponent)
         EXPECT_EQ(mock->GetValue(), MOCK_COMPONENT_VALUE);
 
         // Clean up
-        wb::DestroyEntity(entity, entityIDView, *entityCont, *componentCont);
+        wb::DestroyEntity(entity, *entityIDView, *entityCont, *componentCont);
     }
 
     EXPECT_NE(entityID->IsValid(), true); // The entity ID should no longer be valid after destruction
@@ -136,12 +136,12 @@ TEST(Entity, EntityIDView)
     std::unique_ptr<wb::IComponentContainer> componentCont = std::make_unique<wb::ComponentContainer>();
 
     // Create an EntityIDView
-    wb::EntityIDView entityIDView;
+    std::unique_ptr<wb::IEntityIDView> entityIDView = std::make_unique<wb::EntityIDView>();
 
     // Create an entity
-    std::unique_ptr<wb::OptionalValue> entity1ID = nullptr;
+    std::unique_ptr<wb::IOptionalValue> entity1ID = nullptr;
     {
-        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, entityIDView);
+        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, *entityIDView);
         EXPECT_TRUE(entity().GetID().IsValid());
         EXPECT_TRUE(entity().GetID()() == 0); // ID should be 0 since it's the first entity created
         EXPECT_EQ(entity().GetComponentIDs().size(), 0);
@@ -156,9 +156,9 @@ TEST(Entity, EntityIDView)
     } // If CreatingEntity goes out of scope, it will register the entity in the ID view.
 
     // Create another entity
-    std::unique_ptr<wb::OptionalValue> entity2ID = nullptr;
+    std::unique_ptr<wb::IOptionalValue> entity2ID = nullptr;
     {
-        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, entityIDView);
+        wb::CreatingEntity entity = wb::CreateEntity(*entityCont, *entityIDView);
         EXPECT_TRUE(entity().GetID().IsValid());
         EXPECT_TRUE(entity().GetID()() == 1); // ID should be 1 since it's the second entity created
         EXPECT_EQ(entity().GetComponentIDs().size(), 0);
@@ -172,7 +172,7 @@ TEST(Entity, EntityIDView)
 
     } // If CreatingEntity goes out of scope, it will register the entity in the ID view.
 
-    for (const std::unique_ptr<wb::OptionalValue> &id : entityIDView(MockComponentID()))
+    for (const std::unique_ptr<wb::IOptionalValue> &id : (*entityIDView)(MockComponentID()))
     {
         EXPECT_TRUE(id->IsValid());
 
@@ -196,12 +196,12 @@ TEST(Entity, EntityIDView)
         wb::IEntity *entity1 = entityCont->PtrGet(*entity1ID);
         ASSERT_NE(entity1, nullptr);
 
-        wb::DestroyEntity(entity1, entityIDView, *entityCont, *componentCont);
+        wb::DestroyEntity(entity1, *entityIDView, *entityCont, *componentCont);
     }
     EXPECT_EQ(entityCont->GetSize(), 1); // Only entity2 should remain
 
     int remainingEntitiesCount = 0;
-    for (const std::unique_ptr<wb::OptionalValue> &id : entityIDView(MockComponentID()))
+    for (const std::unique_ptr<wb::IOptionalValue> &id : (*entityIDView)(MockComponentID()))
     {
         EXPECT_TRUE(id->IsValid());
 
@@ -229,7 +229,7 @@ TEST(Entity, EntityIDView)
         wb::IEntity *entity2 = entityCont->PtrGet(*entity2ID);
         ASSERT_NE(entity2, nullptr);
 
-        wb::DestroyEntity(entity2, entityIDView, *entityCont, *componentCont);
+        wb::DestroyEntity(entity2, *entityIDView, *entityCont, *componentCont);
     }
     
     EXPECT_EQ(entityCont->GetSize(), 0); // The entity should be removed from
