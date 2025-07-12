@@ -12,6 +12,8 @@ namespace wb
         static size_t CreateComponentID();
         static size_t CreateSystemID();
 
+        static size_t CreateFileLoaderID();
+
     };
 
 } // namespace wb
