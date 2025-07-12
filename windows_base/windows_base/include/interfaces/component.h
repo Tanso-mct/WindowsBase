@@ -6,7 +6,7 @@ namespace wb
     {
     public:
         virtual ~IComponent() = default;
-        virtual size_t GetID() const = 0;
+        virtual const size_t &GetID() const = 0;
     };
 
 } // namespace wb

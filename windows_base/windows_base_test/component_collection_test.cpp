@@ -7,10 +7,10 @@
 
 namespace
 {
-    size_t MockComponentID()
+    const size_t &MockComponentID()
     {
-        static size_t mockComponentID = wb::IDFactory::CreateComponentID();
-        return mockComponentID;
+        static size_t id = wb::IDFactory::CreateComponentID();
+        return id;
     }
 
     class MockComponent : public wb::IComponent
@@ -19,7 +19,7 @@ namespace
         MockComponent() = default;
         ~MockComponent() override = default;
 
-        size_t GetID() const override 
+        const size_t &GetID() const override 
         {
             return MockComponentID();
         }

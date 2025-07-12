@@ -10,10 +10,10 @@
 
 namespace
 {
-    size_t MockSystemID()
+    const size_t &MockSystemID()
     {
-        static size_t mockSystemID = wb::IDFactory::CreateSystemID();
-        return mockSystemID;
+        static size_t id = wb::IDFactory::CreateSystemID();
+        return id;
     }
 
     class MockSystem : public wb::ISystem
@@ -22,7 +22,7 @@ namespace
         MockSystem() = default;
         ~MockSystem() override = default;
 
-        size_t GetID() const override
+        const size_t &GetID() const override
         {
             return MockSystemID();
         }

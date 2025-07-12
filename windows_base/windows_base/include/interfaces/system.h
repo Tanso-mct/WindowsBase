@@ -8,7 +8,7 @@ namespace wb
     {
     public:
         virtual ~ISystem() = default;
-        virtual size_t GetID() const = 0;
+        virtual const size_t &GetID() const = 0;
         virtual void Update(const SystemArgument &args) = 0;
     };
 
