@@ -38,6 +38,9 @@
     <ClCompile Include="file_loader_collection_test.cpp">
       <Filter>tests\file</Filter>
     </ClCompile>
+    <ClCompile Include="asset_collection_test.cpp">
+      <Filter>tests\asset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -63,6 +66,9 @@
     </Filter>
     <Filter Include="tests\file">
       <UniqueIdentifier>{a10de0da-c250-40a6-9819-c105c50f8b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\asset">
+      <UniqueIdentifier>{9f8fc166-eb39-412c-a022-e97dd3535727}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
