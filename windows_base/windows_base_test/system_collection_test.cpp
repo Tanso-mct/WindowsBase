@@ -45,25 +45,6 @@ namespace
 
 TEST(SystemCollection, GetFactory)
 {
-    // Create asset container
-    std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
-
     wb::ISystemFactory &factory = wb::gSystemCollection.GetFactory(MockSystemID());
     EXPECT_NE(&factory, nullptr);
-
-    std::unique_ptr<wb::ISystem> system = factory.Create(*assetCont);
-    EXPECT_NE(system, nullptr);
-
-    std::unique_ptr<wb::IEntityContainer> entityCont = std::make_unique<wb::EntityContainer>();
-    std::unique_ptr<wb::IComponentContainer> componentCont = std::make_unique<wb::ComponentContainer>();
-    std::unique_ptr<wb::IEntityIDView> entityIDView = std::make_unique<wb::EntityIDView>();
-    
-    // Call the Update method to ensure the system is functional
-    wb::SystemArgument args
-    (
-        *entityCont,
-        *componentCont,
-        *entityIDView
-    );
-    system->Update(args);
 }

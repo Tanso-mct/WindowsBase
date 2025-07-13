@@ -10,6 +10,7 @@
 #include "windows_base/include/file_loader_collection.h"
 
 #include "windows_base/include/container_impl.h"
+#include "windows_base/include/system.h"
 
 void wb::SceneContext::SetEntityContainer(std::unique_ptr<IEntityContainer> entityCont)
 {
@@ -196,6 +197,21 @@ bool wb::SceneFacade::CheckIsReady() const
         return false;
     }
 
+    if (systemScheduler_ == nullptr)
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {
+                "Scene facade is not ready: ",
+                "System scheduler is not set."
+            }
+        );
+
+        wb::ConsoleLogWrn(err);
+        return false;
+    }
+
     return true;
 }
 
@@ -219,12 +235,13 @@ void wb::SceneFacade::SetAssetGroup(std::unique_ptr<IAssetGroup> assetGroup)
     assetGroup_ = std::move(assetGroup);
 }
 
+void wb::SceneFacade::SetSystemScheduler(std::unique_ptr<ISystemScheduler> systemScheduler)
+{
+    systemScheduler_ = std::move(systemScheduler);
+}
+
 void wb::SceneFacade::Load(IAssetContainer &assetCont)
 {
-    /*******************************************************************************************************************
-     * Load assets
-    /******************************************************************************************************************/
-
     if (CheckIsReady() == false)
     {
         std::string err = wb::CreateErrorMessage
@@ -237,6 +254,10 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
         wb::ErrorNotify("WINDOWS_BASE", err);
         wb::ThrowRuntimeError(err);
     }
+
+    /*******************************************************************************************************************
+     * Load assets
+    /******************************************************************************************************************/
 
     // The file datas which is already loaded
     std::unordered_map<std::string, std::unique_ptr<IFileData>> fileDatas;
@@ -273,13 +294,30 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
     fileDatas.clear();
 
     /*******************************************************************************************************************
-     * Create component container
+     * Create systems
     /******************************************************************************************************************/
 
+    sceneContext_->SetSystemContainer(systemsFactory_->Create(assetCont));
+
+    /*******************************************************************************************************************
+     * Create entities
+    /******************************************************************************************************************/
+
+    // Create containers
     sceneContext_->SetComponentContainer(std::make_unique<ComponentContainer>());
+    sceneContext_->SetEntityContainer(std::make_unique<EntityContainer>());
 
+    // Create entity ID view
+    sceneContext_->SetEntityIDView(entityIDViewFactory_->Create());
 
-    
+    // Create entities using the factory
+    entitiesFactory_->Create
+    (
+        assetCont,
+        sceneContext_->GetEntityContainer(),
+        sceneContext_->GetComponentContainer(),
+        sceneContext_->GetEntityIDView()
+    );
 }
 
 wb::SceneState wb::SceneFacade::Update
@@ -287,9 +325,229 @@ wb::SceneState wb::SceneFacade::Update
     ContainerStorage &contStorage, const double &deltaTime, 
     const size_t &belongWindowID, size_t &nextSceneID
 ){
-    return wb::SceneState::Size;
+    systemScheduler_->Execute(SystemArgument
+    {
+        sceneContext_->GetEntityContainer(),
+        sceneContext_->GetComponentContainer(),
+        sceneContext_->GetEntityIDView(),
+        sceneContext_->GetSystemContainer()
+    });
+
+    return SceneState::Updating;
 }
 
 void wb::SceneFacade::Release(IAssetContainer &assetCont)
 {
+    if (CheckIsReady() == false)
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"Scene facade is not ready for releasing."}
+        );
+
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
+
+    // Clear the entity container
+    sceneContext_->SetEntityContainer(nullptr);
+
+    // Clear assets
+    for (const size_t &assetID : assetGroup_->GetAssetIDs())
+    {
+        assetCont.Release(assetID);
+    }
+
+    // Clear the component container
+    sceneContext_->SetComponentContainer(nullptr);
+
+    // Clear the system container
+    sceneContext_->SetSystemContainer(nullptr);
+
+    // Clear the entity ID view
+    sceneContext_->SetEntityIDView(nullptr);
 }
+
+// void wb::SceneUpdator::SetBelongWindowID(const size_t &belongWindowID)
+// {
+//     belongWindowID_ = belongWindowID;
+//     isBelongWindowIDSet_ = true;
+// }
+
+// void wb::SceneUpdator::SetInitialSceneID(const size_t &initialSceneID)
+// {
+//     currentSceneID_ = initialSceneID;
+//     nextSceneID_ = initialSceneID;
+//     isInitialSceneIDSet_ = true;
+// }
+
+// bool wb::SceneUpdator::CheckIsReady() const
+// {
+//     if (isBelongWindowIDSet_ == false)
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {
+//                 "Scene updator is not ready: ",
+//                 "Belong window ID is not set."
+//             }
+//         );
+
+//         wb::ConsoleLogWrn(err);
+//         return false;
+//     }
+
+//     if (isInitialSceneIDSet_ == false)
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {
+//                 "Scene updator is not ready: ",
+//                 "Initial scene ID is not set."
+//             }
+//         );
+
+//         wb::ConsoleLogWrn(err);
+//         return false;
+//     }
+
+//     return true;
+// }
+
+// bool wb::SceneUpdator::NeedToLoad() const
+// {
+//     return currentSceneState_ == SceneState::NeedToLoad;
+// }
+
+// bool wb::SceneUpdator::NeedToExit() const
+// {
+//     return currentSceneState_ == SceneState::NeedToExit;
+// }
+
+// bool wb::SceneUpdator::IsLoading() const
+// {
+//     return isLoading_;
+// }
+
+// bool wb::SceneUpdator::IsSwitching() const
+// {
+//     return currentSceneState_ == SceneState::Switching;
+// }
+
+// bool wb::SceneUpdator::IsFinishedLoading()
+// {
+//     if (asyncloadFuture_.valid())
+//     {
+//         return true;
+//     }
+
+//     if (asyncloadFuture_.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
+//     {
+//         isLoading_ = false;
+//         return true;
+//     }
+
+//     return false;
+// }
+
+// bool wb::SceneUpdator::IsFinishedReleasing()
+// {
+//     if (asyncReleaseFuture_.valid())
+//     {
+//         return true;
+//     }
+
+//     if (asyncReleaseFuture_.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
+//     {
+//         return true;
+//     }
+
+//     return false;
+// }
+
+// void wb::SceneUpdator::AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont)
+// {
+//     wb::ISceneFacade *nextScene = sceneCont.PtrGet(nextSceneID_);
+//     if (nextScene == nullptr)
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {"Next scene is not exist with ID: ", std::to_string(nextSceneID_)}
+//         );
+
+//         wb::ConsoleLogErr(err);
+//         wb::ErrorNotify("WINDOWS_BASE", err);
+//         wb::ThrowRuntimeError(err);
+//     }
+
+//     if (nextScene->CheckIsReady() == false)
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {"Next scene is not ready for loading with ID: ", std::to_string(nextSceneID_)}
+//         );
+
+//         wb::ConsoleLogErr(err);
+//         wb::ErrorNotify("WINDOWS_BASE", err);
+//         wb::ThrowRuntimeError(err);
+//     }
+
+//     if (!IsFinishedLoading())
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {"Scene updator is already async loading a scene."}
+//         );
+
+//         wb::ConsoleLogErr(err);
+//         wb::ErrorNotify("WINDOWS_BASE", err);
+//         wb::ThrowRuntimeError(err);
+//     }
+
+//     isLoading_ = true;
+//     asyncloadFuture_ = std::async
+//     (
+//         std::launch::async,
+//         &wb::ISceneFacade::Load, nextScene, std::ref(assetCont)
+//     );
+// }
+
+// void wb::SceneUpdator::SyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont)
+// {
+//     wb::ISceneFacade *nextScene = sceneCont.PtrGet(nextSceneID_);
+//     if (nextScene == nullptr)
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {"Next scene is not exist with ID: ", std::to_string(nextSceneID_)}
+//         );
+
+//         wb::ConsoleLogErr(err);
+//         wb::ErrorNotify("WINDOWS_BASE", err);
+//         wb::ThrowRuntimeError(err);
+//     }
+
+//     if (nextScene->CheckIsReady() == false)
+//     {
+//         std::string err = wb::CreateErrorMessage
+//         (
+//             __FILE__, __LINE__, __FUNCTION__,
+//             {"Next scene is not ready for loading with ID: ", std::to_string(nextSceneID_)}
+//         );
+
+//         wb::ConsoleLogErr(err);
+//         wb::ErrorNotify("WINDOWS_BASE", err);
+//         wb::ThrowRuntimeError(err);
+//     }
+
+//     isLoading_ = true;
+//     nextScene->Load(assetCont);
+// }

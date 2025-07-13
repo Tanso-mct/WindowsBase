@@ -3,6 +3,7 @@
 
 #include "windows_base/include/interfaces/container.h"
 #include "windows_base/include/interfaces/entity.h"
+#include "windows_base/include/interfaces/scene.h"
 
 namespace wb
 {
@@ -14,13 +15,18 @@ namespace wb
         (
             IEntityContainer &entityContainer,
             IComponentContainer &componentContainer,
-            IEntityIDView &entityIDView
+            IEntityIDView &entityIDView,
+            ISystemContainer &systemContainer
         );
         ~SystemArgument() = default;
 
         IEntityContainer &entityContainer_;
         IComponentContainer &componentContainer_;
         IEntityIDView &entityIDView_;
+
+        ISystemContainer &systemContainer_;
+
+        SceneState state_ = SceneState::Size;
 
         // TODO: Add any necessary data members or methods for system arguments
     };

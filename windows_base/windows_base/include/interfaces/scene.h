@@ -4,12 +4,12 @@
 #include "windows_base/include/interfaces/context.h"
 #include "windows_base/include/interfaces/facade.h"
 #include "windows_base/include/interfaces/container.h"
-#include "windows_base/include/interfaces/entity.h"
 #include "windows_base/include/interfaces/factory.h"
-#include "windows_base/include/interfaces/asset.h"
 
 namespace wb
 {
+    class IEntityIDView;
+
     class ISceneContext : public IContext
     {
     public:
@@ -39,6 +39,9 @@ namespace wb
         Size,
     };
 
+    class IAssetGroup;
+    class ISystemScheduler;
+
     class ISceneFacade : public IFacade
     {
     public:
@@ -52,6 +55,7 @@ namespace wb
         virtual void SetEntityIDViewFactory(std::unique_ptr<IEntityIDViewFactory> entityIDViewFactory) = 0;
         virtual void SetSystemsFactory(std::unique_ptr<ISystemsFactory> systemsFactory) = 0;
         virtual void SetAssetGroup(std::unique_ptr<IAssetGroup> assetGroup) = 0;
+        virtual void SetSystemScheduler(std::unique_ptr<ISystemScheduler> systemScheduler) = 0;
 
         /***************************************************************************************************************
          * Scene management methods
@@ -79,7 +83,7 @@ namespace wb
         /**************************************************************************************************************/
 
         virtual void SetBelongWindowID(const size_t &belongWindowID) = 0;
-        virtual void SetCurrentSceneID(const size_t &currentSceneID) = 0;
+        virtual void SetInitialSceneID(const size_t &initialSceneID) = 0;
         virtual bool CheckIsReady() const = 0;
 
         /***************************************************************************************************************
@@ -96,8 +100,8 @@ namespace wb
         virtual bool IsLoading() const = 0;
         virtual bool IsSwitching() const = 0;
 
-        virtual bool IsFinishedLoading() const = 0;
-        virtual bool IsFinishedReleasing() const = 0;
+        virtual bool IsFinishedLoading() = 0;
+        virtual bool IsFinishedReleasing() = 0;
 
         /***************************************************************************************************************
          * Processing for Scene

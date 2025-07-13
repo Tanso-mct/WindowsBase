@@ -51,6 +51,7 @@ namespace wb
         std::unique_ptr<IEntityIDViewFactory> entityIDViewFactory_;
         std::unique_ptr<ISystemsFactory> systemsFactory_;
         std::unique_ptr<IAssetGroup> assetGroup_;
+        std::unique_ptr<ISystemScheduler> systemScheduler_;
 
     public:
         SceneFacade() = default;
@@ -74,6 +75,7 @@ namespace wb
         void SetEntityIDViewFactory(std::unique_ptr<IEntityIDViewFactory> entityIDViewFactory) override;
         void SetSystemsFactory(std::unique_ptr<ISystemsFactory> systemsFactory) override;
         void SetAssetGroup(std::unique_ptr<IAssetGroup> assetGroup) override;
+        void SetSystemScheduler(std::unique_ptr<ISystemScheduler> systemScheduler) override;
 
         void Load(IAssetContainer &assetCont) override;
 
@@ -93,9 +95,8 @@ namespace wb
     //     bool isBelongWindowIDSet_ = false;
 
     //     size_t currentSceneID_ = 0;
-    //     bool isCurrentSceneIDSet_ = false;
-
     //     size_t nextSceneID_ = 0;
+    //     bool isInitialSceneIDSet_ = false;
 
     //     SceneState currentSceneState_ = SceneState::NeedToLoad;
 
@@ -116,7 +117,7 @@ namespace wb
     //     /**************************************************************************************************************/
 
     //     void SetBelongWindowID(const size_t &belongWindowID) override;
-    //     void SetCurrentSceneID(const size_t &currentSceneID) override;
+    //     void SetInitialSceneID(const size_t &initialSceneID) override;
     //     bool CheckIsReady() const override;
 
     //     bool NeedToLoad() const override;
@@ -124,8 +125,8 @@ namespace wb
 
     //     bool IsLoading() const override;
     //     bool IsSwitching() const override;
-    //     bool IsFinishedLoading() const override;
-    //     bool IsFinishedReleasing() const override;
+    //     bool IsFinishedLoading() override;
+    //     bool IsFinishedReleasing() override;
 
     //     void AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
     //     void SyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;

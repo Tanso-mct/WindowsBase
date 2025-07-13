@@ -16,4 +16,11 @@ namespace wb
         virtual void Update(const SystemArgument &args) = 0;
     };
 
+    class ISystemScheduler
+    {
+    public:
+        virtual ~ISystemScheduler() = default;
+        virtual void Execute(const SystemArgument &args) = 0;
+    };
+
 } // namespace wb
