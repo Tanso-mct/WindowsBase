@@ -8,12 +8,18 @@
 wb::SystemArgument::SystemArgument
 (
     IEntityContainer &entityContainer, IComponentContainer &componentContainer, 
-    IEntityIDView &entityIDView, ISystemContainer &systemContainer
+    IEntityIDView &entityIDView, ISystemContainer &systemContainer,
+    ContainerStorage &containerStorage,
+    const double &deltaTime, const size_t &belongWindowID, size_t &nextSceneID
 ) :
     entityContainer_(entityContainer),
     componentContainer_(componentContainer),
     entityIDView_(entityIDView),
-    systemContainer_(systemContainer)
+    systemContainer_(systemContainer),
+    containerStorage_(containerStorage),
+    deltaTime_(deltaTime),
+    belongWindowID_(belongWindowID),
+    nextSceneID_(nextSceneID)
 {
 }
 

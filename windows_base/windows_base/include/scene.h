@@ -88,53 +88,53 @@ namespace wb
         void Release(IAssetContainer &assetCont) override;
     };
 
-    // class WINDOWS_BASE_API SceneUpdator : public ISceneUpdator
-    // {
-    // private:
-    //     size_t belongWindowID_ = 0;
-    //     bool isBelongWindowIDSet_ = false;
+    class WINDOWS_BASE_API SceneUpdator : public ISceneUpdator
+    {
+    private:
+        size_t belongWindowID_ = 0;
+        bool isBelongWindowIDSet_ = false;
 
-    //     size_t currentSceneID_ = 0;
-    //     size_t nextSceneID_ = 0;
-    //     bool isInitialSceneIDSet_ = false;
+        size_t currentSceneID_ = 0;
+        size_t nextSceneID_ = 0;
+        bool isInitialSceneIDSet_ = false;
 
-    //     SceneState currentSceneState_ = SceneState::NeedToLoad;
+        SceneState currentSceneState_ = SceneState::NeedToLoad;
 
-    //     bool isFirstUpdate_ = true;
-    //     std::chrono::high_resolution_clock::time_point lastUpdateTime_;
-    //     std::chrono::high_resolution_clock::time_point currentUpdateTime_;
+        bool isFirstUpdate_ = true;
+        std::chrono::high_resolution_clock::time_point lastUpdateTime_;
+        std::chrono::high_resolution_clock::time_point currentUpdateTime_;
 
-    //     bool isLoading_ = false;
-    //     std::future<void> asyncloadFuture_;
-    //     std::future<void> asyncReleaseFuture_;
+        bool isLoading_ = false;
+        std::future<void> asyncloadFuture_;
+        std::future<void> asyncReleaseFuture_;
 
-    // public:
-    //     SceneUpdator() = default;
-    //     ~SceneUpdator() override = default;
+    public:
+        SceneUpdator() = default;
+        ~SceneUpdator() override = default;
 
-    //     /***************************************************************************************************************
-    //      * ISceneUpdator implementation
-    //     /**************************************************************************************************************/
+        /***************************************************************************************************************
+         * ISceneUpdator implementation
+        /**************************************************************************************************************/
 
-    //     void SetBelongWindowID(const size_t &belongWindowID) override;
-    //     void SetInitialSceneID(const size_t &initialSceneID) override;
-    //     bool CheckIsReady() const override;
+        void SetBelongWindowID(const size_t &belongWindowID) override;
+        void SetInitialSceneID(const size_t &initialSceneID) override;
+        bool CheckIsReady() const override;
 
-    //     bool NeedToLoad() const override;
-    //     bool NeedToExit() const override;
+        bool NeedToLoad() const override;
+        bool NeedToExit() const override;
 
-    //     bool IsLoading() const override;
-    //     bool IsSwitching() const override;
-    //     bool IsFinishedLoading() override;
-    //     bool IsFinishedReleasing() override;
+        bool IsLoading() const override;
+        bool IsSwitching() const override;
+        bool IsFinishedLoading() override;
+        bool IsFinishedReleasing() override;
 
-    //     void AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
-    //     void SyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
+        void AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
+        void SyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
 
-    //     void UpdateCurrentScene(ContainerStorage &contStorage) override;
+        void UpdateCurrentScene(ContainerStorage &contStorage) override;
 
-    //     void AsyncReleaseCurrentScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
-    //     void SyncReleaseCurrentScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
-    // };
+        void AsyncReleaseCurrentScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
+        void SyncReleaseCurrentScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
+    };
     
 } // namespace wb

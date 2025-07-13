@@ -4,6 +4,7 @@
 #include "windows_base/include/interfaces/container.h"
 #include "windows_base/include/interfaces/entity.h"
 #include "windows_base/include/interfaces/scene.h"
+#include "windows_base/include/container_storage.h"
 
 namespace wb
 {
@@ -16,19 +17,22 @@ namespace wb
             IEntityContainer &entityContainer,
             IComponentContainer &componentContainer,
             IEntityIDView &entityIDView,
-            ISystemContainer &systemContainer
+            ISystemContainer &systemContainer,
+            ContainerStorage &containerStorage,
+            const double &deltaTime, const size_t &belongWindowID, size_t &nextSceneID
         );
         ~SystemArgument() = default;
 
         IEntityContainer &entityContainer_;
         IComponentContainer &componentContainer_;
         IEntityIDView &entityIDView_;
-
         ISystemContainer &systemContainer_;
 
-        SceneState state_ = SceneState::Size;
-
-        // TODO: Add any necessary data members or methods for system arguments
+        ContainerStorage &containerStorage_;
+        SceneState state_ = SceneState::Updating;
+        size_t &nextSceneID_;
+        const double &deltaTime_;
+        const size_t &belongWindowID_;
     };
 
 } // namespace wb
