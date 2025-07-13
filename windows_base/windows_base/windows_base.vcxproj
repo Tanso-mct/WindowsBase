@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\asset_collection.cpp" />
+    <ClCompile Include="src\asset_factory_collection.cpp" />
     <ClCompile Include="src\asset_group.cpp" />
     <ClCompile Include="src\component_collection.cpp" />
     <ClCompile Include="src\console_log.cpp" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\asset_collection.h" />
+    <ClInclude Include="include\asset_factory_collection.h" />
     <ClInclude Include="include\asset_group.h" />
     <ClInclude Include="include\component_collection.h" />
     <ClInclude Include="include\console_log.h" />

@@ -68,7 +68,11 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "string_view": "cpp",
-        "shared_mutex": "cpp"
+        "shared_mutex": "cpp",
+        "chrono": "cpp",
+        "coroutine": "cpp",
+        "resumable": "cpp",
+        "forward_list": "cpp"
     },
     "commentTranslate.hover.enabled": true,
     "commentTranslate.targetLanguage": "en"

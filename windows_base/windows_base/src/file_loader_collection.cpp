@@ -1,6 +1,9 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/file_loader_collection.h"
 
+#include "windows_base/include/console_log.h"
+#include "windows_base/include/error_handler.h"
+
 void wb::FileLoaderCollection::AddLoader(size_t id, std::unique_ptr<IFileLoader> loader)
 {
     if (fileLoaders_.find(id) != fileLoaders_.end())

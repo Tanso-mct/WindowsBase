@@ -4,9 +4,6 @@
 #include "windows_base/include/interfaces/file.h"
 #include "windows_base/include/interfaces/collection.h"
 
-#include "windows_base/include/console_log.h"
-#include "windows_base/include/error_handler.h"
-
 namespace wb
 {
     class WINDOWS_BASE_API FileLoaderCollection : public IFileLoaderCollection

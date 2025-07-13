@@ -23,6 +23,7 @@ namespace wb
 
     using IComponentCollection = IFactoryCollection<IComponentFactory>;
     using ISystemCollection = IFactoryCollection<ISystemFactory>;
+    using IAssetFactoryCollection = IFactoryCollection<IAssetFactory>;
     
     class IAssetCollection
     {

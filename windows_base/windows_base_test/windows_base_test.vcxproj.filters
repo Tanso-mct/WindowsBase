@@ -41,6 +41,9 @@
     <ClCompile Include="asset_collection_test.cpp">
       <Filter>tests\asset</Filter>
     </ClCompile>
+    <ClCompile Include="asset_factory_collection_test.cpp">
+      <Filter>tests\asset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
