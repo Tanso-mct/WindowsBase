@@ -7,6 +7,7 @@
 #include "windows_base/include/interfaces/component.h"
 #include "windows_base/include/interfaces/system.h"
 #include "windows_base/include/interfaces/asset.h"
+#include "windows_base/include/interfaces/scene.h"
 
 namespace wb
 {
@@ -14,5 +15,6 @@ namespace wb
     using ComponentContainer = DynamicContainer<IComponent>;
     using SystemContainer = StaticContainer<ISystem>;
     using AssetContainer = StaticContainer<IAsset>;
+    using SceneContainer = StaticContainer<ISceneFacade>;
 
 } // namespace wb

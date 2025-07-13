@@ -171,6 +171,7 @@
     <ClInclude Include="include\container_dynamic.h" />
     <ClInclude Include="include\container_impl.h" />
     <ClInclude Include="include\container_static.h" />
+    <ClInclude Include="include\container_storage.h" />
     <ClInclude Include="include\dll_config.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\error_handler.h" />
