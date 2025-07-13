@@ -42,9 +42,12 @@ namespace wb
         SystemFactory() = default;
         virtual ~SystemFactory() override = default;
 
-        std::unique_ptr<ISystem> Create() const override
+        std::unique_ptr<ISystem> Create(IAssetContainer& assetCont) const override
         {
-            return std::make_unique<SYSTEM>();
+            std::unique_ptr<ISystem> system = std::make_unique<SYSTEM>();
+            system->Initialize(assetCont);
+
+            return system;
         }
     };
 

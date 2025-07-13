@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "windows_base/include/interfaces/container.h"
+
 namespace wb
 {
     class SystemArgument;
@@ -9,6 +11,8 @@ namespace wb
     public:
         virtual ~ISystem() = default;
         virtual const size_t &GetID() const = 0;
+
+        virtual void Initialize(IAssetContainer &assetContainer) = 0;
         virtual void Update(const SystemArgument &args) = 0;
     };
 

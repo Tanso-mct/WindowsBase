@@ -3,15 +3,16 @@
 #include "windows_base/include/container_static.h"
 #include "windows_base/include/container_dynamic.h"
 
+#include "windows_base/include/interfaces/entity.h"
+#include "windows_base/include/interfaces/component.h"
+#include "windows_base/include/interfaces/system.h"
+#include "windows_base/include/interfaces/asset.h"
+
 namespace wb
 {
-    class IEntity;
     using EntityContainer = DynamicContainer<IEntity>;
-
-    class IComponent;
     using ComponentContainer = DynamicContainer<IComponent>;
-
-    class ISystem;
     using SystemContainer = StaticContainer<ISystem>;
+    using AssetContainer = StaticContainer<IAsset>;
 
 } // namespace wb

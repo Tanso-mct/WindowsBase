@@ -6,34 +6,26 @@
 
 namespace wb
 {
-    template <typename PRODUCT>
+    template <typename PRODUCT, typename... ARGS>
     class IFactory
     {
     public:
         virtual ~IFactory() = default;
-        virtual PRODUCT Create() const = 0;
+        virtual PRODUCT Create(ARGS...) const = 0;
     };
 
     class IComponent;
     using IComponentFactory = IFactory<std::unique_ptr<IComponent>>;
 
-    class ISystem;
-    using ISystemFactory = IFactory<std::unique_ptr<ISystem>>;
-    using ISystemsFactory = IFactory<std::unique_ptr<ISystemContainer>>;
+    using ISystemFactory = IFactory<std::unique_ptr<ISystem>, IAssetContainer&>;
+    using ISystemsFactory = IFactory<std::unique_ptr<ISystemContainer>, IAssetContainer&>;
 
-    using IEntitiesFactory = IFactory<void>;
+    class IEntityIDView;
+    using IEntitiesFactory = IFactory<void, IAssetContainer&, IEntityContainer&, IComponentContainer&, IEntityIDView&>;
 
     class IEntityIDView;
     using IEntityIDViewFactory = IFactory<std::unique_ptr<IEntityIDView>>;
 
     class IFileData;
-    class IAssetFactory
-    {
-    public:
-        virtual ~IAssetFactory() = default;
-        virtual std::unique_ptr<IAsset> Create(const IFileData &fileData) const = 0;
-    };
-
-
-
+    using IAssetFactory = IFactory<std::unique_ptr<IAsset>, const IFileData &>;
 }

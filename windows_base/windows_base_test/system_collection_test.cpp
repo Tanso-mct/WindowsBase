@@ -27,6 +27,12 @@ namespace
             return MockSystemID();
         }
 
+        void Initialize(wb::IAssetContainer &assetContainer) override
+        {
+            // Mock initialization logic
+            std::cout << "MockSystem Initialized with asset container." << std::endl;
+        }
+
         void Update(const wb::SystemArgument &args) override
         {
             // Mock update logic
@@ -39,10 +45,13 @@ namespace
 
 TEST(SystemCollection, GetFactory)
 {
+    // Create asset container
+    std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
+
     wb::ISystemFactory &factory = wb::gSystemCollection.GetFactory(MockSystemID());
     EXPECT_NE(&factory, nullptr);
 
-    std::unique_ptr<wb::ISystem> system = factory.Create();
+    std::unique_ptr<wb::ISystem> system = factory.Create(*assetCont);
     EXPECT_NE(system, nullptr);
 
     std::unique_ptr<wb::IEntityContainer> entityCont = std::make_unique<wb::EntityContainer>();

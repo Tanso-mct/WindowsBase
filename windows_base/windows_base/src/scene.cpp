@@ -6,7 +6,10 @@
 #include "windows_base/include/type_cast.h"
 
 #include "windows_base/include/asset_collection.h"
+#include "windows_base/include/asset_factory_collection.h"
 #include "windows_base/include/file_loader_collection.h"
+
+#include "windows_base/include/container_impl.h"
 
 void wb::SceneContext::SetEntityContainer(std::unique_ptr<IEntityContainer> entityCont)
 {
@@ -102,19 +105,19 @@ wb::IEntityIDView &wb::SceneContext::GetEntityIDView()
 
 void wb::SceneFacade::SetContext(std::unique_ptr<IContext> context)
 {
-    // sceneContext_ = wb::UniqueAs<ISceneContext>(std::move(context));
-    // if (sceneContext_ == nullptr)
-    // {
-    //     std::string err = wb::CreateErrorMessage
-    //     (
-    //         __FILE__, __LINE__, __FUNCTION__,
-    //         {"Context is not of type ISceneContext."}
-    //     );
+    sceneContext_ = wb::UniqueAs<ISceneContext>(context);
+    if (sceneContext_ == nullptr)
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"Context is not of type ISceneContext."}
+        );
 
-    //     wb::ConsoleLogErr(err);
-    //     wb::ErrorNotify("WINDOWS_BASE", err);
-    //     wb::ThrowRuntimeError(err);
-    // }
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
 }
 
 bool wb::SceneFacade::CheckIsReady() const
@@ -237,6 +240,44 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
 
     // The file datas which is already loaded
     std::unordered_map<std::string, std::unique_ptr<IFileData>> fileDatas;
+
+    // Load file datas and create assets
+    for (const size_t &assetID : assetGroup_->GetAssetIDs())
+    {
+        std::string_view filePath = gAssetCollection.GetFilePath(assetID);
+        if (fileDatas.find(filePath.data()) == fileDatas.end())
+        {
+            // Get the file loader
+            const size_t &fileLoaderID = gAssetCollection.GetFileLoaderID(assetID);
+            IFileLoader &fileLoader = gFileLoaderCollection.GetLoader(fileLoaderID);
+
+            // Load the file data
+            std::unique_ptr<IFileData> fileData = fileLoader.Load(filePath);
+
+            // Store the file data
+            fileDatas[filePath.data()] = std::move(fileData);
+        }
+
+        // Get the asset factory
+        const size_t &assetFactoryID = gAssetCollection.GetFactoryID(assetID);
+        IAssetFactory &assetFactory = gAssetFactoryCollection.GetFactory(assetFactoryID);
+
+        // Create the asset using the factory and the loaded file data
+        std::unique_ptr<IAsset> asset = assetFactory.Create(*fileDatas[filePath.data()]);
+
+        // Add the asset to the asset container
+        assetCont.Set(assetID, std::move(asset));
+    }
+
+    // Clean up the file datas
+    fileDatas.clear();
+
+    /*******************************************************************************************************************
+     * Create component container
+    /******************************************************************************************************************/
+
+    sceneContext_->SetComponentContainer(std::make_unique<ComponentContainer>());
+
 
     
 }
