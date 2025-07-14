@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/interfaces/asset.h"
 #include "windows_base/include/asset_factory_collection.h"
 #pragma comment(lib, "windows_base.lib")
 
