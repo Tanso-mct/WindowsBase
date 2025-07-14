@@ -70,6 +70,13 @@ namespace wb
         virtual bool IsMinimizing() const = 0;
         virtual bool IsFullScreen() const = 0;
 
+        /***************************************************************************************************************
+         * Monitor related
+        /**************************************************************************************************************/
+
+        virtual void AddMonitor(size_t monitorID) = 0;
+        virtual void RemoveMonitorByTypeID(size_t monitorTypeID) = 0;
+
         virtual const size_t &GetMonitorID(size_t monitorTypeID) const = 0;
         virtual const std::vector<size_t> &GetMonitorIDs() const = 0;
 
