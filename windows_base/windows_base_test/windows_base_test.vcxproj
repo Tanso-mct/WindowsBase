@@ -156,6 +156,7 @@
     <ClCompile Include="monitor_collection_test.cpp" />
     <ClCompile Include="monitor_factory_collection_test.cpp" />
     <ClCompile Include="monitor_keyboard_test.cpp" />
+    <ClCompile Include="monitor_mouse_test.cpp" />
     <ClCompile Include="optional_value_test.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

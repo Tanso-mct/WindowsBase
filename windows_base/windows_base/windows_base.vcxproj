@@ -155,6 +155,7 @@
     <ClCompile Include="src\monitor_collection.cpp" />
     <ClCompile Include="src\monitor_factory_collection.cpp" />
     <ClCompile Include="src\monitor_keyboard.cpp" />
+    <ClCompile Include="src\monitor_mouse.cpp" />
     <ClCompile Include="src\optional_value.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -203,6 +204,7 @@
     <ClInclude Include="include\monitor_collection.h" />
     <ClInclude Include="include\monitor_factory_collection.h" />
     <ClInclude Include="include\monitor_keyboard.h" />
+    <ClInclude Include="include\monitor_mouse.h" />
     <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\scene.h" />
     <ClInclude Include="include\scene_facade_collection.h" />

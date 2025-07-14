@@ -324,13 +324,16 @@ void wb::DefaultKeyboardMonitor::EditState(UINT msg, WPARAM wParam, LPARAM lPara
     // Get key states
     std::vector<UINT> &keyStates = keyboardContext_->KeyStates();
 
-    if (inputType == INPUT_DOWN && keyStates[static_cast<size_t>(keyCode)] != INPUT_PRESSED)
+    // Casted index for the key code
+    size_t index = static_cast<size_t>(keyCode);
+
+    if (inputType == INPUT_DOWN && keyStates[index] != INPUT_PRESSED)
     {
-        keyStates[static_cast<size_t>(keyCode)] = INPUT_DOWN;
+        keyStates[index] = INPUT_DOWN;
     }
     else if (inputType == INPUT_UP)
     {
-        keyStates[static_cast<size_t>(keyCode)] = INPUT_UP;
+        keyStates[index] = INPUT_UP;
     }
 }
 

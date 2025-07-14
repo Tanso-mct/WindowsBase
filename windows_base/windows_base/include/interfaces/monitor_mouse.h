@@ -4,6 +4,8 @@
 
 namespace wb
 {
+    constexpr UINT NOT_XBUTTON = 0;
+
     /*******************************************************************************************************************
      * Table class to obtain codes to identify Mouse buttons and MouseCode from WPARAM and LPARAM.
      * Use this to manage Mouse button status, get button status, etc.
@@ -22,7 +24,7 @@ namespace wb
         virtual void Create() = 0;
         virtual bool CheckIsReady() const = 0;
 
-        virtual MouseCode GetMouseCode(UINT msg, WPARAM wPram) const = 0;
+        virtual MouseCode GetMouseCode(UINT msg, WPARAM wParam) const = 0;
     };
 
     /*******************************************************************************************************************

@@ -62,6 +62,9 @@
     <ClCompile Include="monitor_keyboard_test.cpp">
       <Filter>tests\monitor</Filter>
     </ClCompile>
+    <ClCompile Include="monitor_mouse_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
