@@ -53,6 +53,9 @@
     <ClCompile Include="scene_facade_collection_test.cpp">
       <Filter>tests\scene</Filter>
     </ClCompile>
+    <ClCompile Include="monitor_factory_collection_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -84,6 +87,9 @@
     </Filter>
     <Filter Include="tests\scene">
       <UniqueIdentifier>{15e89808-58ab-4616-9119-b66f17270565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\monitor">
+      <UniqueIdentifier>{888b75b1-7e74-4023-bf42-a8cb5ac57bc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

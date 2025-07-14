@@ -18,6 +18,9 @@ namespace wb
 
         static size_t CreateSceneFacadeID();
 
+        static size_t CreateMonitorID();
+        static size_t CreateMonitorFactoryID();
+
     };
 
 } // namespace wb

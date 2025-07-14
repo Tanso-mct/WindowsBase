@@ -31,4 +31,7 @@ namespace wb
 
     class ISceneFacade;
     using ISceneFacadeFactory = IFactory<std::unique_ptr<ISceneFacade>>;
+
+    class IMonitor;
+    using IMonitorFactory = IFactory<std::unique_ptr<IMonitor>>;
 }

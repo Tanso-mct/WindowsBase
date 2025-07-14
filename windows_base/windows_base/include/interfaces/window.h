@@ -75,9 +75,9 @@ namespace wb
         /**************************************************************************************************************/
 
         virtual void AddMonitor(size_t monitorID) = 0;
-        virtual void RemoveMonitorByTypeID(size_t monitorTypeID) = 0;
+        virtual void RemoveMonitorByFactoryID(size_t monitorFactoryID) = 0;
 
-        virtual const size_t &GetMonitorID(size_t monitorTypeID) const = 0;
+        virtual const size_t &GetMonitorIDByFactoryID(size_t monitorFactoryID) const = 0;
         virtual const std::vector<size_t> &GetMonitorIDs() const = 0;
 
         /***************************************************************************************************************

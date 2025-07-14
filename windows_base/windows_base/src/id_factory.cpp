@@ -60,3 +60,23 @@ size_t wb::IDFactory::CreateSceneFacadeID()
 
     return createdId;
 }
+
+size_t wb::IDFactory::CreateMonitorID()
+{
+    static size_t idCounter = 0;
+
+    size_t createdId = idCounter;
+    idCounter++;
+
+    return createdId;
+}
+
+size_t wb::IDFactory::CreateMonitorFactoryID()
+{
+    static size_t idCounter = 0;
+
+    size_t createdId = idCounter;
+    idCounter++;
+
+    return createdId;
+}

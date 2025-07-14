@@ -152,6 +152,7 @@
     <ClCompile Include="src\error_handler.cpp" />
     <ClCompile Include="src\file_loader_collection.cpp" />
     <ClCompile Include="src\id_factory.cpp" />
+    <ClCompile Include="src\monitor_factory_collection.cpp" />
     <ClCompile Include="src\optional_value.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -161,6 +162,7 @@
     <ClCompile Include="src\system.cpp" />
     <ClCompile Include="src\system_collection.cpp" />
     <ClCompile Include="src\type_cast.cpp" />
+    <ClCompile Include="src\window.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,15 +191,19 @@
     <ClInclude Include="include\interfaces\facade.h" />
     <ClInclude Include="include\interfaces\factory.h" />
     <ClInclude Include="include\interfaces\file.h" />
+    <ClInclude Include="include\interfaces\monitor.h" />
     <ClInclude Include="include\interfaces\optional_value.h" />
     <ClInclude Include="include\interfaces\scene.h" />
     <ClInclude Include="include\interfaces\system.h" />
+    <ClInclude Include="include\interfaces\window.h" />
+    <ClInclude Include="include\monitor_factory_collection.h" />
     <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\scene.h" />
     <ClInclude Include="include\scene_facade_collection.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="include\system_collection.h" />
     <ClInclude Include="include\type_cast.h" />
+    <ClInclude Include="include\window.h" />
     <ClInclude Include="include\windows_helper.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
