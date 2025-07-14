@@ -1,7 +1,11 @@
 ﻿#pragma once
 #include "windows_base/include/dll_config.h"
 
+#include "windows_base/include/interfaces/asset.h"
 #include "windows_base/include/interfaces/scene.h"
+
+#include "windows_base/include/console_log.h"
+#include "windows_base/include/error_handler.h"
 
 #include <chrono>
 #include <ctime>
@@ -88,18 +92,47 @@ namespace wb
         void Release(IAssetContainer &assetCont) override;
     };
 
-    class WINDOWS_BASE_API SceneFacadeFactory : public ISceneFacadeFactory
+    template <
+        typename SCENE_CONTEXT,
+        typename ENTITIES_FACTORY,
+        typename ENTITY_ID_VIEW_FACTORY,
+        typename SYSTEMS_FACTORY,
+        typename ASSET_GROUP,
+        typename SYSTEM_SCHEDULER
+    >
+    class SceneFacadeFactory : public ISceneFacadeFactory
     {
     public:
-        std::unique_ptr<ISceneFacade> Create
-        (
-            std::unique_ptr<ISceneContext> context,
-            std::unique_ptr<IEntitiesFactory> entitiesFactory,
-            std::unique_ptr<IEntityIDViewFactory> entityIDViewFactory,
-            std::unique_ptr<ISystemsFactory> systemsFactory,
-            std::unique_ptr<IAssetGroup> assetGroup,
-            std::unique_ptr<ISystemScheduler> systemScheduler
-        ) const override;
+        std::unique_ptr<ISceneFacade> Create() const override
+        {
+            std::unique_ptr<wb::ISceneFacade> sceneFacade = std::make_unique<wb::SceneFacade>();
+
+            // Set the context
+            sceneFacade->SetContext(std::make_unique<SCENE_CONTEXT>());
+
+            // Set the factories and asset group
+            sceneFacade->SetEntitiesFactory(std::make_unique<ENTITIES_FACTORY>());
+            sceneFacade->SetEntityIDViewFactory(std::make_unique<ENTITY_ID_VIEW_FACTORY>());
+            sceneFacade->SetSystemsFactory(std::make_unique<SYSTEMS_FACTORY>());
+            sceneFacade->SetAssetGroup(std::make_unique<ASSET_GROUP>());
+            sceneFacade->SetSystemScheduler(std::make_unique<SYSTEM_SCHEDULER>());
+
+            // Check if the scene facade is ready
+            if (!sceneFacade->CheckIsReady())
+            {
+                std::string err = wb::CreateErrorMessage
+                (
+                    __FILE__, __LINE__, __FUNCTION__,
+                    {"Scene facade is not ready after creation."}
+                );
+
+                wb::ConsoleLogErr(err);
+                wb::ErrorNotify("WINDOWS_BASE", err);
+                wb::ThrowRuntimeError(err);
+            }
+
+            return sceneFacade;
+        }
     };
 
     class WINDOWS_BASE_API SceneUpdator : public ISceneUpdator

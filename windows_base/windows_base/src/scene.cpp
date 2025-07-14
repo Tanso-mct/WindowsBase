@@ -1,8 +1,6 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/scene.h"
 
-#include "windows_base/include/console_log.h"
-#include "windows_base/include/error_handler.h"
 #include "windows_base/include/type_cast.h"
 
 #include "windows_base/include/asset_collection.h"
@@ -372,31 +370,6 @@ void wb::SceneFacade::Release(IAssetContainer &assetCont)
 
     // Clear the entity ID view
     sceneContext_->SetEntityIDView(nullptr);
-}
-
-std::unique_ptr<wb::ISceneFacade> wb::SceneFacadeFactory::Create
-(
-    std::unique_ptr<ISceneContext> context, 
-    std::unique_ptr<IEntitiesFactory> entitiesFactory, 
-    std::unique_ptr<IEntityIDViewFactory> entityIDViewFactory, 
-    std::unique_ptr<ISystemsFactory> systemsFactory, 
-    std::unique_ptr<IAssetGroup> assetGroup, 
-    std::unique_ptr<ISystemScheduler> systemScheduler
-) const
-{
-    std::unique_ptr<wb::SceneFacade> sceneFacade = std::make_unique<wb::SceneFacade>();
-
-    // Set the context
-    sceneFacade->SetContext(std::move(context));
-
-    // Set the factories and asset group
-    sceneFacade->SetEntitiesFactory(std::move(entitiesFactory));
-    sceneFacade->SetEntityIDViewFactory(std::move(entityIDViewFactory));
-    sceneFacade->SetSystemsFactory(std::move(systemsFactory));
-    sceneFacade->SetAssetGroup(std::move(assetGroup));
-    sceneFacade->SetSystemScheduler(std::move(systemScheduler));
-
-    return sceneFacade;
 }
 
 void wb::SceneUpdator::SetBelongWindowID(const size_t &belongWindowID)

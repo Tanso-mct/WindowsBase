@@ -111,16 +111,16 @@ namespace
 TEST(SceneFacade, Create)
 {
     // Create a SceneFacade
-    wb::SceneFacadeFactory factory;
-    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create
-    (
-        std::make_unique<wb::SceneContext>(),
-        std::make_unique<MockEntitiesFactory>(),
-        std::make_unique<wb::EntityIDViewFactory<wb::EntityIDView>>(),
-        std::make_unique<wb::SystemsFactory>(),
-        std::make_unique<MockAssetGroup>(),
-        std::make_unique<MockSystemScheduler>()
-    );
+    std::unique_ptr<wb::ISceneFacadeFactory> factory = std::make_unique<wb::SceneFacadeFactory
+    <
+        wb::SceneContext, 
+        MockEntitiesFactory, 
+        wb::EntityIDViewFactory<wb::EntityIDView>, 
+        wb::SystemsFactory, 
+        MockAssetGroup, 
+        MockSystemScheduler
+    >>();
+    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory->Create();
 
     // Check if the scene facade is created successfully
     EXPECT_TRUE(sceneFacade->CheckIsReady());
@@ -129,16 +129,16 @@ TEST(SceneFacade, Create)
 TEST(SceneFacade, Use)
 {
     // Create a SceneFacade
-    wb::SceneFacadeFactory factory;
-    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create
-    (
-        std::make_unique<wb::SceneContext>(),
-        std::make_unique<MockEntitiesFactory>(),
-        std::make_unique<wb::EntityIDViewFactory<wb::EntityIDView>>(),
-        std::make_unique<wb::SystemsFactory>(),
-        std::make_unique<MockAssetGroup>(),
-        std::make_unique<MockSystemScheduler>()
-    );
+    std::unique_ptr<wb::ISceneFacadeFactory> factory = std::make_unique<wb::SceneFacadeFactory
+    <
+        wb::SceneContext, 
+        MockEntitiesFactory, 
+        wb::EntityIDViewFactory<wb::EntityIDView>, 
+        wb::SystemsFactory, 
+        MockAssetGroup, 
+        MockSystemScheduler
+    >>();
+    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory->Create();
 
     // Create an asset container
     std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
@@ -156,4 +156,39 @@ TEST(SceneFacade, Use)
 
     // Release the scene
     sceneFacade->Release(*assetCont);
+}
+
+TEST(SceneUpdator, Create)
+{
+    std::unique_ptr<wb::ISceneUpdator> sceneUpdator = std::make_unique<wb::SceneUpdator>();
+
+    const size_t MOCK_BELONG_WINDOW_ID = 1;
+    const size_t MOCK_INITIAL_SCENE_ID = 0;
+
+    // Set the belong window ID and initial scene ID
+    sceneUpdator->SetBelongWindowID(MOCK_BELONG_WINDOW_ID);
+    sceneUpdator->SetInitialSceneID(MOCK_INITIAL_SCENE_ID);
+
+    // Check if the scene updator is ready
+    EXPECT_TRUE(sceneUpdator->CheckIsReady());
+}
+
+TEST(SceneUpdator, Use)
+{
+    std::unique_ptr<wb::ISceneUpdator> sceneUpdator = std::make_unique<wb::SceneUpdator>();
+
+    const size_t MOCK_BELONG_WINDOW_ID = 1;
+    const size_t MOCK_INITIAL_SCENE_ID = 0;
+
+    // Set the belong window ID and initial scene ID
+    sceneUpdator->SetBelongWindowID(MOCK_BELONG_WINDOW_ID);
+    sceneUpdator->SetInitialSceneID(MOCK_INITIAL_SCENE_ID);
+
+    // Check if the scene updator is ready
+    EXPECT_TRUE(sceneUpdator->CheckIsReady());
+
+    // Create a container storage
+    wb::ContainerStorage contStorage;
+
+    
 }

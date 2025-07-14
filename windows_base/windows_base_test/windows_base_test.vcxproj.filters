@@ -50,6 +50,9 @@
     <ClCompile Include="scene_test.cpp">
       <Filter>tests\scene</Filter>
     </ClCompile>
+    <ClCompile Include="scene_facade_collection_test.cpp">
+      <Filter>tests\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

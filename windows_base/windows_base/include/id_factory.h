@@ -16,6 +16,8 @@ namespace wb
         static size_t CreateAssetID();
         static size_t CreateAssetFactoryID();
 
+        static size_t CreateSceneFacadeID();
+
     };
 
 } // namespace wb

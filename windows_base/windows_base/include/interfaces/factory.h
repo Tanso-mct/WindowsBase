@@ -30,17 +30,5 @@ namespace wb
     using IAssetFactory = IFactory<std::unique_ptr<IAsset>, const IFileData &>;
 
     class ISceneFacade;
-    class ISceneContext;
-    class IAssetGroup;
-    class ISystemScheduler;
-    using ISceneFacadeFactory = IFactory
-    <
-        std::unique_ptr<ISceneFacade>,
-        std::unique_ptr<ISceneContext>,
-        std::unique_ptr<IEntitiesFactory>,
-        std::unique_ptr<IEntityIDViewFactory>,
-        std::unique_ptr<ISystemsFactory>,
-        std::unique_ptr<IAssetGroup>,
-        std::unique_ptr<ISystemScheduler>
-    >;
+    using ISceneFacadeFactory = IFactory<std::unique_ptr<ISceneFacade>>;
 }
