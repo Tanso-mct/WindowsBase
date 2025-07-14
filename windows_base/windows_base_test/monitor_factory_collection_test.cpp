@@ -47,9 +47,14 @@ namespace
          * IMonitor implementation
         /******************************************************************************************************************/
 
-        const size_t &GetID() const override
+        const size_t &GetFactoryID() const override
         {
             return MockMonitorFactoryID();
+        }
+
+        void EditState(UINT msg, WPARAM wParam, LPARAM lParam) override
+        {
+            // Mock implementation for testing purposes
         }
 
         void UpdateState() override
@@ -63,7 +68,19 @@ namespace
         }
     };
 
-    WB_REGISTER_MONITOR_FACTORY(MockMonitor, MockMonitorFactoryID());
+    class MockMonitorFactory : public wb::IMonitorFactory
+    {
+    public:
+        MockMonitorFactory() = default;
+        virtual ~MockMonitorFactory() override = default;
+
+        std::unique_ptr<wb::IMonitor> Create() const override
+        {
+            return std::make_unique<MockMonitor>();
+        }
+    };
+
+    WB_REGISTER_MONITOR_FACTORY(MockMonitorFactory, MockMonitorFactoryID());
 }
 
 TEST(MonitorFactoryCollection, GetFactory)

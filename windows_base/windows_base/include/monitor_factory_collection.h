@@ -35,27 +35,14 @@ namespace wb
 
     extern WINDOWS_BASE_API MonitorFactoryCollection gMonitorFactoryCollection;
 
-    template <typename MONITOR>
-    class MonitorFactory : public IMonitorFactory
-    {
-    public:
-        MonitorFactory() = default;
-        virtual ~MonitorFactory() override = default;
-
-        std::unique_ptr<IMonitor> Create() const override
-        {
-            return std::make_unique<MONITOR>();
-        }
-    };
-
     class WINDOWS_BASE_API MonitorFactoryRegistrar
     {
     public:
         MonitorFactoryRegistrar(size_t monitorID, std::unique_ptr<IMonitorFactory> monitorFactory);
     };
 
-    #define WB_REGISTER_MONITOR_FACTORY(MONITOR, ID) \
-        static wb::MonitorFactoryRegistrar monitorFactoryRegistrar##T(ID, std::make_unique<wb::MonitorFactory<MONITOR>>());
+    #define WB_REGISTER_MONITOR_FACTORY(MONITOR_FACTORY, ID) \
+        static wb::MonitorFactoryRegistrar monitorFactoryRegistrar##T(ID, std::make_unique<MONITOR_FACTORY>());
 
 
 } // namespace wb

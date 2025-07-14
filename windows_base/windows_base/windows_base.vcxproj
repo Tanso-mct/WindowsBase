@@ -154,6 +154,7 @@
     <ClCompile Include="src\id_factory.cpp" />
     <ClCompile Include="src\monitor_collection.cpp" />
     <ClCompile Include="src\monitor_factory_collection.cpp" />
+    <ClCompile Include="src\monitor_keyboard.cpp" />
     <ClCompile Include="src\optional_value.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -193,12 +194,15 @@
     <ClInclude Include="include\interfaces\factory.h" />
     <ClInclude Include="include\interfaces\file.h" />
     <ClInclude Include="include\interfaces\monitor.h" />
+    <ClInclude Include="include\interfaces\monitor_keyboard.h" />
+    <ClInclude Include="include\interfaces\monitor_mouse.h" />
     <ClInclude Include="include\interfaces\optional_value.h" />
     <ClInclude Include="include\interfaces\scene.h" />
     <ClInclude Include="include\interfaces\system.h" />
     <ClInclude Include="include\interfaces\window.h" />
     <ClInclude Include="include\monitor_collection.h" />
     <ClInclude Include="include\monitor_factory_collection.h" />
+    <ClInclude Include="include\monitor_keyboard.h" />
     <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\scene.h" />
     <ClInclude Include="include\scene_facade_collection.h" />
