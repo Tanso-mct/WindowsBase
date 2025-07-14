@@ -88,6 +88,20 @@ namespace wb
         void Release(IAssetContainer &assetCont) override;
     };
 
+    class WINDOWS_BASE_API SceneFacadeFactory : public ISceneFacadeFactory
+    {
+    public:
+        std::unique_ptr<ISceneFacade> Create
+        (
+            std::unique_ptr<ISceneContext> context,
+            std::unique_ptr<IEntitiesFactory> entitiesFactory,
+            std::unique_ptr<IEntityIDViewFactory> entityIDViewFactory,
+            std::unique_ptr<ISystemsFactory> systemsFactory,
+            std::unique_ptr<IAssetGroup> assetGroup,
+            std::unique_ptr<ISystemScheduler> systemScheduler
+        ) const override;
+    };
+
     class WINDOWS_BASE_API SceneUpdator : public ISceneUpdator
     {
     private:

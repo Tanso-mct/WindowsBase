@@ -47,6 +47,9 @@
     <ClCompile Include="container_storage_test.cpp">
       <Filter>tests\container</Filter>
     </ClCompile>
+    <ClCompile Include="scene_test.cpp">
+      <Filter>tests\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -75,6 +78,9 @@
     </Filter>
     <Filter Include="tests\asset">
       <UniqueIdentifier>{9f8fc166-eb39-412c-a022-e97dd3535727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\scene">
+      <UniqueIdentifier>{15e89808-58ab-4616-9119-b66f17270565}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

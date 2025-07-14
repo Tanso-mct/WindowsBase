@@ -35,4 +35,10 @@ namespace wb
         const size_t &belongWindowID_;
     };
 
+    class WINDOWS_BASE_API SystemsFactory : public ISystemsFactory
+    {
+    public:
+        std::unique_ptr<ISystemContainer> Create(IAssetContainer &assetCont) const override;
+    };
+
 } // namespace wb

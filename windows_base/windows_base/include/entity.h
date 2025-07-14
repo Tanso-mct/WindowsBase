@@ -55,6 +55,16 @@ namespace wb
         const std::vector<std::unique_ptr<IOptionalValue>> &operator()(size_t componentID) const override;
     };
 
+    template <typename ENTITY_ID_VIEW>
+    class EntityIDViewFactory : public IEntityIDViewFactory
+    {
+    public:
+        std::unique_ptr<IEntityIDView> Create() const override
+        {
+            return std::make_unique<ENTITY_ID_VIEW>();
+        }
+    };
+
     class WINDOWS_BASE_API CreatingEntity
     {
     private:

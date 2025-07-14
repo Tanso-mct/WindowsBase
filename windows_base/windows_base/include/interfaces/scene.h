@@ -72,6 +72,7 @@ namespace wb
         virtual void Release(IAssetContainer &assetCont) = 0;
     };
 
+
     class ISceneUpdator
     {
     public:

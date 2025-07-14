@@ -20,10 +20,10 @@ namespace wb
          * IAssetGroup implementation
         /**************************************************************************************************************/
 
-        const std::vector<size_t> &GetAssetIDs() const override;
+        const std::vector<size_t> &GetAssetIDs() const final;
 
     protected:
-        void AddAssetID(size_t assetID) override;
+        void AddAssetID(size_t assetID) final;
     };
 
 } // namespace wb
