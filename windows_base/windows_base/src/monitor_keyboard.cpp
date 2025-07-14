@@ -605,4 +605,7 @@ std::unique_ptr<wb::IMonitor> wb::DefaultKeyboardMonitorFactory::Create() const
     return monitor;
 }
 
-WB_REGISTER_MONITOR_FACTORY(wb::DefaultKeyboardMonitorFactory, wb::DefaultKeyboardMonitorFactoryID())
+namespace wb
+{
+    WB_REGISTER_MONITOR_FACTORY(DefaultKeyboardMonitorFactory, DefaultKeyboardMonitorFactoryID())
+}

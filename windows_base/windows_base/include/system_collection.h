@@ -59,6 +59,6 @@ namespace wb
     };
 
     #define WB_REGISTER_SYSTEM(SYSTEM, ID) \
-        static wb::SystemRegistrar systemRegistrar##T(ID, std::make_unique<wb::SystemFactory<SYSTEM>>());
+        static wb::SystemRegistrar systemRegistrar##SYSTEM(ID, std::make_unique<wb::SystemFactory<SYSTEM>>());
 
 } // namespace wb

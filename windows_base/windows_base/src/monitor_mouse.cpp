@@ -555,4 +555,7 @@ std::unique_ptr<wb::IMonitor> wb::DefaultMouseMonitorFactory::Create() const
     return monitor;
 }
 
-WB_REGISTER_MONITOR_FACTORY(wb::DefaultMouseMonitorFactory, wb::DefaultMouseMonitorFactoryID())
+namespace wb
+{
+    WB_REGISTER_MONITOR_FACTORY(DefaultMouseMonitorFactory, DefaultMouseMonitorFactoryID())
+}

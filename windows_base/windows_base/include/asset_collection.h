@@ -46,8 +46,8 @@ namespace wb
         AssetRegistrar(size_t assetID, size_t factoryID, size_t fileLoaderID, std::string_view filePath);
     };
 
-    #define WB_REGISTER_ASSET(ID, FACTORY_ID, FILE_LOADER_ID, FILE_PATH) \
-        static wb::AssetRegistrar assetRegistrar##T(ID, FACTORY_ID, FILE_LOADER_ID, FILE_PATH);
+    #define WB_REGISTER_ASSET(ID_FUNC, FACTORY_ID, FILE_LOADER_ID, FILE_PATH) \
+        static wb::AssetRegistrar assetRegistrar##ID_FUNC(ID_FUNC(), FACTORY_ID, FILE_LOADER_ID, FILE_PATH);
 
 
 } // namespace wb

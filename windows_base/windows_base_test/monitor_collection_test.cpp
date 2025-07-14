@@ -30,7 +30,7 @@ namespace
      * Register Mock Monitor
     /******************************************************************************************************************/
 
-    WB_REGISTER_MONITOR(MockMonitorID(), MockMonitorFactoryID());
+    WB_REGISTER_MONITOR(MockMonitorID, MockMonitorFactoryID());
 }
 
 TEST(MonitorCollection, GetFactoryID)

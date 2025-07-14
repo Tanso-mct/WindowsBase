@@ -27,7 +27,7 @@ WINDOWS_BASE_API void wb::CreateWindowWB
     (
         wc.lpszClassName,
         windowName, windowStyle,
-        posX,posY, width,height,
+        posX, posY, width, height,
         hWndParent,
         nullptr,
         wc.hInstance,

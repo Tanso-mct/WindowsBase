@@ -68,6 +68,9 @@
     <ClCompile Include="window_collection_test.cpp">
       <Filter>tests\window</Filter>
     </ClCompile>
+    <ClCompile Include="window_test.cpp">
+      <Filter>tests\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

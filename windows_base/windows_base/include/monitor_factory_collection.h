@@ -43,7 +43,7 @@ namespace wb
     };
 
     #define WB_REGISTER_MONITOR_FACTORY(MONITOR_FACTORY, ID) \
-        static wb::MonitorFactoryRegistrar monitorFactoryRegistrar##T(ID, std::make_unique<MONITOR_FACTORY>());
+        static wb::MonitorFactoryRegistrar monitorFactoryRegistrar##MONITOR_FACTORY(ID, std::make_unique<MONITOR_FACTORY>());
 
 
 } // namespace wb

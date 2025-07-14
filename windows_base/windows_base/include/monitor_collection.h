@@ -42,7 +42,7 @@ namespace wb
         MonitorRegistrar(size_t monitorID, size_t factoryID);
     };
 
-    #define WB_REGISTER_MONITOR(ID, FACTORY_ID) \
-        static wb::MonitorRegistrar monitorRegistrar##T(ID, FACTORY_ID);
+    #define WB_REGISTER_MONITOR(ID_FUNC, FACTORY_ID) \
+        static wb::MonitorRegistrar monitorRegistrar##ID_FUNC(ID_FUNC(), FACTORY_ID);
 
 } // namespace wb

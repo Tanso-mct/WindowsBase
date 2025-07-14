@@ -40,7 +40,7 @@ namespace
         }
     };
 
-    WB_REGISTER_SYSTEM(::MockSystem, ::MockSystemID());
+    WB_REGISTER_SYSTEM(MockSystem, MockSystemID());
 }
 
 TEST(SystemCollection, GetFactory)

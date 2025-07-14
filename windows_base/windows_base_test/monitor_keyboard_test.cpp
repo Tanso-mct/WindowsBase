@@ -22,7 +22,7 @@ namespace
      * Register Mock Keyboard Monitor
     /******************************************************************************************************************/
 
-    WB_REGISTER_MONITOR(MockKeyboardMonitorID(), wb::DefaultKeyboardMonitorFactoryID());
+    WB_REGISTER_MONITOR(MockKeyboardMonitorID, wb::DefaultKeyboardMonitorFactoryID());
 }
 
 TEST(keyboardMonitor, UseInputTypeTable)

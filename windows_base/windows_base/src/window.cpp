@@ -54,13 +54,12 @@ bool wb::DefaultWindowFacade::CheckIsReady() const
         return false;
     }
 
-    isReady_ = true;
     return true;
 }
 
 const HWND &wb::DefaultWindowFacade::GetHandle() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -78,7 +77,7 @@ const HWND &wb::DefaultWindowFacade::GetHandle() const
 
 std::wstring_view wb::DefaultWindowFacade::GetName() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -96,7 +95,7 @@ std::wstring_view wb::DefaultWindowFacade::GetName() const
 
 const UINT &wb::DefaultWindowFacade::GetClientWidth() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -114,7 +113,7 @@ const UINT &wb::DefaultWindowFacade::GetClientWidth() const
 
 const UINT &wb::DefaultWindowFacade::GetClientHeight() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -132,7 +131,7 @@ const UINT &wb::DefaultWindowFacade::GetClientHeight() const
 
 bool wb::DefaultWindowFacade::IsCreated() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -150,7 +149,7 @@ bool wb::DefaultWindowFacade::IsCreated() const
 
 bool wb::DefaultWindowFacade::NeedsResize() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -168,7 +167,7 @@ bool wb::DefaultWindowFacade::NeedsResize() const
 
 bool wb::DefaultWindowFacade::NeedsToQuitApp() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -186,7 +185,7 @@ bool wb::DefaultWindowFacade::NeedsToQuitApp() const
 
 bool wb::DefaultWindowFacade::IsFocusing() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -204,7 +203,7 @@ bool wb::DefaultWindowFacade::IsFocusing() const
 
 bool &wb::DefaultWindowFacade::IsFocused()
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -222,7 +221,7 @@ bool &wb::DefaultWindowFacade::IsFocused()
 
 bool &wb::DefaultWindowFacade::IsUnFocused()
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -240,7 +239,7 @@ bool &wb::DefaultWindowFacade::IsUnFocused()
 
 bool wb::DefaultWindowFacade::IsMaximizing() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -258,7 +257,7 @@ bool wb::DefaultWindowFacade::IsMaximizing() const
 
 bool wb::DefaultWindowFacade::IsMinimizing() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -276,7 +275,7 @@ bool wb::DefaultWindowFacade::IsMinimizing() const
 
 bool wb::DefaultWindowFacade::IsFullScreen() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -292,9 +291,9 @@ bool wb::DefaultWindowFacade::IsFullScreen() const
     return context_->IsFullScreen();
 }
 
-void wb::DefaultWindowFacade::AddMonitor(size_t monitorID)
+void wb::DefaultWindowFacade::AddMonitorID(size_t monitorID)
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -316,9 +315,9 @@ void wb::DefaultWindowFacade::AddMonitor(size_t monitorID)
     monitorTypeToIDMap_[monitorFactoryID] = monitorIDs_.size() - 1;
 }
 
-void wb::DefaultWindowFacade::RemoveMonitorByFactoryID(size_t monitorFactoryID)
+void wb::DefaultWindowFacade::RemoveMonitorIDByFactoryID(size_t monitorFactoryID)
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -354,7 +353,7 @@ void wb::DefaultWindowFacade::RemoveMonitorByFactoryID(size_t monitorFactoryID)
 
 const size_t &wb::DefaultWindowFacade::GetMonitorIDByFactoryID(size_t monitorTypeID) const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -385,7 +384,7 @@ const size_t &wb::DefaultWindowFacade::GetMonitorIDByFactoryID(size_t monitorTyp
 
 const std::vector<size_t> &wb::DefaultWindowFacade::GetMonitorIDs() const
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -403,7 +402,7 @@ const std::vector<size_t> &wb::DefaultWindowFacade::GetMonitorIDs() const
 
 void wb::DefaultWindowFacade::Create(WNDCLASSEX &wc)
 {
-    if (!isReady_)
+    if (!CheckIsReady())
     {
         std::string err = wb::CreateErrorMessage
         (
@@ -423,9 +422,12 @@ void wb::DefaultWindowFacade::Create(WNDCLASSEX &wc)
     wb::CreateWindowWB
     (
         context_->Handle(), context_->Style(), context_->Name().c_str(),
-        context_->PosX(), context_->PosY(), context_->ClientWidth(), context_->ClientHeight(),
+        context_->PosX(), context_->PosY(), context_->Width(), context_->Height(),
         context_->ParentHandle(), wc
     );
+
+    // Keep the window's instance
+    context_->Instance() = wc.hInstance;
 
     /*******************************************************************************************************************
      * Get the window's client area size
@@ -448,6 +450,23 @@ void wb::DefaultWindowFacade::Create(WNDCLASSEX &wc)
 
         context_->ClientWidth() = clientRect.right - clientRect.left;
         context_->ClientHeight() = clientRect.bottom - clientRect.top;
+
+        POINT clientPos = {clientRect.left, clientRect.top};
+        if (!ClientToScreen(context_->Handle(), &clientPos))
+        {
+            std::string err = wb::CreateErrorMessage
+            (
+                __FILE__, __LINE__, __FUNCTION__,
+                {"Failed to convert client position to screen coordinates."}
+            );
+
+            wb::ConsoleLogErr(err);
+            wb::ErrorNotify("WINDOWS_BASE", err);
+            wb::ThrowRuntimeError(err);
+        }
+
+        context_->PosX() = clientPos.x;
+        context_->PosY() = clientPos.y;
     }
 
     /*******************************************************************************************************************
@@ -490,6 +509,42 @@ void wb::DefaultWindowFacade::Create(WNDCLASSEX &wc)
     context_->IsCreated() = true;
 }
 
+void wb::DefaultWindowFacade::Show()
+{
+    if (!context_->IsCreated())
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"Window is not created. Cannot show."}
+        );
+
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
+
+    ShowWindow(context_->Handle(), SW_SHOW);
+}
+
+void wb::DefaultWindowFacade::Hide()
+{
+    if (!context_->IsCreated())
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"Window is not created. Cannot hide."}
+        );
+
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
+
+    ShowWindow(context_->Handle(), SW_HIDE);
+}
+
 void wb::DefaultWindowFacade::Destroy()
 {
     if (!context_->IsCreated())
@@ -518,17 +573,12 @@ void wb::DefaultWindowFacade::Destroy()
         wb::ThrowRuntimeError(err);
     }
 
-    context_->IsCreated() = false;
-}
-
-void wb::DefaultWindowFacade::Destroyed()
-{
-    if (!context_->IsCreated())
+    if (!UnregisterClass(context_->Name().c_str(), context_->Instance()))
     {
         std::string err = wb::CreateErrorMessage
         (
             __FILE__, __LINE__, __FUNCTION__,
-            {"Window is not created. Cannot destroy."}
+            {"Failed to unregister the window class."}
         );
 
         wb::ConsoleLogErr(err);
@@ -536,6 +586,11 @@ void wb::DefaultWindowFacade::Destroyed()
         wb::ThrowRuntimeError(err);
     }
 
+    context_->IsCreated() = false;
+}
+
+void wb::DefaultWindowFacade::Destroyed()
+{
     /*******************************************************************************************************************
      * Show taskbar
     /******************************************************************************************************************/

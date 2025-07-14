@@ -73,8 +73,6 @@ namespace wb
         std::vector<size_t> monitorIDs_;
         std::unordered_map<size_t, size_t> monitorTypeToIDMap_;
 
-        mutable bool isReady_ = false;
-
     public:
         DefaultWindowFacade() = default;
         virtual ~DefaultWindowFacade() override = default;
@@ -111,13 +109,16 @@ namespace wb
         virtual bool IsMinimizing() const override;
         virtual bool IsFullScreen() const override;
 
-        virtual void AddMonitor(size_t monitorID) override;
-        virtual void RemoveMonitorByFactoryID(size_t monitorFactoryID) override;
+        virtual void AddMonitorID(size_t monitorID) override;
+        virtual void RemoveMonitorIDByFactoryID(size_t monitorFactoryID) override;
 
         virtual const size_t &GetMonitorIDByFactoryID(size_t monitorFactoryID) const override;
         virtual const std::vector<size_t> &GetMonitorIDs() const override;
 
         virtual void Create(WNDCLASSEX& wc) override;
+
+        virtual void Show() override;
+        virtual void Hide() override;
 
         virtual void Destroy() override;
         virtual void Destroyed() override;

@@ -26,7 +26,7 @@ namespace
     }
 
     constexpr const char* MOCK_FILE_PATH = "mock_file_path";
-    WB_REGISTER_ASSET(MockAssetID(), MockAssetFactoryID(), MockFileLoaderID(), MOCK_FILE_PATH);
+    WB_REGISTER_ASSET(MockAssetID, MockAssetFactoryID(), MockFileLoaderID(), MOCK_FILE_PATH);
 }
 
 TEST(AssetCollection, GetAssetDetails)

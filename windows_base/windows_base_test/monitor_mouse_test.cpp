@@ -22,7 +22,7 @@ namespace
      * Register Mock Mouse Monitor
     /******************************************************************************************************************/
 
-    WB_REGISTER_MONITOR(MockMouseMonitorID(), wb::DefaultMouseMonitorFactoryID());
+    WB_REGISTER_MONITOR(MockMouseMonitorID, wb::DefaultMouseMonitorFactoryID());
 }
 
 TEST(mouseMonitor, UseInputTypeTable)
