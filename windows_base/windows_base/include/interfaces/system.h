@@ -20,7 +20,7 @@ namespace wb
     {
     public:
         virtual ~ISystemScheduler() = default;
-        virtual void Execute(SystemArgument &args) = 0;
+        virtual void Execute(ISystemContainer &systemCont, SystemArgument &args) = 0;
     };
 
 } // namespace wb

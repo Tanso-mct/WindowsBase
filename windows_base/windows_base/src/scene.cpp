@@ -333,7 +333,7 @@ wb::SceneState wb::SceneFacade::Update
         deltaTime, belongWindowID, nextSceneID
     };
 
-    systemScheduler_->Execute(args);
+    systemScheduler_->Execute(sceneContext_->GetSystemContainer(), args);
 
     return args.state_;
 }

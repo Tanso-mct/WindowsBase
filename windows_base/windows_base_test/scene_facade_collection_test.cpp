@@ -121,7 +121,7 @@ namespace
     class MockSystemScheduler : public wb::ISystemScheduler
     {
     public:
-        void Execute(wb::SystemArgument &args) override
+        void Execute(wb::ISystemContainer &systemCont, wb::SystemArgument &args) override
         {
             // Mock implementation
         }
