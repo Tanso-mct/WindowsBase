@@ -442,7 +442,7 @@ bool wb::SceneUpdator::IsSwitching() const
 
 bool wb::SceneUpdator::IsFinishedLoading()
 {
-    if (asyncloadFuture_.valid())
+    if (!asyncloadFuture_.valid())
     {
         return true;
     }
@@ -458,7 +458,7 @@ bool wb::SceneUpdator::IsFinishedLoading()
 
 bool wb::SceneUpdator::IsFinishedReleasing()
 {
-    if (asyncReleaseFuture_.valid())
+    if (!asyncReleaseFuture_.valid())
     {
         return true;
     }
@@ -469,6 +469,11 @@ bool wb::SceneUpdator::IsFinishedReleasing()
     }
 
     return false;
+}
+
+void wb::SceneUpdator::MoveToNextScene()
+{
+    currentSceneID_ = nextSceneID_;
 }
 
 void wb::SceneUpdator::AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont)

@@ -10,29 +10,11 @@
 #include "windows_base/include/asset_collection.h"
 #include "windows_base/include/container_storage.h"
 #include "windows_base/include/system.h"
+#include "windows_base/include/scene_facade_collection.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
 {
-    /*******************************************************************************************************************
-     * Entities Factory Mock
-     * Entities factory is responsible for creating entities in the scene.
-     * Create an instance of entity and store it in the entity container.
-    /******************************************************************************************************************/
-
-    class MockEntitiesFactory : public wb::IEntitiesFactory
-    {
-    public:
-        void Create
-        (
-            wb::IAssetContainer &assetCont, wb::IEntityContainer &entityCont,
-            wb::IComponentContainer &componentCont, wb::IEntityIDView &entityIDView
-        ) const override
-        {
-            // Mock implementation
-        }
-    };
-
     const size_t &MockAssetFactoryID()
     {
         static size_t id = wb::IDFactory::CreateAssetFactoryID();
@@ -74,6 +56,9 @@ namespace
         std::unique_ptr<wb::IFileData> Load(std::string_view path) override
         {
             // Mock implementation, returning nullptr for simplicity
+
+            std::this_thread::sleep_for(std::chrono::seconds(2)); // Simulate loading delay
+
             return nullptr;
         }
     };
@@ -89,6 +74,46 @@ namespace
     constexpr const char* MOCK_FILE_PATH = "mock_file_path";
     WB_REGISTER_ASSET(MockAssetID(), MockAssetFactoryID(), MockFileLoaderID(), MOCK_FILE_PATH);
 
+    /*******************************************************************************************************************
+     * Mock Scenes ID
+    /******************************************************************************************************************/
+
+    const size_t &MockSceneFacadeID()
+    {
+        static size_t id = wb::IDFactory::CreateSceneFacadeID();
+        return id;
+    }
+
+    const size_t &MockNextScneFacadeID()
+    {
+        static size_t id = wb::IDFactory::CreateSceneFacadeID();
+        return id;
+    }
+
+    /*******************************************************************************************************************
+     * Entities Factory Mock
+     * Entities factory is responsible for creating entities in the scene.
+     * Create an instance of entity and store it in the entity container.
+    /******************************************************************************************************************/
+
+    class MockEntitiesFactory : public wb::IEntitiesFactory
+    {
+    public:
+        void Create
+        (
+            wb::IAssetContainer &assetCont, wb::IEntityContainer &entityCont,
+            wb::IComponentContainer &componentCont, wb::IEntityIDView &entityIDView
+        ) const override
+        {
+            // Mock implementation
+        }
+    };
+
+    /*******************************************************************************************************************
+     * Mock Asset Group
+     * Contains asset IDs that will be used in the scene.
+    /******************************************************************************************************************/
+
     class MockAssetGroup : public wb::AssetGroup
     {
     public:
@@ -98,47 +123,75 @@ namespace
         }
     };
 
+    /*******************************************************************************************************************
+     * Mock System Scheduler
+     * Responsible for updating systems in the scene.
+    /******************************************************************************************************************/
+
     class MockSystemScheduler : public wb::ISystemScheduler
     {
     public:
-        void Execute(const wb::SystemArgument &args) override
+        void Execute(wb::SystemArgument &args) override
         {
             // Mock implementation
+            std::cout << "MockSystemScheduler executed." << std::endl;
+
+            args.state_ = wb::SceneState::Switching;
+            args.nextSceneID_ = MockNextScneFacadeID();
         }
     };
+
+    class MockOtherSystemScheduler : public wb::ISystemScheduler
+    {
+    public:
+        void Execute(wb::SystemArgument &args) override
+        {
+            // Mock implementation for a different system scheduler
+            std::cout << "MockOtherSystemScheduler executed." << std::endl;
+
+            args.state_ = wb::SceneState::NeedToExit;
+        }
+    };
+
+    /*******************************************************************************************************************
+     * Mock Scenes registrar
+     * SceneFacade with the necessary factories and asset group.
+    /******************************************************************************************************************/
+
+    WB_REGISTER_SCENE_FACADE
+    (
+        MockSceneFacadeID,
+        MockEntitiesFactory,
+        MockAssetGroup,
+        MockSystemScheduler
+    );
+
+
+    WB_REGISTER_SCENE_FACADE
+    (
+        MockNextScneFacadeID,
+        MockEntitiesFactory,
+        MockAssetGroup,
+        MockOtherSystemScheduler
+    );
 }
 
 TEST(SceneFacade, Create)
 {
-    // Create a SceneFacade
-    std::unique_ptr<wb::ISceneFacadeFactory> factory = std::make_unique<wb::SceneFacadeFactory
-    <
-        wb::SceneContext, 
-        MockEntitiesFactory, 
-        wb::EntityIDViewFactory<wb::EntityIDView>, 
-        wb::SystemsFactory, 
-        MockAssetGroup, 
-        MockSystemScheduler
-    >>();
-    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory->Create();
+    // Get the SceneFacade factory
+    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
 
-    // Check if the scene facade is created successfully
-    EXPECT_TRUE(sceneFacade->CheckIsReady());
+    // Create a SceneFacade using the factory
+    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
 }
 
 TEST(SceneFacade, Use)
 {
-    // Create a SceneFacade
-    std::unique_ptr<wb::ISceneFacadeFactory> factory = std::make_unique<wb::SceneFacadeFactory
-    <
-        wb::SceneContext, 
-        MockEntitiesFactory, 
-        wb::EntityIDViewFactory<wb::EntityIDView>, 
-        wb::SystemsFactory, 
-        MockAssetGroup, 
-        MockSystemScheduler
-    >>();
-    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory->Create();
+    // Get the SceneFacade factory
+    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+
+    // Create a SceneFacade using the factory
+    std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
 
     // Create an asset container
     std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
@@ -163,11 +216,10 @@ TEST(SceneUpdator, Create)
     std::unique_ptr<wb::ISceneUpdator> sceneUpdator = std::make_unique<wb::SceneUpdator>();
 
     const size_t MOCK_BELONG_WINDOW_ID = 1;
-    const size_t MOCK_INITIAL_SCENE_ID = 0;
 
     // Set the belong window ID and initial scene ID
     sceneUpdator->SetBelongWindowID(MOCK_BELONG_WINDOW_ID);
-    sceneUpdator->SetInitialSceneID(MOCK_INITIAL_SCENE_ID);
+    sceneUpdator->SetInitialSceneID(MockSceneFacadeID());
 
     // Check if the scene updator is ready
     EXPECT_TRUE(sceneUpdator->CheckIsReady());
@@ -178,17 +230,123 @@ TEST(SceneUpdator, Use)
     std::unique_ptr<wb::ISceneUpdator> sceneUpdator = std::make_unique<wb::SceneUpdator>();
 
     const size_t MOCK_BELONG_WINDOW_ID = 1;
-    const size_t MOCK_INITIAL_SCENE_ID = 0;
 
     // Set the belong window ID and initial scene ID
     sceneUpdator->SetBelongWindowID(MOCK_BELONG_WINDOW_ID);
-    sceneUpdator->SetInitialSceneID(MOCK_INITIAL_SCENE_ID);
+    sceneUpdator->SetInitialSceneID(MockSceneFacadeID());
 
     // Check if the scene updator is ready
     EXPECT_TRUE(sceneUpdator->CheckIsReady());
 
-    // Create a container storage
+    // Create containers
     wb::ContainerStorage contStorage;
+    {
+        std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
+        assetCont->Create(wb::gAssetCollection.GetMaxID() + 1);
+        contStorage.SetContainer<wb::IAssetContainer>(std::move(assetCont));
 
+        std::unique_ptr<wb::ISceneContainer> sceneCont = std::make_unique<wb::SceneContainer>();
+        sceneCont->Create(wb::gSceneFacadeCollection.GetMaxID() + 1);
+        contStorage.SetContainer<wb::ISceneContainer>(std::move(sceneCont));
+    }
+
+    // Create current scene
+    {
+        // Get the SceneFacade factory
+        wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+
+        // Create a SceneFacade using the factory
+        std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
+
+        // Get the scene container from the container storage
+        wb::ISceneContainer &sceneCont = contStorage.GetContainer<wb::ISceneContainer>();
+
+        // Store the scene facade in the scene container
+        sceneCont.Set(MockSceneFacadeID(), std::move(sceneFacade));
+    }
+
+    // Create next scene
+    {
+        // Get the SceneFacade factory
+        wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockNextScneFacadeID());
+
+        // Create a SceneFacade using the factory
+        std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
+
+        // Get the scene container from the container storage
+        wb::ISceneContainer &sceneCont = contStorage.GetContainer<wb::ISceneContainer>();
+
+        // Store the scene facade in the scene container
+        sceneCont.Set(MockNextScneFacadeID(), std::move(sceneFacade));
+    }
     
+    // Load the next scene
+    EXPECT_TRUE(sceneUpdator->NeedToLoad());
+    sceneUpdator->SyncLoadNextScene
+    (
+        contStorage.GetContainer<wb::IAssetContainer>(), 
+        contStorage.GetContainer<wb::ISceneContainer>()
+    );
+
+    std::cout << "Scene loaded successfully." << std::endl;
+
+    // Update the current scene
+    sceneUpdator->UpdateCurrentScene(contStorage);
+
+    // Switch to the next scene
+    EXPECT_TRUE(sceneUpdator->IsSwitching());
+    sceneUpdator->AsyncLoadNextScene
+    (
+        contStorage.GetContainer<wb::IAssetContainer>(), 
+        contStorage.GetContainer<wb::ISceneContainer>()
+    );
+
+    // Wait for the async load to finish
+    while (!sceneUpdator->IsFinishedLoading())
+    {
+        // Update the current scene
+        sceneUpdator->UpdateCurrentScene(contStorage);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    std::cout << "Next scene loaded successfully." << std::endl;
+
+    // Release the current scene
+    sceneUpdator->AsyncReleaseCurrentScene
+    (
+        contStorage.GetContainer<wb::IAssetContainer>(), 
+        contStorage.GetContainer<wb::ISceneContainer>()
+    );
+
+    // Move to the next scene
+    sceneUpdator->MoveToNextScene();
+
+    if (sceneUpdator->IsFinishedReleasing())
+    {
+        // Update the current scene
+        sceneUpdator->UpdateCurrentScene(contStorage);
+    }
+    
+    // Wait for the async release to finish
+    while (!sceneUpdator->IsFinishedReleasing())
+    {
+        // Update the current scene
+        sceneUpdator->UpdateCurrentScene(contStorage);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    std::cout << "Before scene released successfully." << std::endl;
+
+    EXPECT_TRUE(sceneUpdator->NeedToExit());
+
+    // Sync release the current scene
+    sceneUpdator->SyncReleaseCurrentScene
+    (
+        contStorage.GetContainer<wb::IAssetContainer>(), 
+        contStorage.GetContainer<wb::ISceneContainer>()
+    );
+
+    std::cout << "Scene released successfully." << std::endl;
 }

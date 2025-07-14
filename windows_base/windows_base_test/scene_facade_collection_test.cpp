@@ -2,15 +2,12 @@
 
 #include "windows_base/include/id_factory.h"
 #include "windows_base/include/scene_facade_collection.h"
-#include "windows_base/include/scene.h"
-#include "windows_base/include/entity.h"
 #include "windows_base/include/container_impl.h"
 #include "windows_base/include/asset_group.h"
 #include "windows_base/include/file_loader_collection.h"
 #include "windows_base/include/asset_factory_collection.h"
 #include "windows_base/include/asset_collection.h"
 #include "windows_base/include/container_storage.h"
-#include "windows_base/include/system.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -124,7 +121,7 @@ namespace
     class MockSystemScheduler : public wb::ISystemScheduler
     {
     public:
-        void Execute(const wb::SystemArgument &args) override
+        void Execute(wb::SystemArgument &args) override
         {
             // Mock implementation
         }

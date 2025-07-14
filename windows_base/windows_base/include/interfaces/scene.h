@@ -108,6 +108,8 @@ namespace wb
          * Processing for Scene
         /**************************************************************************************************************/
 
+        virtual void MoveToNextScene() = 0;
+
         virtual void AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) = 0;
         virtual void SyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) = 0;
 

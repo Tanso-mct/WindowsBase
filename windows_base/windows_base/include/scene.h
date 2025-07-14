@@ -175,6 +175,8 @@ namespace wb
         bool IsFinishedLoading() override;
         bool IsFinishedReleasing() override;
 
+        void MoveToNextScene() override;
+
         void AsyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
         void SyncLoadNextScene(IAssetContainer &assetCont, ISceneContainer &sceneCont) override;
 
