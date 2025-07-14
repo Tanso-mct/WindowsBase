@@ -65,3 +65,70 @@ TEST(MouseMonitor, UseMouseCodeTable)
     EXPECT_EQ(mouseCodeTable->GetMouseCode(WM_XBUTTONUP, xButton2), wb::MouseCode::X2);
 }
 
+TEST(MouseMonitor, Create)
+{
+    // Get the monitor factory id
+    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+    EXPECT_EQ(factoryID, wb::DefaultMouseMonitorFactoryID());
+
+    // Get the monitor factory
+    wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+    EXPECT_NE(&monitorFactory, nullptr);
+
+    // Create a monitor using the factory
+    std::unique_ptr<wb::IMonitor> monitor = monitorFactory.Create();
+    EXPECT_NE(monitor, nullptr);
+    EXPECT_EQ(monitor->GetFactoryID(), wb::DefaultMouseMonitorFactoryID());
+}
+
+TEST(MouseMonitor, Use)
+{
+    // Get the monitor factory id
+    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+    EXPECT_EQ(factoryID, wb::DefaultMouseMonitorFactoryID());
+
+    // Get the monitor factory
+    wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+    EXPECT_NE(&monitorFactory, nullptr);
+
+    // Create a monitor using the factory
+    std::unique_ptr<wb::IMonitor> monitor = monitorFactory.Create();
+    EXPECT_NE(monitor, nullptr);
+    EXPECT_EQ(monitor->GetFactoryID(), wb::DefaultMouseMonitorFactoryID());
+
+    wb::IMouseMonitor *mouseMonitor = dynamic_cast<wb::IMouseMonitor*>(monitor.get());
+    EXPECT_NE(mouseMonitor, nullptr);
+
+    WPARAM notXButton = 0;
+    LPARAM mockLParam = 0;
+
+    // Down, Up, DoubleTap test
+    mouseMonitor->EditState(WM_LBUTTONDOWN, notXButton, mockLParam);
+    EXPECT_TRUE(mouseMonitor->GetButton(wb::MouseCode::Left));
+    EXPECT_TRUE(mouseMonitor->GetButtonDown(wb::MouseCode::Left));
+    EXPECT_FALSE(mouseMonitor->GetButtonUp(wb::MouseCode::Left));
+
+    mouseMonitor->UpdateState();
+    EXPECT_TRUE(mouseMonitor->GetButton(wb::MouseCode::Left));
+    EXPECT_FALSE(mouseMonitor->GetButtonDown(wb::MouseCode::Left));
+    EXPECT_FALSE(mouseMonitor->GetButtonUp(wb::MouseCode::Left));
+
+    mouseMonitor->EditState(WM_LBUTTONUP, notXButton, mockLParam);
+    EXPECT_FALSE(mouseMonitor->GetButton(wb::MouseCode::Left));
+    EXPECT_FALSE(mouseMonitor->GetButtonDown(wb::MouseCode::Left));
+    EXPECT_TRUE(mouseMonitor->GetButtonUp(wb::MouseCode::Left));
+
+    mouseMonitor->UpdateState();
+    EXPECT_FALSE(mouseMonitor->GetButton(wb::MouseCode::Left));
+    EXPECT_FALSE(mouseMonitor->GetButtonDown(wb::MouseCode::Left));
+    EXPECT_FALSE(mouseMonitor->GetButtonUp(wb::MouseCode::Left));
+
+    mouseMonitor->EditState(WM_LBUTTONDOWN, notXButton, mockLParam);
+    mouseMonitor->UpdateState();
+
+    mouseMonitor->EditState(WM_LBUTTONUP, notXButton, mockLParam);
+    EXPECT_TRUE(mouseMonitor->GetButtonDoubleTap(wb::MouseCode::Left, 0.5));
+
+    mouseMonitor->UpdateState();
+}
+
