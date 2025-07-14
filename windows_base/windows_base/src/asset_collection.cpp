@@ -16,7 +16,7 @@ void wb::AssetCollection::Add(size_t id, size_t factoryID, size_t fileLoaderID, 
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the asset type, loader ID, and file path to the collections
+    // Add the asset factory, loader ID, and file path to the collections
     factoryIDs_[id] = factoryID;
     fileLoaderIDs_[id] = fileLoaderID;
     filePaths_[id] = filePath.data();
@@ -38,7 +38,7 @@ const size_t &wb::AssetCollection::GetFactoryID(size_t id) const
         std::string err = wb::CreateErrorMessage
         (
             __FILE__, __LINE__, __FUNCTION__,
-            {"Asset type for ID ", std::to_string(id), " does not exist."}
+            {"Asset factory for ID ", std::to_string(id), " does not exist."}
         );
 
         wb::ConsoleLogErr(err);

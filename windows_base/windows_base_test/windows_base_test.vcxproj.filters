@@ -56,6 +56,9 @@
     <ClCompile Include="monitor_factory_collection_test.cpp">
       <Filter>tests\monitor</Filter>
     </ClCompile>
+    <ClCompile Include="monitor_collection_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

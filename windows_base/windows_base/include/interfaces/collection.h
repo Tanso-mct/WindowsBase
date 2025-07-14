@@ -41,6 +41,18 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
+    class IMonitorCollection
+    {
+    public:
+        virtual ~IMonitorCollection() = default;
+
+        virtual void Add(size_t id, size_t factoryID) = 0;
+        virtual const size_t &GetFactoryID(size_t id) const = 0;
+
+        virtual size_t GetMaxID() const = 0;
+        virtual const std::vector<size_t> &GetKeys() const = 0;
+    };
+
     template <typename LOADER>
     class ILoaderCollection
     {
