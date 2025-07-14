@@ -12,6 +12,8 @@ namespace wb
     private:
         std::unique_ptr<ISceneContainer> sceneContainer_ = nullptr;
         std::unique_ptr<IAssetContainer> assetContainer_ = nullptr;
+        std::unique_ptr<IMonitorContainer> monitorContainer_ = nullptr;
+        std::unique_ptr<IWindowContainer> windowContainer_ = nullptr;
 
     public:
         ContainerStorage() = default;
@@ -106,6 +108,64 @@ namespace wb
             }
 
             return *assetContainer_;
+        }
+
+        /***************************************************************************************************************
+         * IMonitorContainer specialization
+        /**************************************************************************************************************/
+
+        template <>
+        void SetContainer(std::unique_ptr<IMonitorContainer> container)
+        {
+            monitorContainer_ = std::move(container);
+        }
+
+        template <>
+        IMonitorContainer &GetContainer()
+        {
+            if (!monitorContainer_)
+            {
+                std::string err = CreateErrorMessage
+                (
+                    __FILE__, __LINE__, __FUNCTION__,
+                    {"Monitor container is not set."}
+                );
+
+                wb::ConsoleLogErr(err);
+                wb::ErrorNotify("WINDOWS_BASE", err);
+                wb::ThrowRuntimeError(err);
+            }
+
+            return *monitorContainer_;
+        }
+
+        /***************************************************************************************************************
+         * IWindowContainer specialization
+        /**************************************************************************************************************/
+
+        template <>
+        void SetContainer(std::unique_ptr<IWindowContainer> container)
+        {
+            windowContainer_ = std::move(container);
+        }
+
+        template <>
+        IWindowContainer &GetContainer()
+        {
+            if (!windowContainer_)
+            {
+                std::string err = CreateErrorMessage
+                (
+                    __FILE__, __LINE__, __FUNCTION__,
+                    {"Window container is not set."}
+                );
+
+                wb::ConsoleLogErr(err);
+                wb::ErrorNotify("WINDOWS_BASE", err);
+                wb::ThrowRuntimeError(err);
+            }
+
+            return *windowContainer_;
         }
     
 

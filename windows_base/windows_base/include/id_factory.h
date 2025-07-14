@@ -21,6 +21,8 @@ namespace wb
         static size_t CreateMonitorID();
         static size_t CreateMonitorFactoryID();
 
+        static size_t CreateWindowID();
+
     };
 
 } // namespace wb

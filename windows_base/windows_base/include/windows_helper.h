@@ -17,7 +17,7 @@ namespace wb
     WINDOWS_BASE_API void ShowWindowWB(HWND& hWnd);
     WINDOWS_BASE_API void CreateStandardConsole();
 
-    WINDOWS_BASE_API void GetWindowSize(HWND hWnd, UINT& width, UINT& height);
+    WINDOWS_BASE_API void GetMonitorSize(HWND hWnd, UINT& width, UINT& height);
 
     WINDOWS_BASE_API std::unique_ptr<unsigned char[]> LoadFileData(std::string_view filePath, fpos_t &size);
 

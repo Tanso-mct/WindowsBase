@@ -25,12 +25,12 @@ TEST(WindowsHelper, CreateStandardConsole)
     wb::CreateStandardConsole();
 }
 
-TEST(WindowsHelper, GetWindowSize)
+TEST(WindowsHelper, GetMonitorSize)
 {
     HWND hWnd = GetDesktopWindow();
     UINT width = 0;
     UINT height = 0;
-    wb::GetWindowSize(hWnd, width, height);
+    wb::GetMonitorSize(hWnd, width, height);
     
     EXPECT_GT(width, 0);
     EXPECT_GT(height, 0);

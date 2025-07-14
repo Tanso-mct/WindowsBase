@@ -167,6 +167,7 @@
     <ClCompile Include="src\type_cast.cpp" />
     <ClCompile Include="src\window.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />
+    <ClCompile Include="src\window_collection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\asset_collection.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="include\type_cast.h" />
     <ClInclude Include="include\window.h" />
     <ClInclude Include="include\windows_helper.h" />
+    <ClInclude Include="include\window_collection.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

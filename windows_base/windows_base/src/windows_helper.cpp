@@ -132,7 +132,7 @@ WINDOWS_BASE_API void wb::CreateStandardConsole()
     }
 }
 
-WINDOWS_BASE_API void wb::GetWindowSize(HWND hWnd, UINT &width, UINT &height)
+WINDOWS_BASE_API void wb::GetMonitorSize(HWND hWnd, UINT &width, UINT &height)
 {
     MONITORINFO mi = {0};
     HMONITOR hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);

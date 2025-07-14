@@ -109,4 +109,10 @@ namespace wb
     class ISceneFacade;
     using ISceneContainer = IStaticContainer<ISceneFacade>;
 
+    class IMonitor;
+    using IMonitorContainer = IStaticContainer<IMonitor>;
+
+    class IWindowFacade;
+    using IWindowContainer = IStaticContainer<IWindowFacade>;
+
 } // namespace wb

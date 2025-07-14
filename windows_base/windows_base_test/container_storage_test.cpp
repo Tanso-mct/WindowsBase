@@ -33,3 +33,34 @@ TEST(ContainerStorage, SetAndGetAssetContainer)
         EXPECT_NE(&assetContainer, nullptr);
     }
 }
+
+TEST(ContainerStorage, SetAndGetMonitorContainer)
+{
+    wb::ContainerStorage storage;
+
+    {
+        std::unique_ptr<wb::IMonitorContainer> monitorContainer = std::make_unique<wb::MonitorContainer>();
+        storage.SetContainer(std::move(monitorContainer));
+    }
+    
+    {
+        wb::IMonitorContainer &monitorContainer = storage.GetContainer<wb::IMonitorContainer>();
+        EXPECT_NE(&monitorContainer, nullptr);
+    }
+}
+
+TEST(ContainerStorage, SetAndGetWindowContainer)
+{
+    wb::ContainerStorage storage;
+
+    {
+        std::unique_ptr<wb::IWindowContainer> windowContainer = std::make_unique<wb::WindowContainer>();
+        storage.SetContainer(std::move(windowContainer));
+    }
+    
+    {
+        wb::IWindowContainer &windowContainer = storage.GetContainer<wb::IWindowContainer>();
+        EXPECT_NE(&windowContainer, nullptr);
+    }
+}
+

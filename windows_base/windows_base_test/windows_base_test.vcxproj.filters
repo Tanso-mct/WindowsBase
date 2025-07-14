@@ -65,6 +65,9 @@
     <ClCompile Include="monitor_mouse_test.cpp">
       <Filter>tests\monitor</Filter>
     </ClCompile>
+    <ClCompile Include="window_collection_test.cpp">
+      <Filter>tests\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -99,6 +102,9 @@
     </Filter>
     <Filter Include="tests\monitor">
       <UniqueIdentifier>{888b75b1-7e74-4023-bf42-a8cb5ac57bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\window">
+      <UniqueIdentifier>{ba48a228-09b1-4073-ab60-78f9fb5e8354}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

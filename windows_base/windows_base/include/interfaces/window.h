@@ -12,6 +12,11 @@
 
 namespace wb
 {
+    constexpr const wchar_t* TASK_BAR_CLASS_NAME = L"Shell_TrayWnd";
+
+    constexpr UINT MINIMUM_WINDOW_WIDTH = 1;
+    constexpr UINT MINIMUM_WINDOW_HEIGHT = 1;
+
     class IWindowContext : public IContext
     {
     public:
@@ -39,6 +44,7 @@ namespace wb
         virtual bool &IsFullScreen() = 0;
 
         virtual bool &NeedsResize() = 0;
+        virtual bool &NeedsToQuitApp() = 0;
     };
 
     constexpr UINT DEFAULT_WINDOW_WIDTH = 960;
@@ -61,6 +67,7 @@ namespace wb
 
         virtual bool IsCreated() const = 0;
         virtual bool NeedsResize() const = 0;
+        virtual bool NeedsToQuitApp() const = 0;
 
         virtual bool IsFocusing() const = 0;
         virtual bool &IsFocused() = 0; // Remains true until False is substituted
@@ -116,6 +123,8 @@ namespace wb
         virtual void Moved() = 0;
     };
 
+    class ContainerStorage;
+
     class IWindowEvent
     {
     public:
@@ -123,9 +132,11 @@ namespace wb
 
         virtual void SetWindowID(size_t windowID) = 0;
         virtual void SetSceneUpdator(std::unique_ptr<ISceneUpdator> sceneUpdator) = 0;
+        virtual void SetKeyboardMonitorID(size_t keyboardMonitorID) = 0;
+        virtual void SetMouseMonitorID(size_t mouseMonitorID) = 0;
         virtual bool CheckIsReady() const = 0;
 
-        virtual void OnEvent(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
+        virtual void OnEvent(ContainerStorage &contStorage, UINT msg, WPARAM wParam, LPARAM lParam) = 0;
     };
 
 } // namespace wb

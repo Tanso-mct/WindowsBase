@@ -80,3 +80,13 @@ size_t wb::IDFactory::CreateMonitorFactoryID()
 
     return createdId;
 }
+
+size_t wb::IDFactory::CreateWindowID()
+{
+    static size_t idCounter = 0;
+
+    size_t createdId = idCounter;
+    idCounter++;
+
+    return createdId;
+}

@@ -8,6 +8,8 @@
 #include "windows_base/include/interfaces/system.h"
 #include "windows_base/include/interfaces/asset.h"
 #include "windows_base/include/interfaces/scene.h"
+#include "windows_base/include/interfaces/monitor.h"
+#include "windows_base/include/interfaces/window.h"
 
 namespace wb
 {
@@ -16,5 +18,7 @@ namespace wb
     using SystemContainer = StaticContainer<ISystem>;
     using AssetContainer = StaticContainer<IAsset>;
     using SceneContainer = StaticContainer<ISceneFacade>;
+    using MonitorContainer = StaticContainer<IMonitor>;
+    using WindowContainer = StaticContainer<IWindowFacade>;
 
 } // namespace wb

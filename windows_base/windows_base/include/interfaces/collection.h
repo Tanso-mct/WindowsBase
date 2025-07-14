@@ -53,6 +53,23 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
+    class IWindowCollection
+    {
+    public:
+        virtual ~IWindowCollection() = default;
+
+        virtual void AddFactories
+        (
+            size_t id, 
+            std::unique_ptr<IWindowFacadeFactory> facadeFactory, std::unique_ptr<IWindowEventFactory> eventFactory
+        )= 0;
+        virtual IWindowFacadeFactory &GetFacadeFactory(size_t id) = 0;
+        virtual IWindowEventFactory &GetEventFactory(size_t id) = 0;
+
+        virtual size_t GetMaxID() const = 0;
+        virtual const std::vector<size_t> &GetKeys() const = 0;
+    };
+
     template <typename LOADER>
     class ILoaderCollection
     {

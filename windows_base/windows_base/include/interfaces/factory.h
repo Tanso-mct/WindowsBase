@@ -34,4 +34,10 @@ namespace wb
 
     class IMonitor;
     using IMonitorFactory = IFactory<std::unique_ptr<IMonitor>>;
+
+    class IWindowFacade;
+    using IWindowFacadeFactory = IFactory<std::unique_ptr<IWindowFacade>>;
+
+    class IWindowEvent;
+    using IWindowEventFactory = IFactory<std::unique_ptr<IWindowEvent>>;
 }

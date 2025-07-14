@@ -2,6 +2,8 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/window.h"
+#include "windows_base/include/interfaces/scene.h"
+#include "windows_base/include/container_storage.h"
 
 #include <unordered_map>
 
@@ -32,6 +34,7 @@ namespace wb
         bool isFullScreen_ = false;
 
         bool needsResize_ = false;
+        bool needsToQuitApp_ = true;
 
     public:
         WindowContext() = default;
@@ -59,85 +62,121 @@ namespace wb
         bool &IsFullScreen() override { return isFullScreen_; }
 
         bool &NeedsResize() override { return needsResize_; }
+        bool &NeedsToQuitApp() override { return needsToQuitApp_; }
     };
 
-    // class WINDOWS_BASE_API DefaultWindowFacade : public IWindowFacade
-    // {
-    // private:
-    //     std::unique_ptr<IWindowContext> context_;
+    class WINDOWS_BASE_API DefaultWindowFacade : public IWindowFacade
+    {
+    private:
+        std::unique_ptr<IWindowContext> context_;
 
-    //     std::vector<size_t> monitorIDs_;
-    //     std::unordered_map<size_t, size_t> monitorTypeToIDMap_;
+        std::vector<size_t> monitorIDs_;
+        std::unordered_map<size_t, size_t> monitorTypeToIDMap_;
 
-    //     mutable bool isReady_ = false;
+        mutable bool isReady_ = false;
 
-    // public:
-    //     DefaultWindowFacade() = default;
-    //     virtual ~DefaultWindowFacade() override = default;
+    public:
+        DefaultWindowFacade() = default;
+        virtual ~DefaultWindowFacade() override = default;
 
-    //     DefaultWindowFacade(const DefaultWindowFacade &) = delete;
-    //     DefaultWindowFacade &operator=(const DefaultWindowFacade &) = delete;
+        DefaultWindowFacade(const DefaultWindowFacade &) = delete;
+        DefaultWindowFacade &operator=(const DefaultWindowFacade &) = delete;
 
-    //     /***************************************************************************************************************
-    //      * IFacade implementation
-    //     /**************************************************************************************************************/
+        /***************************************************************************************************************
+         * IFacade implementation
+        /**************************************************************************************************************/
 
-    //     virtual void SetContext(std::unique_ptr<IContext> context) override;
-    //     virtual bool CheckIsReady() const override;
+        virtual void SetContext(std::unique_ptr<IContext> context) override;
+        virtual bool CheckIsReady() const override;
 
-    //     /***************************************************************************************************************
-    //      * IWindowFacade implementation
-    //     /**************************************************************************************************************/
+        /***************************************************************************************************************
+         * IWindowFacade implementation
+        /**************************************************************************************************************/
         
-    //     virtual const HWND &GetHandle() const override;
-    //     virtual std::wstring_view GetName() const override;
+        virtual const HWND &GetHandle() const override;
+        virtual std::wstring_view GetName() const override;
 
-    //     virtual const UINT &GetClientWidth() const override;
-    //     virtual const UINT &GetClientHeight() const override;
+        virtual const UINT &GetClientWidth() const override;
+        virtual const UINT &GetClientHeight() const override;
 
-    //     virtual bool IsCreated() const override;
-    //     virtual bool NeedsResize() const override;
+        virtual bool IsCreated() const override;
+        virtual bool NeedsResize() const override;
+        virtual bool NeedsToQuitApp() const override;
 
-    //     virtual bool IsFocusing() const override;
-    //     virtual bool &IsFocused() override;
-    //     virtual bool &IsUnFocused() override;
+        virtual bool IsFocusing() const override;
+        virtual bool &IsFocused() override;
+        virtual bool &IsUnFocused() override;
 
-    //     virtual bool IsMaximizing() const override;
-    //     virtual bool IsMinimizing() const override;
-    //     virtual bool IsFullScreen() const override;
+        virtual bool IsMaximizing() const override;
+        virtual bool IsMinimizing() const override;
+        virtual bool IsFullScreen() const override;
 
-    //     virtual void AddMonitor(size_t monitorID) override;
-    //     virtual void RemoveMonitorByFactoryID(size_t monitorFactoryID) override;
+        virtual void AddMonitor(size_t monitorID) override;
+        virtual void RemoveMonitorByFactoryID(size_t monitorFactoryID) override;
 
-    //     virtual const size_t &GetMonitorIDByFactoryID(size_t monitorFactoryID) const override;
-    //     virtual const std::vector<size_t> &GetMonitorIDs() const override;
+        virtual const size_t &GetMonitorIDByFactoryID(size_t monitorFactoryID) const override;
+        virtual const std::vector<size_t> &GetMonitorIDs() const override;
 
-    //     virtual void Create(WNDCLASSEX& wc) override;
+        virtual void Create(WNDCLASSEX& wc) override;
 
-    //     virtual void Destroy() override;
-    //     virtual void Destroyed() override;
+        virtual void Destroy() override;
+        virtual void Destroyed() override;
 
-    //     virtual void Resize(UINT width, UINT height) override;
-    //     virtual void Resized() override;
+        virtual void Resize(UINT width, UINT height) override;
+        virtual void Resized() override;
 
-    //     virtual void Focus() override;
-    //     virtual void Focused() override;
-    //     virtual void UnFocused() override;
+        virtual void Focus() override;
+        virtual void Focused() override;
+        virtual void UnFocused() override;
 
-    //     virtual void Maximize() override;
-    //     virtual void Maximized() override;
+        virtual void Maximize() override;
+        virtual void Maximized() override;
 
-    //     virtual void Minimize() override;
-    //     virtual void Minimized() override;
+        virtual void Minimize() override;
+        virtual void Minimized() override;
 
-    //     virtual void FullScreen() override;
-    //     virtual void FullScreened() override;
+        virtual void FullScreen() override;
+        virtual void FullScreened() override;
 
-    //     virtual void Restore() override;
-    //     virtual void Restored() override;
+        virtual void Restore() override;
+        virtual void Restored() override;
 
-    //     virtual void Move(UINT posX, UINT posY) override;
-    //     virtual void Moved() override;
-    // };
+        virtual void Move(UINT posX, UINT posY) override;
+        virtual void Moved() override;
+    };
+
+    class WINDOWS_BASE_API DefaultWindowEvent : public IWindowEvent
+    {
+    private:
+        size_t windowID_ = 0;
+        bool isWindowIDSet_ = false;
+
+        size_t keyboardMonitorID_ = 0;
+        bool isKeyboardMonitorIDSet_ = false;
+
+        size_t mouseMonitorID_ = 0;
+        bool isMouseMonitorIDSet_ = false;
+
+        std::unique_ptr<ISceneUpdator> sceneUpdator_ = nullptr;
+
+    public:
+        DefaultWindowEvent() = default;
+        virtual ~DefaultWindowEvent() override = default;
+
+        DefaultWindowEvent(const DefaultWindowEvent &) = delete;
+        DefaultWindowEvent &operator=(const DefaultWindowEvent &) = delete;
+
+        /***************************************************************************************************************
+         * IWindowEvent implementation
+        /**************************************************************************************************************/
+
+        virtual void SetWindowID(size_t windowID) override;
+        virtual void SetSceneUpdator(std::unique_ptr<ISceneUpdator> sceneUpdator) override;
+        virtual void SetKeyboardMonitorID(size_t keyboardMonitorID) override;
+        virtual void SetMouseMonitorID(size_t mouseMonitorID) override;
+        virtual bool CheckIsReady() const override;
+
+        virtual void OnEvent(ContainerStorage &contStorage, UINT msg, WPARAM wParam, LPARAM lParam) override;
+    };
 
 } // namespace wb
