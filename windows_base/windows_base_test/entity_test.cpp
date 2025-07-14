@@ -41,7 +41,7 @@ namespace
         }
     };
 
-    WB_REGISTER_COMPONENT(::MockComponent, ::MockComponentID());
+    WB_REGISTER_COMPONENT(MockComponent, MockComponentID());
 }
 
 TEST(Entity, CreateAndDestroy)

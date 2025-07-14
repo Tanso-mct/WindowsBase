@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "windows_base/include/dll_config.h"
 
+#include "windows_base/include/interfaces/scene.h"
 #include "windows_base/include/interfaces/collection.h"
 
 #include "windows_base/include/scene.h"
