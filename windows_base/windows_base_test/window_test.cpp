@@ -20,6 +20,8 @@
 
 #include "windows_base/include/window_collection.h"
 #include "windows_base/include/window.h"
+
+#include "windows_base/include/event.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -610,4 +612,162 @@ TEST(Window, Move)
 
     // Invoke the Destroyed method
     windowFacade->Destroyed();
+}
+
+static bool gWindowsBaseInitialized = false;
+static wb::EventInvoker<HWND, wb::IWindowEvent, HWND, wb::ContainerStorage&, UINT, WPARAM, LPARAM> gWindowEventInvoker;
+static wb::ContainerStorage gContainerStorage;
+
+static LRESULT CALLBACK WindowProcWithEvent(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    if (gWindowsBaseInitialized) gWindowEventInvoker.Invoke(hWnd, hWnd, gContainerStorage, msg, wParam, lParam);
+
+    switch (msg)
+    {
+    case WM_PAINT:
+        break;
+
+    default:
+        return DefWindowProc(hWnd, msg, wParam, lParam);
+    }
+
+    return 0;
+}
+
+TEST(Window, Event)
+{
+    // Create containers
+    {
+        // Create window container
+        std::unique_ptr<wb::IWindowContainer> windowCont = std::make_unique<wb::WindowContainer>();
+        windowCont->Create(wb::gWindowCollection.GetMaxID() + 1);
+        gContainerStorage.SetContainer<wb::IWindowContainer>(std::move(windowCont));
+
+        // Create monitor container
+        std::unique_ptr<wb::IMonitorContainer> monitorCont = std::make_unique<wb::MonitorContainer>();
+        monitorCont->Create(wb::gMonitorFactoryCollection.GetMaxID() + 1);
+        gContainerStorage.SetContainer<wb::IMonitorContainer>(std::move(monitorCont));
+
+        // Create asset container
+        std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
+        assetCont->Create(wb::gAssetCollection.GetMaxID() + 1);
+        gContainerStorage.SetContainer<wb::IAssetContainer>(std::move(assetCont));
+
+        // Create scene container
+        std::unique_ptr<wb::ISceneContainer> sceneCont = std::make_unique<wb::SceneContainer>();
+        sceneCont->Create(wb::gSceneFacadeCollection.GetMaxID() + 1);
+        gContainerStorage.SetContainer<wb::ISceneContainer>(std::move(sceneCont));
+    }
+
+    // Create window
+    {
+        // Get the facade factory
+        wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+        EXPECT_NE(&facadeFactory, nullptr);
+
+        // Create a window facade using the factory
+        std::unique_ptr<wb::IWindowFacade> windowFacade = facadeFactory.Create();
+        EXPECT_NE(windowFacade, nullptr);
+
+        // Check if the window is ready
+        EXPECT_TRUE(windowFacade->CheckIsReady());
+
+        // Create Window
+        WNDCLASSEX wc = {};
+        wc.cbSize = sizeof(WNDCLASSEX);
+        wc.lpfnWndProc = WindowProcWithEvent;
+        wc.hInstance = GetModuleHandle(nullptr);
+        wc.lpszClassName = windowFacade->GetName().data();
+        windowFacade->Create(wc);
+
+        // Show the window
+        windowFacade->Show();
+
+        // Create and set the instance table
+        {
+            std::unique_ptr<wb::IEventInstanceTable<HWND, wb::IWindowEvent>> instanceTable 
+                =std::make_unique<wb::EventInstTable<HWND, wb::IWindowEvent>>();
+
+            // Get the event factory
+            wb::IWindowEventFactory &eventFactory = wb::gWindowCollection.GetEventFactory(MockWindowID());
+
+            // Create a window event using the factory
+            std::unique_ptr<wb::IWindowEvent> windowEvent = eventFactory.Create();
+
+            // Add the window event to the instance table
+            instanceTable->Add(windowFacade->GetHandle(), std::move(windowEvent));
+
+            gWindowEventInvoker.SetInstanceTable(std::move(instanceTable));
+        }
+
+        // Create and set the function table
+        {
+            std::unique_ptr<wb::IEventFuncTable<HWND, wb::IWindowEvent, wb::ContainerStorage&, UINT, WPARAM, LPARAM>> funcTable 
+                = std::make_unique<wb::EventFuncTable<HWND, wb::IWindowEvent, wb::ContainerStorage&, UINT, WPARAM, LPARAM>>();
+
+            funcTable->Add(windowFacade->GetHandle(), &wb::IWindowEvent::OnEvent);
+
+            gWindowEventInvoker.SetFuncTable(std::move(funcTable));
+        }
+
+        // Get window container
+        wb::IWindowContainer &windowContainer = gContainerStorage.GetContainer<wb::IWindowContainer>();
+
+        // Add the window facade to the container
+        windowContainer.Set(MockWindowID(), std::move(windowFacade));
+    }
+
+    // Create a mock monitor mouse
+    {
+        // Get the mouse factory
+        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(MockMouseMonitorID());
+
+        // Create a monitor mouse using the factory
+        std::unique_ptr<wb::IMonitor> mouseMonitor = monitorFactory.Create();
+
+        // Get the monitor container
+        wb::IMonitorContainer &monitorContainer = gContainerStorage.GetContainer<wb::IMonitorContainer>();
+
+        // Add the mouse monitor to the container
+        monitorContainer.Set(MockMouseMonitorID(), std::move(mouseMonitor));
+    }
+
+    // Create a mock monitor keyboard
+    {
+        // Get the keyboard factory
+        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(MockKeyboardMonitorID());
+
+        // Create a monitor keyboard using the factory
+        std::unique_ptr<wb::IMonitor> keyboardMonitor = monitorFactory.Create();
+
+        // Get the monitor container
+        wb::IMonitorContainer &monitorContainer = gContainerStorage.GetContainer<wb::IMonitorContainer>();
+
+        // Add the keyboard monitor to the container
+        monitorContainer.Set(MockKeyboardMonitorID(), std::move(keyboardMonitor));
+    }
+
+    // Create a mock scene
+    {
+        // Get the scene facade factory
+        wb::ISceneFacadeFactory &sceneFacadeFactory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+
+        // Create a SceneFacade using the factory
+        std::unique_ptr<wb::ISceneFacade> sceneFacade = sceneFacadeFactory.Create();
+
+        // Add the scene facade to the container
+        wb::ISceneContainer &sceneContainer = gContainerStorage.GetContainer<wb::ISceneContainer>();
+        sceneContainer.Set(MockSceneFacadeID(), std::move(sceneFacade));
+    }
+
+    // Set the event invoker initialized flag
+    gWindowsBaseInitialized = true;
+
+    // Message loop
+    MSG msg;
+    while (GetMessage(&msg, nullptr, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 }
