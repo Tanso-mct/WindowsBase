@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
+#include "windows_base/include/container_impl.h"
 
 #include "windows_base/include/monitor_mouse.h"
 #include "windows_base/include/monitor_keyboard.h"
@@ -9,7 +10,6 @@
 
 #include "windows_base/include/scene.h"
 #include "windows_base/include/entity.h"
-#include "windows_base/include/container_impl.h"
 #include "windows_base/include/asset_group.h"
 #include "windows_base/include/file_loader_collection.h"
 #include "windows_base/include/asset_factory_collection.h"
@@ -139,8 +139,6 @@ namespace
         void Execute(wb::ISystemContainer &systemCont, wb::SystemArgument &args) override
         {
             // Mock implementation
-            std::cout << "MockSystemScheduler executed." << std::endl;
-
             args.state_ = wb::SceneState::Updating;
         }
     };
