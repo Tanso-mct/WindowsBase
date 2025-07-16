@@ -169,6 +169,7 @@
     <ClCompile Include="src\window.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />
     <ClCompile Include="src\window_collection.cpp" />
+    <ClCompile Include="windows_base.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\asset_collection.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="include\windows_helper.h" />
     <ClInclude Include="include\window_collection.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="windows_base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

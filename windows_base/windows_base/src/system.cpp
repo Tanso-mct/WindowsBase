@@ -37,9 +37,6 @@ std::unique_ptr<wb::ISystemContainer> wb::SystemsFactory::Create(IAssetContainer
         ISystemFactory &systemFactory = wb::gSystemCollection.GetFactory(systemID);
         std::unique_ptr<ISystem> system = systemFactory.Create(assetCont);
 
-        // Initialize the system
-        system->Initialize(assetCont);
-
         // Add the system to the container
         systemContainer->Set(systemID, std::move(system));
     }

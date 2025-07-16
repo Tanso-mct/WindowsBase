@@ -99,8 +99,8 @@ namespace wb
     {
     private:
         static bool isInitialized_;
-        static EventInvoker<HWND, IWindowEvent, HWND, ContainerStorage&, UINT, WPARAM, LPARAM> windowEventInvoker_;
-        static ContainerStorage containerStorage_;
+        static std::unique_ptr<IEventInvoker<HWND, IWindowEvent, HWND, ContainerStorage&, UINT, WPARAM, LPARAM>> windowEventInvoker_;
+        static std::unique_ptr<ContainerStorage> containerStorage_;
 
         /***************************************************************************************************************
          * WindowsBaseLibrary is a singleton class so constructor and destructor are private.
@@ -115,7 +115,6 @@ namespace wb
     public:
         static void Initialize(LibraryConfig &config);
         static void Run();
-        static void Shutdown();
 
         static void HandleWindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     };
