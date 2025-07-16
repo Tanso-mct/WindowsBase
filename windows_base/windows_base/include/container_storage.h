@@ -14,6 +14,7 @@ namespace wb
         std::unique_ptr<IAssetContainer> assetContainer_ = nullptr;
         std::unique_ptr<IMonitorContainer> monitorContainer_ = nullptr;
         std::unique_ptr<IWindowContainer> windowContainer_ = nullptr;
+        std::unique_ptr<ISharedContainer> sharedContainer_ = nullptr;
 
     public:
         ContainerStorage() = default;
@@ -166,6 +167,35 @@ namespace wb
             }
 
             return *windowContainer_;
+        }
+
+        /***************************************************************************************************************
+         * ISharedContainer specialization
+        /**************************************************************************************************************/
+
+        template <>
+        void SetContainer(std::unique_ptr<ISharedContainer> container)
+        {
+            sharedContainer_ = std::move(container);
+        }
+
+        template <>
+        ISharedContainer &GetContainer()
+        {
+            if (!sharedContainer_)
+            {
+                std::string err = CreateErrorMessage
+                (
+                    __FILE__, __LINE__, __FUNCTION__,
+                    {"Shared container is not set."}
+                );
+
+                wb::ConsoleLogErr(err);
+                wb::ErrorNotify("WINDOWS_BASE", err);
+                wb::ThrowRuntimeError(err);
+            }
+
+            return *sharedContainer_;
         }
     
 

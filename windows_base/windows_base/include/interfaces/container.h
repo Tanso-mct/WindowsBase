@@ -115,4 +115,7 @@ namespace wb
     class IWindowFacade;
     using IWindowContainer = IStaticContainer<IWindowFacade>;
 
+    class ISharedFacade;
+    using ISharedContainer = IStaticContainer<ISharedFacade>;
+
 } // namespace wb

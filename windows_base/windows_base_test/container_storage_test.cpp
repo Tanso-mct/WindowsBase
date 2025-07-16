@@ -64,3 +64,18 @@ TEST(ContainerStorage, SetAndGetWindowContainer)
     }
 }
 
+TEST(ContainerStorage, SetAndGetSharedContainer)
+{
+    wb::ContainerStorage storage;
+
+    {
+        std::unique_ptr<wb::ISharedContainer> sharedContainer = std::make_unique<wb::SharedContainer>();
+        storage.SetContainer(std::move(sharedContainer));
+    }
+    
+    {
+        wb::ISharedContainer &sharedContainer = storage.GetContainer<wb::ISharedContainer>();
+        EXPECT_NE(&sharedContainer, nullptr);
+    }
+}
+

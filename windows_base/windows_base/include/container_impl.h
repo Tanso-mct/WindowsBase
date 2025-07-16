@@ -10,6 +10,7 @@
 #include "windows_base/include/interfaces/scene.h"
 #include "windows_base/include/interfaces/monitor.h"
 #include "windows_base/include/interfaces/window.h"
+#include "windows_base/include/interfaces/shared.h"
 
 namespace wb
 {
@@ -20,5 +21,6 @@ namespace wb
     using SceneContainer = StaticContainer<ISceneFacade>;
     using MonitorContainer = StaticContainer<IMonitor>;
     using WindowContainer = StaticContainer<IWindowFacade>;
+    using SharedContainer = StaticContainer<ISharedFacade>;
 
 } // namespace wb
