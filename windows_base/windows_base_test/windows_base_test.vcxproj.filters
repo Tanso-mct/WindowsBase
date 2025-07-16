@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="console_log_test.cpp">
+      <Filter>tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="error_handler_test.cpp">
+      <Filter>tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="type_cast_test.cpp">
+      <Filter>tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="windows_helper_test.cpp">
+      <Filter>tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="component_collection_test.cpp">
+      <Filter>tests\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="entity_test.cpp">
+      <Filter>tests\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="system_collection_test.cpp">
+      <Filter>tests\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="container_dynamic_test.cpp">
+      <Filter>tests\container</Filter>
+    </ClCompile>
+    <ClCompile Include="container_static_test.cpp">
+      <Filter>tests\container</Filter>
+    </ClCompile>
+    <ClCompile Include="optional_value_test.cpp">
+      <Filter>tests\container</Filter>
+    </ClCompile>
+    <ClCompile Include="event_test.cpp">
+      <Filter>tests\event</Filter>
+    </ClCompile>
+    <ClCompile Include="file_loader_collection_test.cpp">
+      <Filter>tests\file</Filter>
+    </ClCompile>
+    <ClCompile Include="asset_collection_test.cpp">
+      <Filter>tests\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="asset_factory_collection_test.cpp">
+      <Filter>tests\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="container_storage_test.cpp">
+      <Filter>tests\container</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_test.cpp">
+      <Filter>tests\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_facade_collection_test.cpp">
+      <Filter>tests\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="monitor_factory_collection_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="monitor_collection_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="monitor_keyboard_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="monitor_mouse_test.cpp">
+      <Filter>tests\monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="window_collection_test.cpp">
+      <Filter>tests\window</Filter>
+    </ClCompile>
+    <ClCompile Include="window_test.cpp">
+      <Filter>tests\window</Filter>
+    </ClCompile>
+    <ClCompile Include="shared_facade_collection_test.cpp">
+      <Filter>tests\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="library_test.cpp">
+      <Filter>tests\library</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="tests">
+      <UniqueIdentifier>{0b193a69-7d71-4ccd-9cc3-03022029ba59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\utility">
+      <UniqueIdentifier>{c11e61d2-f256-433a-91c0-935de8af52fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\ecs">
+      <UniqueIdentifier>{1674062f-19c5-4b5f-98d0-fc99efcbbf8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\container">
+      <UniqueIdentifier>{c99f0504-5a51-4109-808f-3004a4391da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\event">
+      <UniqueIdentifier>{14d33716-a888-4978-bfd1-729523ca6536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\file">
+      <UniqueIdentifier>{a10de0da-c250-40a6-9819-c105c50f8b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\asset">
+      <UniqueIdentifier>{9f8fc166-eb39-412c-a022-e97dd3535727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\scene">
+      <UniqueIdentifier>{15e89808-58ab-4616-9119-b66f17270565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\monitor">
+      <UniqueIdentifier>{888b75b1-7e74-4023-bf42-a8cb5ac57bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\window">
+      <UniqueIdentifier>{ba48a228-09b1-4073-ab60-78f9fb5e8354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\shared">
+      <UniqueIdentifier>{39eba7d1-503c-4e72-bfde-7cabf3df2f44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\library">
+      <UniqueIdentifier>{fd7e1781-365a-4e79-ae5c-73be683e4118}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
