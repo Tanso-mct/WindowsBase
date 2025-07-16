@@ -46,19 +46,19 @@ namespace wb
         SceneFacadeRegistrar(size_t id, std::unique_ptr<ISceneFacadeFactory> factory);
     };
 
-    #define WB_REGISTER_SCENE_FACADE(ID_FUC, ENTITIES_FACTORY, ASSET_GROUP, SYSTEM_SCHEDULER) \
-        static wb::SceneFacadeRegistrar sceneFacadeRegistrar##ID_FUC \
-        ( \
-            ID_FUC(), \
-            std::make_unique<wb::SceneFacadeFactory \
-            < \
-                wb::SceneContext, \
-                ENTITIES_FACTORY, \
-                wb::EntityIDViewFactory<wb::EntityIDView>, \
-                wb::SystemsFactory, \
-                ASSET_GROUP, \
-                SYSTEM_SCHEDULER \
-            >>() \
-        );
-
 } // namespace wb
+
+#define WB_REGISTER_SCENE_FACADE(ID_FUC, ENTITIES_FACTORY, ASSET_GROUP, SYSTEM_SCHEDULER) \
+    static wb::SceneFacadeRegistrar sceneFacadeRegistrar##ID_FUC \
+    ( \
+        ID_FUC(), \
+        std::make_unique<wb::SceneFacadeFactory \
+        < \
+            wb::SceneContext, \
+            ENTITIES_FACTORY, \
+            wb::EntityIDViewFactory<wb::EntityIDView>, \
+            wb::SystemsFactory, \
+            ASSET_GROUP, \
+            SYSTEM_SCHEDULER \
+        >>() \
+    );

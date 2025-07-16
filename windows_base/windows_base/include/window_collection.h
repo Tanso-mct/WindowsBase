@@ -54,7 +54,7 @@ namespace wb
         );
     };
 
-    #define WB_REGISTER_WINDOW(ID_FUNC, FACADE_FACTORY, EVENT_FACTORY) \
-        static wb::WindowRegistrar windowRegistrar##ID_FUNC(ID_FUNC(), std::make_unique<FACADE_FACTORY>(), std::make_unique<EVENT_FACTORY>());
-
 } // namespace wb
+
+#define WB_REGISTER_WINDOW(ID_FUNC, FACADE_FACTORY, EVENT_FACTORY) \
+    static wb::WindowRegistrar windowRegistrar##ID_FUNC(ID_FUNC(), std::make_unique<FACADE_FACTORY>(), std::make_unique<EVENT_FACTORY>());

@@ -220,8 +220,8 @@ namespace
                 facade->SetContext(std::move(context));
             }
 
-            facade->AddMonitorID(wb::DefaultKeyboardMonitorFactoryID());
-            facade->AddMonitorID(wb::DefaultMouseMonitorFactoryID());
+            facade->AddMonitorID(MockKeyboardMonitorID());
+            facade->AddMonitorID(MockMouseMonitorID());
 
             return facade;
         }
@@ -252,8 +252,8 @@ namespace
                 event->SetSceneUpdator(std::move(sceneUpdator));
             }
             
-            event->SetKeyboardMonitorID(wb::DefaultKeyboardMonitorFactoryID());
-            event->SetMouseMonitorID(wb::DefaultMouseMonitorFactoryID());
+            event->SetKeyboardMonitorID(MockKeyboardMonitorID());
+            event->SetMouseMonitorID(MockMouseMonitorID());
 
             return event;
         }
@@ -643,7 +643,7 @@ TEST(Window, Event)
 
         // Create monitor container
         std::unique_ptr<wb::IMonitorContainer> monitorCont = std::make_unique<wb::MonitorContainer>();
-        monitorCont->Create(wb::gMonitorFactoryCollection.GetMaxID() + 1);
+        monitorCont->Create(wb::gMonitorCollection.GetMaxID() + 1);
         gContainerStorage.SetContainer<wb::IMonitorContainer>(std::move(monitorCont));
 
         // Create asset container
@@ -717,8 +717,11 @@ TEST(Window, Event)
 
     // Create a mock monitor mouse
     {
+        // Get the factory id
+        const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+
         // Get the mouse factory
-        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(MockMouseMonitorID());
+        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
 
         // Create a monitor mouse using the factory
         std::unique_ptr<wb::IMonitor> mouseMonitor = monitorFactory.Create();
@@ -732,8 +735,11 @@ TEST(Window, Event)
 
     // Create a mock monitor keyboard
     {
+        // Get the factory id
+        const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+
         // Get the keyboard factory
-        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(MockKeyboardMonitorID());
+        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
 
         // Create a monitor keyboard using the factory
         std::unique_ptr<wb::IMonitor> keyboardMonitor = monitorFactory.Create();

@@ -55,7 +55,8 @@ namespace wb
         ComponentRegistrar(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory);
     };
 
-    #define WB_REGISTER_COMPONENT(COMPONENT, ID) \
-        static wb::ComponentRegistrar componentRegistrar##COMPONENT(ID, std::make_unique<wb::ComponentFactory<COMPONENT>>());
 
 } // namespace wb
+
+#define WB_REGISTER_COMPONENT(COMPONENT, ID) \
+    static wb::ComponentRegistrar componentRegistrar##COMPONENT(ID, std::make_unique<wb::ComponentFactory<COMPONENT>>());

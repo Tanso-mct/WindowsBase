@@ -39,7 +39,7 @@ namespace wb
         AssetFactoryRegistrar(size_t id, std::unique_ptr<IAssetFactory> factory);
     };
 
-    #define WB_REGISTER_ASSET_FACTORY(ID, FACTORY) \
-        static wb::AssetFactoryRegistrar gAssetFactoryRegistrar##FACTORY(ID, std::make_unique<FACTORY>());
-
 } // namespace wb
+
+#define WB_REGISTER_ASSET_FACTORY(ID, FACTORY) \
+    static wb::AssetFactoryRegistrar gAssetFactoryRegistrar##FACTORY(ID, std::make_unique<FACTORY>());
