@@ -678,8 +678,16 @@ TEST(Window, Event)
         wc.lpszClassName = windowFacade->GetName().data();
         windowFacade->Create(wc);
 
-        // Show the window
-        windowFacade->Show();
+        if (windowFacade->NeedsShowWhenCreated())
+        {
+            // Show the window if it needs to be shown when created
+            windowFacade->Show();
+        }
+        else
+        {
+            // Hide the window if it does not need to be shown when created
+            windowFacade->Hide();
+        }
 
         // Create and set the instance table
         {

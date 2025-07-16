@@ -35,6 +35,7 @@ namespace wb
 
         bool needsResize_ = false;
         bool needsToQuitApp_ = true;
+        bool needsShowWhenCreated_ = true;
 
     public:
         WindowContext() = default;
@@ -63,6 +64,7 @@ namespace wb
 
         bool &NeedsResize() override { return needsResize_; }
         bool &NeedsToQuitApp() override { return needsToQuitApp_; }
+        bool &NeedsShowWhenCreated() { return needsShowWhenCreated_; }
     };
 
     class WINDOWS_BASE_API DefaultWindowFacade : public IWindowFacade
@@ -100,6 +102,7 @@ namespace wb
         virtual bool IsCreated() const override;
         virtual bool NeedsResize() const override;
         virtual bool NeedsToQuitApp() const override;
+        virtual bool NeedsShowWhenCreated() const override;
 
         virtual bool IsFocusing() const override;
         virtual bool &IsFocused() override;

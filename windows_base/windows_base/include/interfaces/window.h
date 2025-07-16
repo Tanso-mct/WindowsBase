@@ -45,6 +45,7 @@ namespace wb
 
         virtual bool &NeedsResize() = 0;
         virtual bool &NeedsToQuitApp() = 0;
+        virtual bool &NeedsShowWhenCreated() = 0;
     };
 
     constexpr UINT DEFAULT_WINDOW_WIDTH = 960;
@@ -68,6 +69,7 @@ namespace wb
         virtual bool IsCreated() const = 0;
         virtual bool NeedsResize() const = 0;
         virtual bool NeedsToQuitApp() const = 0;
+        virtual bool NeedsShowWhenCreated() const = 0;
 
         virtual bool IsFocusing() const = 0;
         virtual bool &IsFocused() = 0; // Remains true until False is substituted

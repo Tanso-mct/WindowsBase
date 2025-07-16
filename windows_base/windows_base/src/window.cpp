@@ -183,6 +183,24 @@ bool wb::DefaultWindowFacade::NeedsToQuitApp() const
     return context_->NeedsToQuitApp();
 }
 
+bool wb::DefaultWindowFacade::NeedsShowWhenCreated() const
+{
+    if (!CheckIsReady())
+    {
+        std::string err = wb::CreateErrorMessage
+        (
+            __FILE__, __LINE__, __FUNCTION__,
+            {"Window facade is not ready."}
+        );
+
+        wb::ConsoleLogErr(err);
+        wb::ErrorNotify("WINDOWS_BASE", err);
+        wb::ThrowRuntimeError(err);
+    }
+
+    return context_->NeedsShowWhenCreated();
+}
+
 bool wb::DefaultWindowFacade::IsFocusing() const
 {
     if (!CheckIsReady())
