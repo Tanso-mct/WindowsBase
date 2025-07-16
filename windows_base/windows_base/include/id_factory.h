@@ -23,6 +23,8 @@ namespace wb
 
         static size_t CreateWindowID();
 
+        static size_t CreateSharedFacadeID();
+
     };
 
 } // namespace wb

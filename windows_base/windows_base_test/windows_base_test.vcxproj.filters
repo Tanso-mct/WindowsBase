@@ -71,6 +71,9 @@
     <ClCompile Include="window_test.cpp">
       <Filter>tests\window</Filter>
     </ClCompile>
+    <ClCompile Include="shared_facade_collection_test.cpp">
+      <Filter>tests\shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -108,6 +111,9 @@
     </Filter>
     <Filter Include="tests\window">
       <UniqueIdentifier>{ba48a228-09b1-4073-ab60-78f9fb5e8354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\shared">
+      <UniqueIdentifier>{39eba7d1-503c-4e72-bfde-7cabf3df2f44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -26,6 +26,7 @@ namespace wb
     using IAssetFactoryCollection = IFactoryCollection<IAssetFactory>;
     using ISceneFacadeCollection = IFactoryCollection<ISceneFacadeFactory>;
     using IMonitorFactoryCollection = IFactoryCollection<IMonitorFactory>;
+    using ISharedFacadeCollection = IFactoryCollection<ISharedFacadeFactory>;
     
     class IAssetCollection
     {

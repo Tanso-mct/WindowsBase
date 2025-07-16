@@ -162,6 +162,7 @@
     </ClCompile>
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\scene_facade_collection.cpp" />
+    <ClCompile Include="src\shared_facade_collection.cpp" />
     <ClCompile Include="src\system.cpp" />
     <ClCompile Include="src\system_collection.cpp" />
     <ClCompile Include="src\type_cast.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="include\interfaces\monitor_mouse.h" />
     <ClInclude Include="include\interfaces\optional_value.h" />
     <ClInclude Include="include\interfaces\scene.h" />
+    <ClInclude Include="include\interfaces\shared.h" />
     <ClInclude Include="include\interfaces\system.h" />
     <ClInclude Include="include\interfaces\window.h" />
     <ClInclude Include="include\monitor_collection.h" />
@@ -209,6 +211,7 @@
     <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\scene.h" />
     <ClInclude Include="include\scene_facade_collection.h" />
+    <ClInclude Include="include\shared_facade_collection.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="include\system_collection.h" />
     <ClInclude Include="include\type_cast.h" />

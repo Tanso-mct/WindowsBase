@@ -90,3 +90,13 @@ size_t wb::IDFactory::CreateWindowID()
 
     return createdId;
 }
+
+size_t wb::IDFactory::CreateSharedFacadeID()
+{
+    static size_t idCounter = 0;
+
+    size_t createdId = idCounter;
+    idCounter++;
+
+    return createdId;
+}

@@ -40,4 +40,7 @@ namespace wb
 
     class IWindowEvent;
     using IWindowEventFactory = IFactory<std::unique_ptr<IWindowEvent>>;
+
+    class ISharedFacade;
+    using ISharedFacadeFactory = IFactory<std::unique_ptr<ISharedFacade>>;
 }
