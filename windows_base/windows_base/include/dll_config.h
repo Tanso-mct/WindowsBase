@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#ifdef BUILDING_WINDOWS_BASE_DLL
+#ifdef WINDOWSBASE_EXPORTS
 #define WINDOWS_BASE_API __declspec(dllexport)
 #else
 #define WINDOWS_BASE_API __declspec(dllimport)
