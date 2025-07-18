@@ -19,6 +19,18 @@
     <Filter Include="ヘッダー ファイル\scene_example">
       <UniqueIdentifier>{ad54a48f-3e74-4e08-aa76-0e3bd990dc29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\feature">
+      <UniqueIdentifier>{51f786b5-9e6e-439e-914d-db79f5652ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\feature">
+      <UniqueIdentifier>{d3460d5e-713e-4bdf-95d5-5be8bf9d1e01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene_example">
+      <UniqueIdentifier>{e870fc60-eca6-4f18-b03a-69f4ca07d2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window_example">
+      <UniqueIdentifier>{f929a9bc-b24d-41ab-ae94-73ddd0dac299}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entry.cpp">
@@ -27,24 +39,60 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\feature\asset_factory_data.cpp">
+      <Filter>ソース ファイル\feature</Filter>
+    </ClCompile>
+    <ClCompile Include="src\feature\component_example.cpp">
+      <Filter>ソース ファイル\feature</Filter>
+    </ClCompile>
+    <ClCompile Include="src\feature\file_loader_text.cpp">
+      <Filter>ソース ファイル\feature</Filter>
+    </ClCompile>
+    <ClCompile Include="src\feature\prefab_example.cpp">
+      <Filter>ソース ファイル\feature</Filter>
+    </ClCompile>
+    <ClCompile Include="src\feature\system_example.cpp">
+      <Filter>ソース ファイル\feature</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_example\asset_group.cpp">
+      <Filter>ソース ファイル\scene_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_example\entities_factory.cpp">
+      <Filter>ソース ファイル\scene_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_example\scene.cpp">
+      <Filter>ソース ファイル\scene_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_example\system_scheduler.cpp">
+      <Filter>ソース ファイル\scene_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window_example\event_factory.cpp">
+      <Filter>ソース ファイル\window_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window_example\facade_factory.cpp">
+      <Filter>ソース ファイル\window_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window_example\keyboard_monitor.cpp">
+      <Filter>ソース ファイル\window_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window_example\mouse_monitor.cpp">
+      <Filter>ソース ファイル\window_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window_example\window.cpp">
+      <Filter>ソース ファイル\window_example</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\pch.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\asset_factory_data.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="include\file_loader_text.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="include\window_example\window.h">
       <Filter>ヘッダー ファイル\window_example</Filter>
     </ClInclude>
-    <ClInclude Include="include\window_example\window_event_factory.h">
+    <ClInclude Include="include\window_example\event_factory.h">
       <Filter>ヘッダー ファイル\window_example</Filter>
     </ClInclude>
-    <ClInclude Include="include\window_example\window_facade_factory.h">
+    <ClInclude Include="include\window_example\facade_factory.h">
       <Filter>ヘッダー ファイル\window_example</Filter>
     </ClInclude>
     <ClInclude Include="include\scene_example\asset_group.h">
@@ -53,11 +101,32 @@
     <ClInclude Include="include\scene_example\entities_factory.h">
       <Filter>ヘッダー ファイル\scene_example</Filter>
     </ClInclude>
-    <ClInclude Include="include\scene_example\scene_example.h">
+    <ClInclude Include="include\scene_example\scene.h">
       <Filter>ヘッダー ファイル\scene_example</Filter>
     </ClInclude>
     <ClInclude Include="include\scene_example\system_scheduler.h">
       <Filter>ヘッダー ファイル\scene_example</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\asset_factory_data.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\component_example.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\file_loader_text.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\prefab_example.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\system_example.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_example\keyboard_monitor.h">
+      <Filter>ヘッダー ファイル\window_example</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_example\mouse_monitor.h">
+      <Filter>ヘッダー ファイル\window_example</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

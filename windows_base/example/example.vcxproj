@@ -72,9 +72,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,18 +143,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entry.cpp" />
+    <ClCompile Include="src\feature\asset_factory_data.cpp" />
+    <ClCompile Include="src\feature\component_example.cpp" />
+    <ClCompile Include="src\feature\file_loader_text.cpp" />
+    <ClCompile Include="src\feature\prefab_example.cpp" />
+    <ClCompile Include="src\feature\system_example.cpp" />
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\scene_example\asset_group.cpp" />
+    <ClCompile Include="src\scene_example\entities_factory.cpp" />
+    <ClCompile Include="src\scene_example\scene.cpp" />
+    <ClCompile Include="src\scene_example\system_scheduler.cpp" />
+    <ClCompile Include="src\window_example\event_factory.cpp" />
+    <ClCompile Include="src\window_example\facade_factory.cpp" />
+    <ClCompile Include="src\window_example\keyboard_monitor.cpp" />
+    <ClCompile Include="src\window_example\mouse_monitor.cpp" />
+    <ClCompile Include="src\window_example\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\asset_factory_data.h" />
-    <ClInclude Include="include\file_loader_text.h" />
+    <ClInclude Include="include\feature\asset_factory_data.h" />
+    <ClInclude Include="include\feature\component_example.h" />
+    <ClInclude Include="include\feature\file_loader_text.h" />
+    <ClInclude Include="include\feature\prefab_example.h" />
+    <ClInclude Include="include\feature\system_example.h" />
     <ClInclude Include="include\scene_example\asset_group.h" />
     <ClInclude Include="include\scene_example\entities_factory.h" />
-    <ClInclude Include="include\scene_example\scene_example.h" />
+    <ClInclude Include="include\scene_example\scene.h" />
     <ClInclude Include="include\scene_example\system_scheduler.h" />
+    <ClInclude Include="include\window_example\keyboard_monitor.h" />
+    <ClInclude Include="include\window_example\mouse_monitor.h" />
     <ClInclude Include="include\window_example\window.h" />
-    <ClInclude Include="include\window_example\window_event_factory.h" />
-    <ClInclude Include="include\window_example\window_facade_factory.h" />
+    <ClInclude Include="include\window_example\event_factory.h" />
+    <ClInclude Include="include\window_example\facade_factory.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
