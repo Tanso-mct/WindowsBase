@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\window_example">
       <UniqueIdentifier>{f929a9bc-b24d-41ab-ae94-73ddd0dac299}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\feature\interfaces">
+      <UniqueIdentifier>{97c1b23d-c3c5-4dea-957b-17036d7c274f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entry.cpp">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="include\feature\asset.h">
       <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\interfaces\component_example.h">
+      <Filter>ヘッダー ファイル\feature\interfaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
