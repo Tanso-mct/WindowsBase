@@ -11,3 +11,8 @@ const size_t &example::ExampleComponent::GetID() const
 {
     return ExampleComponentID();
 }
+
+namespace example
+{
+    WB_REGISTER_COMPONENT(ExampleComponent, ExampleComponentID());
+}

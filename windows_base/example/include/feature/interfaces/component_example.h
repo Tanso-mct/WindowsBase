@@ -7,5 +7,8 @@ namespace example
     {
     public:
         virtual ~IExampleComponent() = default;
+
+        virtual const float &GetValue() const = 0;
+        virtual void SetValue(float value) = 0;
     };
 } // namespace example

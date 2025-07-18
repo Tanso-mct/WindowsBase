@@ -113,9 +113,6 @@ namespace wb
         virtual bool IsFullScreen() const override;
 
         virtual void AddMonitorID(size_t monitorID) override;
-        virtual void RemoveMonitorIDByFactoryID(size_t monitorFactoryID) override;
-
-        virtual const size_t &GetMonitorIDByFactoryID(size_t monitorFactoryID) const override;
         virtual const std::vector<size_t> &GetMonitorIDs() const override;
 
         virtual void Create(WNDCLASSEX& wc) override;
