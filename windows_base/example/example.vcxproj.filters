@@ -140,5 +140,17 @@
     <ClInclude Include="include\feature\interfaces\component_example.h">
       <Filter>ヘッダー ファイル\feature\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="include\feature\interfaces\file_data_text.h">
+      <Filter>ヘッダー ファイル\feature\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\file_data_text.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\interfaces\asset_data.h">
+      <Filter>ヘッダー ファイル\feature\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\asset_data.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

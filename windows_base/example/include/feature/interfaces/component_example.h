@@ -10,5 +10,8 @@ namespace example
 
         virtual const float &GetValue() const = 0;
         virtual void SetValue(float value) = 0;
+
+        virtual const size_t &GetDataAssetID() const = 0;
+        virtual void SetDataAssetID(size_t dataAssetID) = 0;
     };
 } // namespace example

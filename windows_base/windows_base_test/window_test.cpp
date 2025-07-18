@@ -38,7 +38,7 @@ namespace
         MockAssetFactory() = default;
         virtual ~MockAssetFactory() override = default;
 
-        std::unique_ptr<wb::IAsset> Create(const wb::IFileData &fileData) const override
+        std::unique_ptr<wb::IAsset> Create(wb::IFileData &fileData) const override
         {
             // Mock implementation for testing purposes
             return nullptr;

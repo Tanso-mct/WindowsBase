@@ -3,5 +3,6 @@
 
 namespace example
 {
-
+    const size_t &ExampleDataAssetID();
+    
 } // namespace example

@@ -2,6 +2,7 @@
 #include "example/include/feature/system_example.h"
 
 #include "example/include/feature/component_example.h"
+#include "example/include/feature/interfaces/asset_data.h"
 
 const size_t &example::ExampleSystemID()
 {
@@ -16,7 +17,12 @@ const size_t &example::ExampleSystem::GetID() const
 
 void example::ExampleSystem::Initialize(wb::IAssetContainer &assetContainer)
 {
-    wb::ConsoleLog({"ExampleSystem initialized\n"});
+    std::string message = wb::CreateMessage
+    ({
+        "ExampleSystem initialized",
+        "Push 'Space' to log component values and data asset content.",
+    });
+    wb::ConsoleLog(message);
 }
 
 void example::ExampleSystem::Update(const wb::SystemArgument &args)
@@ -24,6 +30,7 @@ void example::ExampleSystem::Update(const wb::SystemArgument &args)
     // Get containers to use
     wb::IWindowContainer &windowContainer = args.containerStorage_.GetContainer<wb::IWindowContainer>();
     wb::IMonitorContainer &monitorContainer = args.containerStorage_.GetContainer<wb::IMonitorContainer>();
+    wb::IAssetContainer &assetContainer = args.containerStorage_.GetContainer<wb::IAssetContainer>();
 
     // Get the window facade for the current window
     wb::IWindowFacade &window = windowContainer.Get(args.belongWindowID_);
@@ -48,12 +55,29 @@ void example::ExampleSystem::Update(const wb::SystemArgument &args)
 
         if (keyboardMonitor != nullptr && keyboardMonitor->GetKeyDown(wb::KeyCode::Space))
         {
+            // Get data asset from the container
+            wb::IAsset &dataAsset = assetContainer.Get(example->GetDataAssetID());
+            example::IDataAsset *data = wb::As<IDataAsset>(&dataAsset);
+            if (data == nullptr)
+            {
+                std::string err = wb::CreateErrorMessage
+                (
+                    __FILE__, __LINE__, __FUNCTION__,
+                    {"Set asset with ID ", std::to_string(example->GetDataAssetID()), " is not of type IDataAsset."}
+                );
+
+                wb::ConsoleLogErr(err);
+                wb::ErrorNotify("EXAMPLE", err);
+                wb::ThrowRuntimeError(err);
+            }
+
             std::string message = wb::CreateMessage
             ({
                 "Entity ID: " + std::to_string(entity->GetID()()), 
-                "ExampleComponent value: " + std::to_string(example->GetValue()) + "\n"
+                "ExampleComponent value: " + std::to_string(example->GetValue()),
+                "Data Asset ID: " + std::to_string(example->GetDataAssetID()),
+                "Data : " + std::string(data->GetData()), ""
             });
-            
             wb::ConsoleLog(message);
         }
     }

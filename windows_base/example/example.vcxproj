@@ -162,10 +162,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\feature\asset.h" />
+    <ClInclude Include="include\feature\asset_data.h" />
     <ClInclude Include="include\feature\asset_factory_data.h" />
     <ClInclude Include="include\feature\component_example.h" />
+    <ClInclude Include="include\feature\file_data_text.h" />
     <ClInclude Include="include\feature\file_loader_text.h" />
+    <ClInclude Include="include\feature\interfaces\asset_data.h" />
     <ClInclude Include="include\feature\interfaces\component_example.h" />
+    <ClInclude Include="include\feature\interfaces\file_data_text.h" />
     <ClInclude Include="include\feature\prefab_example.h" />
     <ClInclude Include="include\feature\system_example.h" />
     <ClInclude Include="include\scene_example\asset_group.h" />

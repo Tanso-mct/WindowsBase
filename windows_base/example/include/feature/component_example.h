@@ -14,6 +14,9 @@ namespace example
     private:
         float value_ = DEFAULT_EXAMPLE_VALUE;
 
+        size_t dataAssetID_ = 0;
+        mutable bool isDataAssetIDSet_ = false;
+
     public:
         ExampleComponent() = default;
         ~ExampleComponent() override = default;
@@ -30,5 +33,8 @@ namespace example
 
         const float &GetValue() const override { return value_; }
         void SetValue(float value) override { value_ = value; }
+
+        const size_t &GetDataAssetID() const override;
+        void SetDataAssetID(size_t dataAssetID) override;
     };
 } // namespace example
