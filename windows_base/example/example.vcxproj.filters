@@ -72,14 +72,17 @@
     <ClCompile Include="src\window_example\facade_factory.cpp">
       <Filter>ソース ファイル\window_example</Filter>
     </ClCompile>
-    <ClCompile Include="src\window_example\keyboard_monitor.cpp">
+    <ClCompile Include="src\window_example\monitor_keyboard.cpp">
       <Filter>ソース ファイル\window_example</Filter>
     </ClCompile>
-    <ClCompile Include="src\window_example\mouse_monitor.cpp">
+    <ClCompile Include="src\window_example\monitor_mouse.cpp">
       <Filter>ソース ファイル\window_example</Filter>
     </ClCompile>
     <ClCompile Include="src\window_example\window.cpp">
       <Filter>ソース ファイル\window_example</Filter>
+    </ClCompile>
+    <ClCompile Include="src\feature\asset.cpp">
+      <Filter>ソース ファイル\feature</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,11 +125,14 @@
     <ClInclude Include="include\feature\system_example.h">
       <Filter>ヘッダー ファイル\feature</Filter>
     </ClInclude>
-    <ClInclude Include="include\window_example\keyboard_monitor.h">
+    <ClInclude Include="include\window_example\monitor_keyboard.h">
       <Filter>ヘッダー ファイル\window_example</Filter>
     </ClInclude>
-    <ClInclude Include="include\window_example\mouse_monitor.h">
+    <ClInclude Include="include\window_example\monitor_mouse.h">
       <Filter>ヘッダー ファイル\window_example</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\asset.h">
+      <Filter>ヘッダー ファイル\feature</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

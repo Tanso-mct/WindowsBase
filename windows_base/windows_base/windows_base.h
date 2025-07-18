@@ -92,7 +92,6 @@ namespace wb
         std::vector<size_t> createWindowIDs_;
         std::vector<size_t> createMonitorIDs_;
         std::vector<size_t> createSceneIDs_;
-        std::vector<size_t> createSharedIDs_;
     };
 
     class WINDOWS_BASE_API WindowsBaseLibrary

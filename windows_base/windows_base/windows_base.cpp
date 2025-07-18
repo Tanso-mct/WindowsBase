@@ -164,26 +164,15 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
     }
 
     /*******************************************************************************************************************
-     * Create shared facades
+     * Create all shared facades
     /******************************************************************************************************************/
 
     {
         wb::ISharedContainer &sharedContainer = containerStorage_->GetContainer<wb::ISharedContainer>();
-        for (const size_t &id : config.createSharedIDs_)
+        std::vector<size_t> keys = wb::gSharedFacadeRegistry.GetKeys();
+
+        for (const size_t &id : keys)
         {
-            if (id > wb::gSharedFacadeRegistry.GetMaxID())
-            {
-                std::string err = CreateErrorMessage
-                (
-                    __FILE__, __LINE__, __FUNCTION__,
-                    {"Shared facade ID is invalid: ", std::to_string(id)}
-                );
-
-                ConsoleLogErr(err);
-                ErrorNotify("WINDOWS_BASE", err);
-                ThrowRuntimeError(err);
-            }
-
             // Get the factory for the shared facade
             wb::ISharedFacadeFactory &factory = wb::gSharedFacadeRegistry.GetFactory(id);
 

@@ -3,6 +3,6 @@
 
 namespace example
 {
-    const size_t &ExampleSceneFacadeID();
+    const size_t &ExampleKeyboardMonitorID();
 
 } // namespace example

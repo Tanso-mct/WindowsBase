@@ -1,6 +1,10 @@
 ﻿#include "example/src/pch.h"
-
 #pragma comment(lib, "windows_base.lib")
+
+#include "example/include/window_example/window.h"
+#include "example/include/window_example/monitor_keyboard.h"
+#include "example/include/window_example/monitor_mouse.h"
+#include "example/include/scene_example/scene.h"
 
 static LRESULT CALLBACK WindowProcWithEvent(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -28,11 +32,30 @@ int APIENTRY wWinMain
     wb::LibraryConfig config;
     config.windowProc_ = WindowProcWithEvent;
 
+    config.createWindowIDs_ = 
+    { 
+        example::ExampleWindowID() 
+    };
+
+    config.createMonitorIDs_ = 
+    { 
+        example::ExampleKeyboardMonitorID(), 
+        example::ExampleMouseMonitorID() 
+    };
+
+    config.createSceneIDs_ = 
+    { 
+        example::ExampleSceneFacadeID() 
+    };
+
     // Initialize the Windows Base Library
     wb::WindowsBaseLibrary::Initialize(config);
 
     // Run the library which will start the message loop
     wb::WindowsBaseLibrary::Run();
+
+    // Shutdown the library
+    wb::WindowsBaseLibrary::Shutdown();
 
     return 0;
 }

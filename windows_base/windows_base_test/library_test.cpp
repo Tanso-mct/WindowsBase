@@ -274,5 +274,8 @@ TEST(WindowsBaseLibrary, Use)
     // Run the WindowsBaseLibrary
     wb::WindowsBaseLibrary::Run();
 
+    // Shutdown the WindowsBaseLibrary
+    wb::WindowsBaseLibrary::Shutdown();
+
     return;
 }

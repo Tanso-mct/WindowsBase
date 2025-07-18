@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entry.cpp" />
+    <ClCompile Include="src\feature\asset.cpp" />
     <ClCompile Include="src\feature\asset_factory_data.cpp" />
     <ClCompile Include="src\feature\component_example.cpp" />
     <ClCompile Include="src\feature\file_loader_text.cpp" />
@@ -155,11 +156,12 @@
     <ClCompile Include="src\scene_example\system_scheduler.cpp" />
     <ClCompile Include="src\window_example\event_factory.cpp" />
     <ClCompile Include="src\window_example\facade_factory.cpp" />
-    <ClCompile Include="src\window_example\keyboard_monitor.cpp" />
-    <ClCompile Include="src\window_example\mouse_monitor.cpp" />
+    <ClCompile Include="src\window_example\monitor_keyboard.cpp" />
+    <ClCompile Include="src\window_example\monitor_mouse.cpp" />
     <ClCompile Include="src\window_example\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\feature\asset.h" />
     <ClInclude Include="include\feature\asset_factory_data.h" />
     <ClInclude Include="include\feature\component_example.h" />
     <ClInclude Include="include\feature\file_loader_text.h" />
@@ -169,8 +171,8 @@
     <ClInclude Include="include\scene_example\entities_factory.h" />
     <ClInclude Include="include\scene_example\scene.h" />
     <ClInclude Include="include\scene_example\system_scheduler.h" />
-    <ClInclude Include="include\window_example\keyboard_monitor.h" />
-    <ClInclude Include="include\window_example\mouse_monitor.h" />
+    <ClInclude Include="include\window_example\monitor_keyboard.h" />
+    <ClInclude Include="include\window_example\monitor_mouse.h" />
     <ClInclude Include="include\window_example\window.h" />
     <ClInclude Include="include\window_example\event_factory.h" />
     <ClInclude Include="include\window_example\facade_factory.h" />
