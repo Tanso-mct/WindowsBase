@@ -78,6 +78,7 @@
 #include "windows_base/include/component_registry.h"
 #include "windows_base/include/system.h"
 #include "windows_base/include/system_registry.h"
+#include "windows_base/include/interfaces/prefab.h"
 
 /***********************************************************************************************************************
  * Windows Base Library

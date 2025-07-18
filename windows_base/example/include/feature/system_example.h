@@ -3,6 +3,8 @@
 
 namespace example
 {
+    const size_t &ExampleSystemID();
+
     class ExampleSystem : public wb::ISystem
     {
     public:

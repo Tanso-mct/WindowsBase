@@ -3,15 +3,20 @@
 
 #include "example/include/feature/component_example.h"
 
-const size_t &example::ExampleSystem::GetID() const
+const size_t &example::ExampleSystemID()
 {
     static size_t id = wb::IDFactory::CreateSystemID();
     return id;
 }
 
+const size_t &example::ExampleSystem::GetID() const
+{
+    return ExampleSystemID();
+}
+
 void example::ExampleSystem::Initialize(wb::IAssetContainer &assetContainer)
 {
-    wb::ConsoleLog({"ExampleSystem initialized"});
+    wb::ConsoleLog({"ExampleSystem initialized\n"});
 }
 
 void example::ExampleSystem::Update(const wb::SystemArgument &args)
@@ -46,8 +51,8 @@ void example::ExampleSystem::Update(const wb::SystemArgument &args)
             std::string message = wb::CreateMessage
             ({
                 "Entity ID: " + std::to_string(entity->GetID()()), 
-                "ExampleComponent value: ", std::to_string(example->GetValue())}
-            );
+                "ExampleComponent value: " + std::to_string(example->GetValue()) + "\n"
+            });
             
             wb::ConsoleLog(message);
         }
