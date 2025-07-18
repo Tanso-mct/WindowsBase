@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/scene_facade_collection.h"
+#include "windows_base/include/scene_facade_registry.h"
 
-void wb::SceneFacadeCollection::AddFactory(size_t id, std::unique_ptr<ISceneFacadeFactory> factory)
+void wb::SceneFacadeRegistry::AddFactory(size_t id, std::unique_ptr<ISceneFacadeFactory> factory)
 {
     if (sceneFacadeFactories_.find(id) != sceneFacadeFactories_.end())
     {
@@ -16,7 +16,7 @@ void wb::SceneFacadeCollection::AddFactory(size_t id, std::unique_ptr<ISceneFaca
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the factory to the collection
+    // Add the factory to the registry
     sceneFacadeFactories_[id] = std::move(factory);
 
     // Save the key
@@ -29,7 +29,7 @@ void wb::SceneFacadeCollection::AddFactory(size_t id, std::unique_ptr<ISceneFaca
     }
 }
 
-wb::ISceneFacadeFactory &wb::SceneFacadeCollection::GetFactory(size_t id)
+wb::ISceneFacadeFactory &wb::SceneFacadeRegistry::GetFactory(size_t id)
 {
     if (sceneFacadeFactories_.find(id) == sceneFacadeFactories_.end())
     {
@@ -47,19 +47,19 @@ wb::ISceneFacadeFactory &wb::SceneFacadeCollection::GetFactory(size_t id)
     return *sceneFacadeFactories_[id];
 }
 
-size_t wb::SceneFacadeCollection::GetMaxID() const
+size_t wb::SceneFacadeRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::SceneFacadeCollection::GetKeys() const
+const std::vector<size_t> &wb::SceneFacadeRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::SceneFacadeCollection wb::gSceneFacadeCollection;
+WINDOWS_BASE_API wb::SceneFacadeRegistry wb::gSceneFacadeRegistry;
 
 wb::SceneFacadeRegistrar::SceneFacadeRegistrar(size_t id, std::unique_ptr<ISceneFacadeFactory> factory)
 {
-    wb::gSceneFacadeCollection.AddFactory(id, std::move(factory));
+    wb::gSceneFacadeRegistry.AddFactory(id, std::move(factory));
 }

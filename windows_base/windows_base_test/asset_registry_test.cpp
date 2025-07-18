@@ -2,7 +2,7 @@
 
 #include "windows_base/include/id_factory.h"
 #include "windows_base/include/interfaces/asset.h"
-#include "windows_base/include/asset_collection.h"
+#include "windows_base/include/asset_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -29,14 +29,14 @@ namespace
     WB_REGISTER_ASSET(MockAssetID, MockAssetFactoryID(), MockFileLoaderID(), MOCK_FILE_PATH);
 }
 
-TEST(AssetCollection, GetAssetDetails)
+TEST(AssetRegistry, GetAssetDetails)
 {
-    const size_t &assetFactoryID = wb::gAssetCollection.GetFactoryID(MockAssetID());
+    const size_t &assetFactoryID = wb::gAssetRegistry.GetFactoryID(MockAssetID());
     EXPECT_EQ(assetFactoryID, MockAssetFactoryID());
 
-    const size_t &fileLoaderID = wb::gAssetCollection.GetFileLoaderID(MockAssetID());
+    const size_t &fileLoaderID = wb::gAssetRegistry.GetFileLoaderID(MockAssetID());
     EXPECT_EQ(fileLoaderID, MockFileLoaderID());
 
-    std::string_view filePath = wb::gAssetCollection.GetFilePath(MockAssetID());
+    std::string_view filePath = wb::gAssetRegistry.GetFilePath(MockAssetID());
     EXPECT_EQ(std::string(filePath), std::string(MOCK_FILE_PATH));
 }

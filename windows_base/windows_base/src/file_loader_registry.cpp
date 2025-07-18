@@ -1,10 +1,10 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/file_loader_collection.h"
+#include "windows_base/include/file_loader_registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
-void wb::FileLoaderCollection::AddLoader(size_t id, std::unique_ptr<IFileLoader> loader)
+void wb::FileLoaderRegistry::AddLoader(size_t id, std::unique_ptr<IFileLoader> loader)
 {
     if (fileLoaders_.find(id) != fileLoaders_.end())
     {
@@ -19,7 +19,7 @@ void wb::FileLoaderCollection::AddLoader(size_t id, std::unique_ptr<IFileLoader>
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the loader to the collection
+    // Add the loader to the registry
     fileLoaders_[id] = std::move(loader);
 
     // Save the key
@@ -32,7 +32,7 @@ void wb::FileLoaderCollection::AddLoader(size_t id, std::unique_ptr<IFileLoader>
     }
 }
 
-wb::IFileLoader &wb::FileLoaderCollection::GetLoader(size_t id)
+wb::IFileLoader &wb::FileLoaderRegistry::GetLoader(size_t id)
 {
     if (fileLoaders_.find(id) == fileLoaders_.end())
     {
@@ -50,19 +50,19 @@ wb::IFileLoader &wb::FileLoaderCollection::GetLoader(size_t id)
     return *fileLoaders_[id];
 }
 
-size_t wb::FileLoaderCollection::GetMaxID() const
+size_t wb::FileLoaderRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::FileLoaderCollection::GetKeys() const
+const std::vector<size_t> &wb::FileLoaderRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::FileLoaderCollection wb::gFileLoaderCollection;
+WINDOWS_BASE_API wb::FileLoaderRegistry wb::gFileLoaderRegistry;
 
 wb::FileLoaderRegistrar::FileLoaderRegistrar(size_t id, std::unique_ptr<IFileLoader> loader)
 {
-    wb::gFileLoaderCollection.AddLoader(id, std::move(loader));
+    wb::gFileLoaderRegistry.AddLoader(id, std::move(loader));
 }

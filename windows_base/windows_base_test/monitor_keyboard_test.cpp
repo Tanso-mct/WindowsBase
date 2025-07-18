@@ -1,9 +1,9 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/monitor_keyboard.h"
-#include "windows_base/include/monitor_factory_collection.h"
+#include "windows_base/include/monitor_factory_registry.h"
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/monitor_collection.h"
+#include "windows_base/include/monitor_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -62,11 +62,11 @@ TEST(KeyboardMonitor, UseKeyCodeTable)
 TEST(KeyboardMonitor, Create)
 {
     // Get the monitor factory id
-    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockKeyboardMonitorID());
+    const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockKeyboardMonitorID());
     EXPECT_EQ(factoryID, wb::DefaultKeyboardMonitorFactoryID());
 
     // Get the monitor factory
-    wb::IMonitorFactory &factory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+    wb::IMonitorFactory &factory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
     EXPECT_NE(&factory, nullptr);
 
     // Create a monitor using the factory
@@ -78,11 +78,11 @@ TEST(KeyboardMonitor, Create)
 TEST(KeyboardMonitor, Use)
 {
     // Get the monitor factory id
-    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockKeyboardMonitorID());
+    const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockKeyboardMonitorID());
     EXPECT_EQ(factoryID, wb::DefaultKeyboardMonitorFactoryID());
 
     // Get the monitor factory
-    wb::IMonitorFactory &factory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+    wb::IMonitorFactory &factory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
     EXPECT_NE(&factory, nullptr);
 
     // Create a monitor using the factory

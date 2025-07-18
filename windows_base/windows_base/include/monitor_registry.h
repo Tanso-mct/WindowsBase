@@ -2,14 +2,14 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/monitor.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API MonitorCollection : public IMonitorCollection
+    class WINDOWS_BASE_API MonitorRegistry : public IMonitorRegistry
     {
     private:
         std::unordered_map<size_t, size_t> factoryIDs_;
@@ -17,14 +17,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        MonitorCollection() = default;
-        virtual ~MonitorCollection() = default;
+        MonitorRegistry() = default;
+        virtual ~MonitorRegistry() = default;
 
-        MonitorCollection(const MonitorCollection &) = delete;
-        MonitorCollection &operator=(const MonitorCollection &) = delete;
+        MonitorRegistry(const MonitorRegistry &) = delete;
+        MonitorRegistry &operator=(const MonitorRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IMonitorCollection implementation
+         * IMonitorRegistry implementation
         /**************************************************************************************************************/
 
         void Add(size_t id, size_t factoryID) override;
@@ -34,7 +34,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API MonitorCollection gMonitorCollection;
+    extern WINDOWS_BASE_API MonitorRegistry gMonitorRegistry;
 
     class WINDOWS_BASE_API MonitorRegistrar
     {

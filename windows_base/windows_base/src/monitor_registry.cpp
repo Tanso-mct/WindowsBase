@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/monitor_collection.h"
+#include "windows_base/include/monitor_registry.h"
 
-void wb::MonitorCollection::Add(size_t id, size_t factoryID)
+void wb::MonitorRegistry::Add(size_t id, size_t factoryID)
 {
     if (factoryIDs_.find(id) != factoryIDs_.end())
     {
@@ -16,7 +16,7 @@ void wb::MonitorCollection::Add(size_t id, size_t factoryID)
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the factory ID to the collection
+    // Add the factory ID to the registry
     factoryIDs_[id] = factoryID;
 
     // Save the key
@@ -29,7 +29,7 @@ void wb::MonitorCollection::Add(size_t id, size_t factoryID)
     }
 }
 
-const size_t &wb::MonitorCollection::GetFactoryID(size_t id) const
+const size_t &wb::MonitorRegistry::GetFactoryID(size_t id) const
 {
     if (factoryIDs_.find(id) == factoryIDs_.end())
     {
@@ -47,19 +47,19 @@ const size_t &wb::MonitorCollection::GetFactoryID(size_t id) const
     return factoryIDs_.at(id);
 }
 
-size_t wb::MonitorCollection::GetMaxID() const
+size_t wb::MonitorRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::MonitorCollection::GetKeys() const
+const std::vector<size_t> &wb::MonitorRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::MonitorCollection wb::gMonitorCollection;
+WINDOWS_BASE_API wb::MonitorRegistry wb::gMonitorRegistry;
 
 wb::MonitorRegistrar::MonitorRegistrar(size_t monitorID, size_t factoryID)
 {
-    wb::gMonitorCollection.Add(monitorID, factoryID);
+    wb::gMonitorRegistry.Add(monitorID, factoryID);
 }

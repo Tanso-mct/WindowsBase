@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/shared_facade_collection.h"
+#include "windows_base/include/shared_facade_registry.h"
 
-void wb::SharedFacadeCollection::AddFactory(size_t id, std::unique_ptr<ISharedFacadeFactory> factory)
+void wb::SharedFacadeRegistry::AddFactory(size_t id, std::unique_ptr<ISharedFacadeFactory> factory)
 {
     if (sharedFacadeFactories_.find(id) != sharedFacadeFactories_.end())
     {
@@ -16,7 +16,7 @@ void wb::SharedFacadeCollection::AddFactory(size_t id, std::unique_ptr<ISharedFa
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the factory to the collection
+    // Add the factory to the registry
     sharedFacadeFactories_[id] = std::move(factory);
 
     // Save the key
@@ -29,7 +29,7 @@ void wb::SharedFacadeCollection::AddFactory(size_t id, std::unique_ptr<ISharedFa
     }
 }
 
-wb::ISharedFacadeFactory &wb::SharedFacadeCollection::GetFactory(size_t id)
+wb::ISharedFacadeFactory &wb::SharedFacadeRegistry::GetFactory(size_t id)
 {
     if (sharedFacadeFactories_.find(id) == sharedFacadeFactories_.end())
     {
@@ -47,19 +47,19 @@ wb::ISharedFacadeFactory &wb::SharedFacadeCollection::GetFactory(size_t id)
     return *sharedFacadeFactories_[id];
 }
 
-size_t wb::SharedFacadeCollection::GetMaxID() const
+size_t wb::SharedFacadeRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::SharedFacadeCollection::GetKeys() const
+const std::vector<size_t> &wb::SharedFacadeRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::SharedFacadeCollection wb::gSharedFacadeCollection;
+WINDOWS_BASE_API wb::SharedFacadeRegistry wb::gSharedFacadeRegistry;
 
 wb::SharedFacadeRegistrar::SharedFacadeRegistrar(size_t id, std::unique_ptr<ISharedFacadeFactory> factory)
 {
-    gSharedFacadeCollection.AddFactory(id, std::move(factory));
+    gSharedFacadeRegistry.AddFactory(id, std::move(factory));
 }

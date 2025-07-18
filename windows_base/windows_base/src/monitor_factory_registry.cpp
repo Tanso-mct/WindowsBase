@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/monitor_factory_collection.h"
+#include "windows_base/include/monitor_factory_registry.h"
 
-void wb::MonitorFactoryCollection::AddFactory(size_t monitorID, std::unique_ptr<IMonitorFactory> monitorFactory)
+void wb::MonitorFactoryRegistry::AddFactory(size_t monitorID, std::unique_ptr<IMonitorFactory> monitorFactory)
 {
     if (monitorFactories_.find(monitorID) != monitorFactories_.end())
     {
@@ -16,7 +16,7 @@ void wb::MonitorFactoryCollection::AddFactory(size_t monitorID, std::unique_ptr<
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the factory to the collection
+    // Add the factory to the registry
     monitorFactories_[monitorID] = std::move(monitorFactory);
 
     // Save the key
@@ -29,7 +29,7 @@ void wb::MonitorFactoryCollection::AddFactory(size_t monitorID, std::unique_ptr<
     }
 }
 
-wb::IMonitorFactory &wb::MonitorFactoryCollection::GetFactory(size_t monitorID)
+wb::IMonitorFactory &wb::MonitorFactoryRegistry::GetFactory(size_t monitorID)
 {
     if (monitorFactories_.find(monitorID) == monitorFactories_.end())
     {
@@ -47,19 +47,19 @@ wb::IMonitorFactory &wb::MonitorFactoryCollection::GetFactory(size_t monitorID)
     return *monitorFactories_[monitorID];
 }
 
-size_t wb::MonitorFactoryCollection::GetMaxID() const
+size_t wb::MonitorFactoryRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::MonitorFactoryCollection::GetKeys() const
+const std::vector<size_t> &wb::MonitorFactoryRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::MonitorFactoryCollection wb::gMonitorFactoryCollection;
+WINDOWS_BASE_API wb::MonitorFactoryRegistry wb::gMonitorFactoryRegistry;
 
 wb::MonitorFactoryRegistrar::MonitorFactoryRegistrar(size_t monitorID, std::unique_ptr<IMonitorFactory> monitorFactory)
 {
-    gMonitorFactoryCollection.AddFactory(monitorID, std::move(monitorFactory));
+    gMonitorFactoryRegistry.AddFactory(monitorID, std::move(monitorFactory));
 }

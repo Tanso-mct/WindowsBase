@@ -3,7 +3,7 @@
 #include "windows_base/include/entity.h"
 #include "windows_base/include/container_impl.h"
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/component_collection.h"
+#include "windows_base/include/component_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace

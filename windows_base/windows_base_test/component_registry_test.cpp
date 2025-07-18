@@ -2,7 +2,7 @@
 
 #include "windows_base/include/id_factory.h"
 #include "windows_base/include/interfaces/component.h"
-#include "windows_base/include/component_collection.h"
+#include "windows_base/include/component_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -28,9 +28,9 @@ namespace
     WB_REGISTER_COMPONENT(MockComponent, MockComponentID());
 }
 
-TEST(ComponentCollection, GetFactory)
+TEST(ComponentRegistry, GetFactory)
 {
-    wb::IComponentFactory &factory = wb::gComponentCollection.GetFactory(MockComponentID());
+    wb::IComponentFactory &factory = wb::gComponentRegistry.GetFactory(MockComponentID());
     EXPECT_NE(&factory, nullptr);
 
     std::unique_ptr<wb::IComponent> component = factory.Create();

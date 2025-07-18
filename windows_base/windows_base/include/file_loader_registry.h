@@ -2,11 +2,11 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/file.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API FileLoaderCollection : public IFileLoaderCollection
+    class WINDOWS_BASE_API FileLoaderRegistry : public IFileLoaderRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<IFileLoader>> fileLoaders_;
@@ -14,14 +14,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        FileLoaderCollection() = default;
-        virtual ~FileLoaderCollection() = default;
+        FileLoaderRegistry() = default;
+        virtual ~FileLoaderRegistry() = default;
 
-        FileLoaderCollection(const FileLoaderCollection &) = delete;
-        FileLoaderCollection &operator=(const FileLoaderCollection &) = delete;
+        FileLoaderRegistry(const FileLoaderRegistry &) = delete;
+        FileLoaderRegistry &operator=(const FileLoaderRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IFileLoaderCollection implementation
+         * IFileLoaderRegistry implementation
         /**************************************************************************************************************/
 
         void AddLoader(size_t type, std::unique_ptr<IFileLoader> loader) override;
@@ -31,7 +31,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API FileLoaderCollection gFileLoaderCollection;
+    extern WINDOWS_BASE_API FileLoaderRegistry gFileLoaderRegistry;
 
     class WINDOWS_BASE_API FileLoaderRegistrar
     {

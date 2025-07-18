@@ -2,14 +2,14 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/system.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API SystemCollection : public ISystemCollection
+    class WINDOWS_BASE_API SystemRegistry : public ISystemRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<ISystemFactory>> systemFactories_;
@@ -17,14 +17,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        SystemCollection() = default;
-        virtual ~SystemCollection() = default;
+        SystemRegistry() = default;
+        virtual ~SystemRegistry() = default;
 
-        SystemCollection(const SystemCollection &) = delete;
-        SystemCollection &operator=(const SystemCollection &) = delete;
+        SystemRegistry(const SystemRegistry &) = delete;
+        SystemRegistry &operator=(const SystemRegistry &) = delete;
 
         /***************************************************************************************************************
-         * ISystemCollection implementation
+         * ISystemRegistry implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t systemID, std::unique_ptr<ISystemFactory> systemFactory) override;
@@ -34,7 +34,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API SystemCollection gSystemCollection;
+    extern WINDOWS_BASE_API SystemRegistry gSystemRegistry;
 
     template <typename SYSTEM>
     class SystemFactory : public ISystemFactory

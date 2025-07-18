@@ -2,14 +2,14 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/asset.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API AssetCollection : public IAssetCollection
+    class WINDOWS_BASE_API AssetRegistry : public IAssetRegistry
     {
     private:
         std::unordered_map<size_t, size_t> factoryIDs_;
@@ -19,14 +19,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        AssetCollection() = default;
-        virtual ~AssetCollection() = default;
+        AssetRegistry() = default;
+        virtual ~AssetRegistry() = default;
 
-        AssetCollection(const AssetCollection &) = delete;
-        AssetCollection &operator=(const AssetCollection &) = delete;
+        AssetRegistry(const AssetRegistry &) = delete;
+        AssetRegistry &operator=(const AssetRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IAssetCollection implementation
+         * IAssetRegistry implementation
         /**************************************************************************************************************/
 
         void Add(size_t id, size_t factoryID, size_t fileLoaderID, std::string_view filePath) override;
@@ -38,7 +38,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API AssetCollection gAssetCollection;
+    extern WINDOWS_BASE_API AssetRegistry gAssetRegistry;
 
     class WINDOWS_BASE_API AssetRegistrar
     {

@@ -6,7 +6,7 @@
 #include "windows_base/include/type_cast.h"
 #include "windows_base/include/windows_helper.h"
 
-#include "windows_base/include/monitor_collection.h"
+#include "windows_base/include/monitor_registry.h"
 #include "windows_base/include/interfaces/monitor_keyboard.h"
 #include "windows_base/include/interfaces/monitor_mouse.h"
 
@@ -327,7 +327,7 @@ void wb::DefaultWindowFacade::AddMonitorID(size_t monitorID)
     monitorIDs_.push_back(monitorID);
 
     // Get the monitor's factory ID
-    const size_t &monitorFactoryID = wb::gMonitorCollection.GetFactoryID(monitorID);
+    const size_t &monitorFactoryID = wb::gMonitorRegistry.GetFactoryID(monitorID);
 
     // Add the monitor's factory ID to the map
     monitorTypeToIDMap_[monitorFactoryID] = monitorIDs_.size() - 1;
@@ -1471,6 +1471,11 @@ void wb::DefaultWindowEvent::OnEvent(ContainerStorage &contStorage, UINT msg, WP
             contStorage.GetContainer<IAssetContainer>(),
             contStorage.GetContainer<ISceneContainer>()
         );
+
+        // Get the window facade
+        wb::IWindowContainer &windowCont = contStorage.GetContainer<wb::IWindowContainer>();
+        wb::IWindowFacade &windowFacade = windowCont.Get(windowID_);
+        windowFacade.Destroy();
 
         break;
     }

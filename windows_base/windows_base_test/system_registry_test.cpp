@@ -3,7 +3,7 @@
 #include "windows_base/include/id_factory.h"
 #include "windows_base/include/interfaces/system.h"
 #include "windows_base/include/system.h"
-#include "windows_base/include/system_collection.h"
+#include "windows_base/include/system_registry.h"
 #include "windows_base/include/entity.h"
 #include "windows_base/include/container_impl.h"
 #pragma comment(lib, "windows_base.lib")
@@ -43,8 +43,8 @@ namespace
     WB_REGISTER_SYSTEM(MockSystem, MockSystemID());
 }
 
-TEST(SystemCollection, GetFactory)
+TEST(SystemRegistry, GetFactory)
 {
-    wb::ISystemFactory &factory = wb::gSystemCollection.GetFactory(MockSystemID());
+    wb::ISystemFactory &factory = wb::gSystemRegistry.GetFactory(MockSystemID());
     EXPECT_NE(&factory, nullptr);
 }

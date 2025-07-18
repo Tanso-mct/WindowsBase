@@ -2,14 +2,14 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/monitor.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API MonitorFactoryCollection : public IMonitorFactoryCollection
+    class WINDOWS_BASE_API MonitorFactoryRegistry : public IMonitorFactoryRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<IMonitorFactory>> monitorFactories_;
@@ -17,14 +17,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        MonitorFactoryCollection() = default;
-        virtual ~MonitorFactoryCollection() = default;
+        MonitorFactoryRegistry() = default;
+        virtual ~MonitorFactoryRegistry() = default;
 
-        MonitorFactoryCollection(const MonitorFactoryCollection &) = delete;
-        MonitorFactoryCollection &operator=(const MonitorFactoryCollection &) = delete;
+        MonitorFactoryRegistry(const MonitorFactoryRegistry &) = delete;
+        MonitorFactoryRegistry &operator=(const MonitorFactoryRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IMonitorFactoryCollection implementation
+         * IMonitorFactoryRegistry implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t monitorID, std::unique_ptr<IMonitorFactory> monitorFactory) override;
@@ -34,7 +34,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API MonitorFactoryCollection gMonitorFactoryCollection;
+    extern WINDOWS_BASE_API MonitorFactoryRegistry gMonitorFactoryRegistry;
 
     class WINDOWS_BASE_API MonitorFactoryRegistrar
     {

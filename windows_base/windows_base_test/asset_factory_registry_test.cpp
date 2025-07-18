@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/asset_factory_collection.h"
+#include "windows_base/include/asset_factory_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -28,9 +28,9 @@ namespace
     WB_REGISTER_ASSET_FACTORY(MockAssetFactoryID(), MockAssetFactory);
 }
 
-TEST(AssetFactoryCollection, GetFactory)
+TEST(AssetFactoryRegistry, GetFactory)
 {
-    wb::IAssetFactory &factory = wb::gAssetFactoryCollection.GetFactory(MockAssetFactoryID());
+    wb::IAssetFactory &factory = wb::gAssetFactoryRegistry.GetFactory(MockAssetFactoryID());
     EXPECT_NE(&factory, nullptr);
 }
 

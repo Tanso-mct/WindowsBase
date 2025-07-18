@@ -2,7 +2,7 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/scene.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/scene.h"
 #include "windows_base/include/system.h"
@@ -13,7 +13,7 @@
 
 namespace wb
 {
-    class WINDOWS_BASE_API SceneFacadeCollection : public ISceneFacadeCollection
+    class WINDOWS_BASE_API SceneFacadeRegistry : public ISceneFacadeRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<ISceneFacadeFactory>> sceneFacadeFactories_;
@@ -21,14 +21,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        SceneFacadeCollection() = default;
-        virtual ~SceneFacadeCollection() = default;
+        SceneFacadeRegistry() = default;
+        virtual ~SceneFacadeRegistry() = default;
 
-        SceneFacadeCollection(const SceneFacadeCollection &) = delete;
-        SceneFacadeCollection &operator=(const SceneFacadeCollection &) = delete;
+        SceneFacadeRegistry(const SceneFacadeRegistry &) = delete;
+        SceneFacadeRegistry &operator=(const SceneFacadeRegistry &) = delete;
 
         /***************************************************************************************************************
-         * ISceneFacadeCollection implementation
+         * ISceneFacadeRegistry implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t id, std::unique_ptr<ISceneFacadeFactory> factory) override;
@@ -38,7 +38,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API SceneFacadeCollection gSceneFacadeCollection;
+    extern WINDOWS_BASE_API SceneFacadeRegistry gSceneFacadeRegistry;
 
     class WINDOWS_BASE_API SceneFacadeRegistrar
     {

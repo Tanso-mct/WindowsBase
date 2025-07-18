@@ -1,10 +1,10 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/asset_factory_collection.h"
+#include "windows_base/include/asset_factory_registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
-void wb::AssetFactoryCollection::AddFactory(size_t id, std::unique_ptr<IAssetFactory> factory)
+void wb::AssetFactoryRegistry::AddFactory(size_t id, std::unique_ptr<IAssetFactory> factory)
 {
     if (factories_.find(id) != factories_.end())
     {
@@ -19,7 +19,7 @@ void wb::AssetFactoryCollection::AddFactory(size_t id, std::unique_ptr<IAssetFac
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the factory to the collection
+    // Add the factory to the registry
     factories_[id] = std::move(factory);
 
     // Save the key
@@ -32,7 +32,7 @@ void wb::AssetFactoryCollection::AddFactory(size_t id, std::unique_ptr<IAssetFac
     }
 }
 
-wb::IAssetFactory &wb::AssetFactoryCollection::GetFactory(size_t id)
+wb::IAssetFactory &wb::AssetFactoryRegistry::GetFactory(size_t id)
 {
     if (factories_.find(id) == factories_.end())
     {
@@ -50,19 +50,19 @@ wb::IAssetFactory &wb::AssetFactoryCollection::GetFactory(size_t id)
     return *factories_[id];
 }
 
-size_t wb::AssetFactoryCollection::GetMaxID() const
+size_t wb::AssetFactoryRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::AssetFactoryCollection::GetKeys() const
+const std::vector<size_t> &wb::AssetFactoryRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::AssetFactoryCollection wb::gAssetFactoryCollection;
+WINDOWS_BASE_API wb::AssetFactoryRegistry wb::gAssetFactoryRegistry;
 
 wb::AssetFactoryRegistrar::AssetFactoryRegistrar(size_t id, std::unique_ptr<IAssetFactory> factory)
 {
-    wb::gAssetFactoryCollection.AddFactory(id, std::move(factory));
+    wb::gAssetFactoryRegistry.AddFactory(id, std::move(factory));
 }

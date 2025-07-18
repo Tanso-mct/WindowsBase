@@ -2,11 +2,11 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/asset.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API AssetFactoryCollection : public IAssetFactoryCollection
+    class WINDOWS_BASE_API AssetFactoryRegistry : public IAssetFactoryRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<IAssetFactory>> factories_;
@@ -14,14 +14,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        AssetFactoryCollection() = default;
-        virtual ~AssetFactoryCollection() = default;
+        AssetFactoryRegistry() = default;
+        virtual ~AssetFactoryRegistry() = default;
 
-        AssetFactoryCollection(const AssetFactoryCollection &) = delete;
-        AssetFactoryCollection &operator=(const AssetFactoryCollection &) = delete;
+        AssetFactoryRegistry(const AssetFactoryRegistry &) = delete;
+        AssetFactoryRegistry &operator=(const AssetFactoryRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IAssetFactoryCollection implementation
+         * IAssetFactoryRegistry implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t id, std::unique_ptr<IAssetFactory> factory) override;
@@ -31,7 +31,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API AssetFactoryCollection gAssetFactoryCollection;
+    extern WINDOWS_BASE_API AssetFactoryRegistry gAssetFactoryRegistry;
 
     class WINDOWS_BASE_API AssetFactoryRegistrar
     {

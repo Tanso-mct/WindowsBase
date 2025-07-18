@@ -9,10 +9,10 @@
 namespace wb
 {
     template <typename FACTORY>
-    class IFactoryCollection
+    class IFactoryRegistry
     {
     public:
-        virtual ~IFactoryCollection() = default;
+        virtual ~IFactoryRegistry() = default;
 
         virtual void AddFactory(size_t id, std::unique_ptr<FACTORY> factory) = 0;
         virtual FACTORY &GetFactory(size_t id) = 0;
@@ -21,17 +21,17 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
-    using IComponentCollection = IFactoryCollection<IComponentFactory>;
-    using ISystemCollection = IFactoryCollection<ISystemFactory>;
-    using IAssetFactoryCollection = IFactoryCollection<IAssetFactory>;
-    using ISceneFacadeCollection = IFactoryCollection<ISceneFacadeFactory>;
-    using IMonitorFactoryCollection = IFactoryCollection<IMonitorFactory>;
-    using ISharedFacadeCollection = IFactoryCollection<ISharedFacadeFactory>;
+    using IComponentRegistry = IFactoryRegistry<IComponentFactory>;
+    using ISystemRegistry = IFactoryRegistry<ISystemFactory>;
+    using IAssetFactoryRegistry = IFactoryRegistry<IAssetFactory>;
+    using ISceneFacadeRegistry = IFactoryRegistry<ISceneFacadeFactory>;
+    using IMonitorFactoryRegistry = IFactoryRegistry<IMonitorFactory>;
+    using ISharedFacadeRegistry = IFactoryRegistry<ISharedFacadeFactory>;
     
-    class IAssetCollection
+    class IAssetRegistry
     {
     public:
-        virtual ~IAssetCollection() = default;
+        virtual ~IAssetRegistry() = default;
 
         virtual void Add(size_t id, size_t factoryID, size_t fileLoaderID, std::string_view filePath) = 0;
         virtual const size_t &GetFactoryID(size_t id) const = 0;
@@ -42,10 +42,10 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
-    class IMonitorCollection
+    class IMonitorRegistry
     {
     public:
-        virtual ~IMonitorCollection() = default;
+        virtual ~IMonitorRegistry() = default;
 
         virtual void Add(size_t id, size_t factoryID) = 0;
         virtual const size_t &GetFactoryID(size_t id) const = 0;
@@ -54,10 +54,10 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
-    class IWindowCollection
+    class IWindowRegistry
     {
     public:
-        virtual ~IWindowCollection() = default;
+        virtual ~IWindowRegistry() = default;
 
         virtual void AddFactories
         (
@@ -72,10 +72,10 @@ namespace wb
     };
 
     template <typename LOADER>
-    class ILoaderCollection
+    class ILoaderRegistry
     {
     public:
-        virtual ~ILoaderCollection() = default;
+        virtual ~ILoaderRegistry() = default;
 
         virtual void AddLoader(size_t id, std::unique_ptr<LOADER> loader) = 0;
         virtual LOADER &GetLoader(size_t id) = 0;
@@ -84,7 +84,7 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const = 0;
     };
 
-    using IFileLoaderCollection = ILoaderCollection<IFileLoader>;
+    using IFileLoaderRegistry = ILoaderRegistry<IFileLoader>;
 
     
     

@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/file_loader_collection.h"
+#include "windows_base/include/file_loader_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -33,9 +33,9 @@ namespace
     WB_REGISTER_FILE_LOADER(MockFileLoaderID(), MockFileLoader);
 }
 
-TEST(FileLoaderCollection, GetLoader)
+TEST(FileLoaderRegistry, GetLoader)
 {
-    wb::IFileLoader &loader = wb::gFileLoaderCollection.GetLoader(MockFileLoaderID());
+    wb::IFileLoader &loader = wb::gFileLoaderRegistry.GetLoader(MockFileLoaderID());
     EXPECT_NE(&loader, nullptr);
 
     EXPECT_EQ(loader.GetID(), MockFileLoaderID());

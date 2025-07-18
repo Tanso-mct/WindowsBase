@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/window_collection.h"
+#include "windows_base/include/window_registry.h"
 
-void wb::WindowCollection::AddFactories(size_t id, std::unique_ptr<IWindowFacadeFactory> facadeFactory, std::unique_ptr<IWindowEventFactory> eventFactory)
+void wb::WindowRegistry::AddFactories(size_t id, std::unique_ptr<IWindowFacadeFactory> facadeFactory, std::unique_ptr<IWindowEventFactory> eventFactory)
 {
     if (facadeFactories_.find(id) != facadeFactories_.end())
     {
@@ -30,7 +30,7 @@ void wb::WindowCollection::AddFactories(size_t id, std::unique_ptr<IWindowFacade
     }
 }
 
-wb::IWindowFacadeFactory &wb::WindowCollection::GetFacadeFactory(size_t id)
+wb::IWindowFacadeFactory &wb::WindowRegistry::GetFacadeFactory(size_t id)
 {
     if (facadeFactories_.find(id) == facadeFactories_.end())
     {
@@ -48,7 +48,7 @@ wb::IWindowFacadeFactory &wb::WindowCollection::GetFacadeFactory(size_t id)
     return *facadeFactories_.at(id);
 }
 
-wb::IWindowEventFactory &wb::WindowCollection::GetEventFactory(size_t id)
+wb::IWindowEventFactory &wb::WindowRegistry::GetEventFactory(size_t id)
 {
     if (eventFactories_.find(id) == eventFactories_.end())
     {
@@ -66,22 +66,22 @@ wb::IWindowEventFactory &wb::WindowCollection::GetEventFactory(size_t id)
     return *eventFactories_.at(id);
 }
 
-size_t wb::WindowCollection::GetMaxID() const
+size_t wb::WindowRegistry::GetMaxID() const
 {
     return maxId_;
 }
 
-const std::vector<size_t> &wb::WindowCollection::GetKeys() const
+const std::vector<size_t> &wb::WindowRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::WindowCollection wb::gWindowCollection;
+WINDOWS_BASE_API wb::WindowRegistry wb::gWindowRegistry;
 
 wb::WindowRegistrar::WindowRegistrar
 (
     size_t windowID,
     std::unique_ptr<IWindowFacadeFactory> facadeFactory, std::unique_ptr<IWindowEventFactory> eventFactory
 ){
-    wb::gWindowCollection.AddFactories(windowID, std::move(facadeFactory), std::move(eventFactory));
+    wb::gWindowRegistry.AddFactories(windowID, std::move(facadeFactory), std::move(eventFactory));
 }

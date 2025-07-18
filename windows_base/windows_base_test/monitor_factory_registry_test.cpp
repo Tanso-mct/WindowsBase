@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/monitor_factory_collection.h"
+#include "windows_base/include/monitor_factory_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -82,8 +82,8 @@ namespace
     WB_REGISTER_MONITOR_FACTORY(MockMonitorFactory, MockMonitorFactoryID());
 }
 
-TEST(MonitorFactoryCollection, GetFactory)
+TEST(MonitorFactoryRegistry, GetFactory)
 {
-    wb::IMonitorFactory &factory = wb::gMonitorFactoryCollection.GetFactory(MockMonitorFactoryID());
+    wb::IMonitorFactory &factory = wb::gMonitorFactoryRegistry.GetFactory(MockMonitorFactoryID());
     EXPECT_NE(&factory, nullptr);
 }

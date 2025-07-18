@@ -5,12 +5,12 @@
 #include "windows_base/include/container_impl.h"
 #include "windows_base/include/asset_group.h"
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/file_loader_collection.h"
-#include "windows_base/include/asset_factory_collection.h"
-#include "windows_base/include/asset_collection.h"
+#include "windows_base/include/file_loader_registry.h"
+#include "windows_base/include/asset_factory_registry.h"
+#include "windows_base/include/asset_registry.h"
 #include "windows_base/include/container_storage.h"
 #include "windows_base/include/system.h"
-#include "windows_base/include/scene_facade_collection.h"
+#include "windows_base/include/scene_facade_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -179,7 +179,7 @@ namespace
 TEST(SceneFacade, Create)
 {
     // Get the SceneFacade factory
-    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeRegistry.GetFactory(MockSceneFacadeID());
 
     // Create a SceneFacade using the factory
     std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
@@ -188,14 +188,14 @@ TEST(SceneFacade, Create)
 TEST(SceneFacade, Use)
 {
     // Get the SceneFacade factory
-    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeRegistry.GetFactory(MockSceneFacadeID());
 
     // Create a SceneFacade using the factory
     std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
 
     // Create an asset container
     std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
-    assetCont->Create(wb::gAssetCollection.GetMaxID() + 1);
+    assetCont->Create(wb::gAssetRegistry.GetMaxID() + 1);
 
     // Load the scene
     sceneFacade->Load(*assetCont);
@@ -242,18 +242,18 @@ TEST(SceneUpdator, Use)
     wb::ContainerStorage contStorage;
     {
         std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
-        assetCont->Create(wb::gAssetCollection.GetMaxID() + 1);
+        assetCont->Create(wb::gAssetRegistry.GetMaxID() + 1);
         contStorage.SetContainer<wb::IAssetContainer>(std::move(assetCont));
 
         std::unique_ptr<wb::ISceneContainer> sceneCont = std::make_unique<wb::SceneContainer>();
-        sceneCont->Create(wb::gSceneFacadeCollection.GetMaxID() + 1);
+        sceneCont->Create(wb::gSceneFacadeRegistry.GetMaxID() + 1);
         contStorage.SetContainer<wb::ISceneContainer>(std::move(sceneCont));
     }
 
     // Create current scene
     {
         // Get the SceneFacade factory
-        wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+        wb::ISceneFacadeFactory &factory = wb::gSceneFacadeRegistry.GetFactory(MockSceneFacadeID());
 
         // Create a SceneFacade using the factory
         std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();
@@ -268,7 +268,7 @@ TEST(SceneUpdator, Use)
     // Create next scene
     {
         // Get the SceneFacade factory
-        wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockNextScneFacadeID());
+        wb::ISceneFacadeFactory &factory = wb::gSceneFacadeRegistry.GetFactory(MockNextScneFacadeID());
 
         // Create a SceneFacade using the factory
         std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();

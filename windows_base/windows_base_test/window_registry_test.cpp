@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/window_collection.h"
+#include "windows_base/include/window_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -55,13 +55,13 @@ namespace
     WB_REGISTER_WINDOW(MockWindowID, MockWindowFacadeFactory, MockWindowEventFactory)    
 }
 
-TEST(WindowCollection, GetFactories)
+TEST(WindowRegistry, GetFactories)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Get the event factory
-    wb::IWindowEventFactory &eventFactory = wb::gWindowCollection.GetEventFactory(MockWindowID());
+    wb::IWindowEventFactory &eventFactory = wb::gWindowRegistry.GetEventFactory(MockWindowID());
     EXPECT_NE(&eventFactory, nullptr);
 }

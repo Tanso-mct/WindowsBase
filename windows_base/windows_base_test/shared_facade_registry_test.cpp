@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/shared_facade_collection.h"
+#include "windows_base/include/shared_facade_registry.h"
 
 namespace
 {
@@ -36,8 +36,8 @@ namespace
     WB_REGISTER_SHARED_FACADE(MockSharedFacadeID, MockSharedFacade);
 }
 
-TEST(SharedFacadeCollection, GetFactory)
+TEST(SharedFacadeRegistry, GetFactory)
 {
-    wb::ISharedFacadeFactory &factory = wb::gSharedFacadeCollection.GetFactory(MockSharedFacadeID());
+    wb::ISharedFacadeFactory &factory = wb::gSharedFacadeRegistry.GetFactory(MockSharedFacadeID());
     EXPECT_NE(&factory, nullptr);
 }

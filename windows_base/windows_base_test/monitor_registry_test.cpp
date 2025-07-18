@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/monitor_collection.h"
+#include "windows_base/include/monitor_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -33,9 +33,9 @@ namespace
     WB_REGISTER_MONITOR(MockMonitorID, MockMonitorFactoryID());
 }
 
-TEST(MonitorCollection, GetFactoryID)
+TEST(MonitorRegistry, GetFactoryID)
 {
     // Get the factory ID for the mock monitor
-    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMonitorID());
+    const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockMonitorID());
     EXPECT_EQ(factoryID, MockMonitorFactoryID());
 }

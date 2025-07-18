@@ -14,13 +14,13 @@
     <ClCompile Include="windows_helper_test.cpp">
       <Filter>tests\utility</Filter>
     </ClCompile>
-    <ClCompile Include="component_collection_test.cpp">
+    <ClCompile Include="component_registry_test.cpp">
       <Filter>tests\ecs</Filter>
     </ClCompile>
     <ClCompile Include="entity_test.cpp">
       <Filter>tests\ecs</Filter>
     </ClCompile>
-    <ClCompile Include="system_collection_test.cpp">
+    <ClCompile Include="system_registry_test.cpp">
       <Filter>tests\ecs</Filter>
     </ClCompile>
     <ClCompile Include="container_dynamic_test.cpp">
@@ -35,13 +35,13 @@
     <ClCompile Include="event_test.cpp">
       <Filter>tests\event</Filter>
     </ClCompile>
-    <ClCompile Include="file_loader_collection_test.cpp">
+    <ClCompile Include="file_loader_registry_test.cpp">
       <Filter>tests\file</Filter>
     </ClCompile>
-    <ClCompile Include="asset_collection_test.cpp">
+    <ClCompile Include="asset_registry_test.cpp">
       <Filter>tests\asset</Filter>
     </ClCompile>
-    <ClCompile Include="asset_factory_collection_test.cpp">
+    <ClCompile Include="asset_factory_registry_test.cpp">
       <Filter>tests\asset</Filter>
     </ClCompile>
     <ClCompile Include="container_storage_test.cpp">
@@ -50,13 +50,13 @@
     <ClCompile Include="scene_test.cpp">
       <Filter>tests\scene</Filter>
     </ClCompile>
-    <ClCompile Include="scene_facade_collection_test.cpp">
+    <ClCompile Include="scene_facade_registry_test.cpp">
       <Filter>tests\scene</Filter>
     </ClCompile>
-    <ClCompile Include="monitor_factory_collection_test.cpp">
+    <ClCompile Include="monitor_factory_registry_test.cpp">
       <Filter>tests\monitor</Filter>
     </ClCompile>
-    <ClCompile Include="monitor_collection_test.cpp">
+    <ClCompile Include="monitor_registry_test.cpp">
       <Filter>tests\monitor</Filter>
     </ClCompile>
     <ClCompile Include="monitor_keyboard_test.cpp">
@@ -65,13 +65,13 @@
     <ClCompile Include="monitor_mouse_test.cpp">
       <Filter>tests\monitor</Filter>
     </ClCompile>
-    <ClCompile Include="window_collection_test.cpp">
+    <ClCompile Include="window_registry_test.cpp">
       <Filter>tests\window</Filter>
     </ClCompile>
     <ClCompile Include="window_test.cpp">
       <Filter>tests\window</Filter>
     </ClCompile>
-    <ClCompile Include="shared_facade_collection_test.cpp">
+    <ClCompile Include="shared_facade_registry_test.cpp">
       <Filter>tests\shared</Filter>
     </ClCompile>
     <ClCompile Include="library_test.cpp">

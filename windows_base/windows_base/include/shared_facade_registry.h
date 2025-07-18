@@ -2,7 +2,7 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/shared.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
@@ -11,7 +11,7 @@
 
 namespace wb
 {
-    class WINDOWS_BASE_API SharedFacadeCollection : public ISharedFacadeCollection
+    class WINDOWS_BASE_API SharedFacadeRegistry : public ISharedFacadeRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<ISharedFacadeFactory>> sharedFacadeFactories_;
@@ -19,14 +19,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        SharedFacadeCollection() = default;
-        virtual ~SharedFacadeCollection() = default;
+        SharedFacadeRegistry() = default;
+        virtual ~SharedFacadeRegistry() = default;
 
-        SharedFacadeCollection(const SharedFacadeCollection &) = delete;
-        SharedFacadeCollection &operator=(const SharedFacadeCollection &) = delete;
+        SharedFacadeRegistry(const SharedFacadeRegistry &) = delete;
+        SharedFacadeRegistry &operator=(const SharedFacadeRegistry &) = delete;
 
         /***************************************************************************************************************
-         * ISharedFacadeCollection implementation
+         * ISharedFacadeRegistry implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t id, std::unique_ptr<ISharedFacadeFactory> factory) override;
@@ -36,7 +36,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API SharedFacadeCollection gSharedFacadeCollection;
+    extern WINDOWS_BASE_API SharedFacadeRegistry gSharedFacadeRegistry;
 
     template <typename SHARED_FACADE>
     class SharedFacadeFactory : public ISharedFacadeFactory

@@ -2,14 +2,14 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/window.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API WindowCollection : public IWindowCollection
+    class WINDOWS_BASE_API WindowRegistry : public IWindowRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<IWindowFacadeFactory>> facadeFactories_;
@@ -18,14 +18,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        WindowCollection() = default;
-        virtual ~WindowCollection() = default;
+        WindowRegistry() = default;
+        virtual ~WindowRegistry() = default;
 
-        WindowCollection(const WindowCollection &) = delete;
-        WindowCollection &operator=(const WindowCollection &) = delete;
+        WindowRegistry(const WindowRegistry &) = delete;
+        WindowRegistry &operator=(const WindowRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IWindowCollection implementation
+         * IWindowRegistry implementation
         /**************************************************************************************************************/
 
         virtual void AddFactories
@@ -41,7 +41,7 @@ namespace wb
         virtual const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API WindowCollection gWindowCollection;
+    extern WINDOWS_BASE_API WindowRegistry gWindowRegistry;
 
     class WINDOWS_BASE_API WindowRegistrar
     {

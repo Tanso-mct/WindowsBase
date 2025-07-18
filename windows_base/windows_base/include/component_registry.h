@@ -2,14 +2,14 @@
 #include "windows_base/include/dll_config.h"
 
 #include "windows_base/include/interfaces/component.h"
-#include "windows_base/include/interfaces/collection.h"
+#include "windows_base/include/interfaces/registry.h"
 
 #include "windows_base/include/console_log.h"
 #include "windows_base/include/error_handler.h"
 
 namespace wb
 {
-    class WINDOWS_BASE_API ComponentCollection : public IComponentCollection
+    class WINDOWS_BASE_API ComponentRegistry : public IComponentRegistry
     {
     private:
         std::unordered_map<size_t, std::unique_ptr<IComponentFactory>> componentFactories_;
@@ -17,14 +17,14 @@ namespace wb
         std::vector<size_t> keys_;
 
     public:
-        ComponentCollection() = default;
-        virtual ~ComponentCollection() = default;
+        ComponentRegistry() = default;
+        virtual ~ComponentRegistry() = default;
 
-        ComponentCollection(const ComponentCollection &) = delete;
-        ComponentCollection &operator=(const ComponentCollection &) = delete;
+        ComponentRegistry(const ComponentRegistry &) = delete;
+        ComponentRegistry &operator=(const ComponentRegistry &) = delete;
 
         /***************************************************************************************************************
-         * IComponentCollection implementation
+         * IComponentRegistry implementation
         /**************************************************************************************************************/
 
         void AddFactory(size_t componentID, std::unique_ptr<IComponentFactory> componentFactory) override;
@@ -34,7 +34,7 @@ namespace wb
         const std::vector<size_t> &GetKeys() const override;
     };
 
-    extern WINDOWS_BASE_API ComponentCollection gComponentCollection;
+    extern WINDOWS_BASE_API ComponentRegistry gComponentRegistry;
 
     template <typename COMPONENT>
     class ComponentFactory : public IComponentFactory

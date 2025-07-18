@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/scene_facade_collection.h"
+#include "windows_base/include/scene_facade_registry.h"
 #include "windows_base/include/container_impl.h"
 #include "windows_base/include/asset_group.h"
-#include "windows_base/include/file_loader_collection.h"
-#include "windows_base/include/asset_factory_collection.h"
-#include "windows_base/include/asset_collection.h"
+#include "windows_base/include/file_loader_registry.h"
+#include "windows_base/include/asset_factory_registry.h"
+#include "windows_base/include/asset_registry.h"
 #include "windows_base/include/container_storage.h"
 #pragma comment(lib, "windows_base.lib")
 
@@ -148,9 +148,9 @@ namespace
     
 }
 
-TEST(SceneFacadeCollection, GetFactory)
+TEST(SceneFacadeRegistry, GetFactory)
 {
-    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+    wb::ISceneFacadeFactory &factory = wb::gSceneFacadeRegistry.GetFactory(MockSceneFacadeID());
     EXPECT_NE(&factory, nullptr);
 
     std::unique_ptr<wb::ISceneFacade> sceneFacade = factory.Create();

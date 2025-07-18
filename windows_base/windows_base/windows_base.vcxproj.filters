@@ -21,7 +21,7 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\component_collection.cpp">
+    <ClCompile Include="src\component_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\console_log.cpp">
@@ -39,7 +39,7 @@
     <ClCompile Include="src\id_factory.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\system_collection.cpp">
+    <ClCompile Include="src\system_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\optional_value.cpp">
@@ -54,7 +54,7 @@
     <ClCompile Include="src\scene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\file_loader_collection.cpp">
+    <ClCompile Include="src\file_loader_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\asset_collection.cpp">
@@ -63,19 +63,19 @@
     <ClCompile Include="src\asset_group.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\asset_factory_collection.cpp">
+    <ClCompile Include="src\asset_factory_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene_facade_collection.cpp">
+    <ClCompile Include="src\scene_facade_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\monitor_factory_collection.cpp">
+    <ClCompile Include="src\monitor_factory_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\window.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\monitor_collection.cpp">
+    <ClCompile Include="src\monitor_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\monitor_keyboard.cpp">
@@ -84,10 +84,10 @@
     <ClCompile Include="src\monitor_mouse.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\window_collection.cpp">
+    <ClCompile Include="src\window_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\shared_facade_collection.cpp">
+    <ClCompile Include="src\shared_facade_registry.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="windows_base.cpp">
@@ -98,7 +98,7 @@
     <ClInclude Include="src\pch.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\component_collection.h">
+    <ClInclude Include="include\component_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\console_log.h">
@@ -134,7 +134,7 @@
     <ClInclude Include="include\system.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\system_collection.h">
+    <ClInclude Include="include\system_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\type_cast.h">
@@ -143,7 +143,7 @@
     <ClInclude Include="include\windows_helper.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\interfaces\collection.h">
+    <ClInclude Include="include\interfaces\registry.h">
       <Filter>ヘッダー ファイル\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="include\interfaces\component.h">
@@ -185,25 +185,25 @@
     <ClInclude Include="include\interfaces\file.h">
       <Filter>ヘッダー ファイル\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="include\file_loader_collection.h">
+    <ClInclude Include="include\file_loader_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\asset_collection.h">
+    <ClInclude Include="include\asset_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\asset_group.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\asset_factory_collection.h">
+    <ClInclude Include="include\asset_factory_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\container_storage.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\scene_facade_collection.h">
+    <ClInclude Include="include\scene_facade_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\monitor_factory_collection.h">
+    <ClInclude Include="include\monitor_factory_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\window.h">
@@ -215,7 +215,7 @@
     <ClInclude Include="include\interfaces\window.h">
       <Filter>ヘッダー ファイル\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="include\monitor_collection.h">
+    <ClInclude Include="include\monitor_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\interfaces\monitor_keyboard.h">
@@ -230,13 +230,13 @@
     <ClInclude Include="include\monitor_mouse.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\window_collection.h">
+    <ClInclude Include="include\window_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\interfaces\shared.h">
       <Filter>ヘッダー ファイル\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="include\shared_facade_collection.h">
+    <ClInclude Include="include\shared_facade_registry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="windows_base.h">
