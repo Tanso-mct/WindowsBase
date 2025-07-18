@@ -9,7 +9,6 @@ namespace wb
     {
     public:
         virtual ~IAsset() = default;
-        virtual const size_t &GetID() const = 0;
     };
 
     class IAssetGroup

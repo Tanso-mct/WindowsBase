@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
-#include "windows_base/include/asset_collection.h"
+#include "windows_base/include/asset_registry.h"
 
-void wb::AssetCollection::Add(size_t id, size_t factoryID, size_t fileLoaderID, std::string_view filePath)
+void wb::AssetRegistry::Add(size_t id, size_t factoryID, size_t fileLoaderID, std::string_view filePath)
 {
     if (factoryIDs_.find(id) != factoryIDs_.end())
     {
@@ -16,7 +16,7 @@ void wb::AssetCollection::Add(size_t id, size_t factoryID, size_t fileLoaderID, 
         wb::ThrowRuntimeError(err);
     }
 
-    // Add the asset factory, loader ID, and file path to the collections
+    // Add the asset factory, loader ID, and file path to the registrys
     factoryIDs_[id] = factoryID;
     fileLoaderIDs_[id] = fileLoaderID;
     filePaths_[id] = filePath.data();
@@ -31,7 +31,7 @@ void wb::AssetCollection::Add(size_t id, size_t factoryID, size_t fileLoaderID, 
     }
 }
 
-const size_t &wb::AssetCollection::GetFactoryID(size_t id) const
+const size_t &wb::AssetRegistry::GetFactoryID(size_t id) const
 {
     if (factoryIDs_.find(id) == factoryIDs_.end())
     {
@@ -49,7 +49,7 @@ const size_t &wb::AssetCollection::GetFactoryID(size_t id) const
     return factoryIDs_.at(id);
 }
 
-const size_t &wb::AssetCollection::GetFileLoaderID(size_t id) const
+const size_t &wb::AssetRegistry::GetFileLoaderID(size_t id) const
 {
     if (fileLoaderIDs_.find(id) == fileLoaderIDs_.end())
     {
@@ -67,7 +67,7 @@ const size_t &wb::AssetCollection::GetFileLoaderID(size_t id) const
     return fileLoaderIDs_.at(id);
 }
 
-std::string_view wb::AssetCollection::GetFilePath(size_t id) const
+std::string_view wb::AssetRegistry::GetFilePath(size_t id) const
 {
     if (filePaths_.find(id) == filePaths_.end())
     {
@@ -85,19 +85,19 @@ std::string_view wb::AssetCollection::GetFilePath(size_t id) const
     return filePaths_.at(id);
 }
 
-size_t wb::AssetCollection::GetMaxID() const
+size_t wb::AssetRegistry::GetMaxID() const
 {
     return maxId;
 }
 
-const std::vector<size_t> &wb::AssetCollection::GetKeys() const
+const std::vector<size_t> &wb::AssetRegistry::GetKeys() const
 {
     return keys_;
 }
 
-WINDOWS_BASE_API wb::AssetCollection wb::gAssetCollection;
+WINDOWS_BASE_API wb::AssetRegistry wb::gAssetRegistry;
 
 wb::AssetRegistrar::AssetRegistrar(size_t assetID, size_t factoryID, size_t fileLoaderID, std::string_view filePath)
 {
-    wb::gAssetCollection.Add(assetID, factoryID, fileLoaderID, filePath);
+    wb::gAssetRegistry.Add(assetID, factoryID, fileLoaderID, filePath);
 }

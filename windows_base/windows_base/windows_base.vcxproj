@@ -144,16 +144,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\asset_collection.cpp" />
-    <ClCompile Include="src\asset_factory_collection.cpp" />
+    <ClCompile Include="src\asset_factory_registry.cpp" />
     <ClCompile Include="src\asset_group.cpp" />
-    <ClCompile Include="src\component_collection.cpp" />
+    <ClCompile Include="src\component_registry.cpp" />
     <ClCompile Include="src\console_log.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\error_handler.cpp" />
-    <ClCompile Include="src\file_loader_collection.cpp" />
+    <ClCompile Include="src\file_loader_registry.cpp" />
     <ClCompile Include="src\id_factory.cpp" />
-    <ClCompile Include="src\monitor_collection.cpp" />
-    <ClCompile Include="src\monitor_factory_collection.cpp" />
+    <ClCompile Include="src\monitor_registry.cpp" />
+    <ClCompile Include="src\monitor_factory_registry.cpp" />
     <ClCompile Include="src\monitor_keyboard.cpp" />
     <ClCompile Include="src\monitor_mouse.cpp" />
     <ClCompile Include="src\optional_value.cpp" />
@@ -161,21 +161,21 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\scene.cpp" />
-    <ClCompile Include="src\scene_facade_collection.cpp" />
-    <ClCompile Include="src\shared_facade_collection.cpp" />
+    <ClCompile Include="src\scene_facade_registry.cpp" />
+    <ClCompile Include="src\shared_facade_registry.cpp" />
     <ClCompile Include="src\system.cpp" />
-    <ClCompile Include="src\system_collection.cpp" />
+    <ClCompile Include="src\system_registry.cpp" />
     <ClCompile Include="src\type_cast.cpp" />
     <ClCompile Include="src\window.cpp" />
     <ClCompile Include="src\windows_helper.cpp" />
-    <ClCompile Include="src\window_collection.cpp" />
+    <ClCompile Include="src\window_registry.cpp" />
     <ClCompile Include="windows_base.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\asset_collection.h" />
-    <ClInclude Include="include\asset_factory_collection.h" />
+    <ClInclude Include="include\asset_registry.h" />
+    <ClInclude Include="include\asset_factory_registry.h" />
     <ClInclude Include="include\asset_group.h" />
-    <ClInclude Include="include\component_collection.h" />
+    <ClInclude Include="include\component_registry.h" />
     <ClInclude Include="include\console_log.h" />
     <ClInclude Include="include\container_dynamic.h" />
     <ClInclude Include="include\container_impl.h" />
@@ -185,10 +185,11 @@
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\error_handler.h" />
     <ClInclude Include="include\event.h" />
-    <ClInclude Include="include\file_loader_collection.h" />
+    <ClInclude Include="include\file_loader_registry.h" />
     <ClInclude Include="include\id_factory.h" />
     <ClInclude Include="include\interfaces\asset.h" />
-    <ClInclude Include="include\interfaces\collection.h" />
+    <ClInclude Include="include\interfaces\prefab.h" />
+    <ClInclude Include="include\interfaces\registry.h" />
     <ClInclude Include="include\interfaces\component.h" />
     <ClInclude Include="include\interfaces\container.h" />
     <ClInclude Include="include\interfaces\context.h" />
@@ -205,20 +206,20 @@
     <ClInclude Include="include\interfaces\shared.h" />
     <ClInclude Include="include\interfaces\system.h" />
     <ClInclude Include="include\interfaces\window.h" />
-    <ClInclude Include="include\monitor_collection.h" />
-    <ClInclude Include="include\monitor_factory_collection.h" />
+    <ClInclude Include="include\monitor_registry.h" />
+    <ClInclude Include="include\monitor_factory_registry.h" />
     <ClInclude Include="include\monitor_keyboard.h" />
     <ClInclude Include="include\monitor_mouse.h" />
     <ClInclude Include="include\optional_value.h" />
     <ClInclude Include="include\scene.h" />
-    <ClInclude Include="include\scene_facade_collection.h" />
-    <ClInclude Include="include\shared_facade_collection.h" />
+    <ClInclude Include="include\scene_facade_registry.h" />
+    <ClInclude Include="include\shared_facade_registry.h" />
     <ClInclude Include="include\system.h" />
-    <ClInclude Include="include\system_collection.h" />
+    <ClInclude Include="include\system_registry.h" />
     <ClInclude Include="include\type_cast.h" />
     <ClInclude Include="include\window.h" />
     <ClInclude Include="include\windows_helper.h" />
-    <ClInclude Include="include\window_collection.h" />
+    <ClInclude Include="include\window_registry.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="windows_base.h" />
   </ItemGroup>

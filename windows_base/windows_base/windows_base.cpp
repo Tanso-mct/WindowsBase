@@ -43,27 +43,27 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
     {
         // Create window container
         std::unique_ptr<wb::IWindowContainer> windowCont = std::make_unique<wb::WindowContainer>();
-        windowCont->Create(wb::gWindowCollection.GetMaxID() + 1);
+        windowCont->Create(wb::gWindowRegistry.GetMaxID() + 1);
         containerStorage_->SetContainer<wb::IWindowContainer>(std::move(windowCont));
 
         // Create monitor container
         std::unique_ptr<wb::IMonitorContainer> monitorCont = std::make_unique<wb::MonitorContainer>();
-        monitorCont->Create(wb::gMonitorCollection.GetMaxID() + 1);
+        monitorCont->Create(wb::gMonitorRegistry.GetMaxID() + 1);
         containerStorage_->SetContainer<wb::IMonitorContainer>(std::move(monitorCont));
 
         // Create scene container
         std::unique_ptr<wb::ISceneContainer> sceneCont = std::make_unique<wb::SceneContainer>();
-        sceneCont->Create(wb::gSceneFacadeCollection.GetMaxID() + 1);
+        sceneCont->Create(wb::gSceneFacadeRegistry.GetMaxID() + 1);
         containerStorage_->SetContainer<wb::ISceneContainer>(std::move(sceneCont));
 
         // Create shared container
         std::unique_ptr<wb::ISharedContainer> sharedCont = std::make_unique<wb::SharedContainer>();
-        sharedCont->Create(wb::gSharedFacadeCollection.GetMaxID() + 1);
+        sharedCont->Create(wb::gSharedFacadeRegistry.GetMaxID() + 1);
         containerStorage_->SetContainer<wb::ISharedContainer>(std::move(sharedCont));
 
         // Create asset container
         std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
-        assetCont->Create(wb::gAssetCollection.GetMaxID() + 1);
+        assetCont->Create(wb::gAssetRegistry.GetMaxID() + 1);
         containerStorage_->SetContainer<wb::IAssetContainer>(std::move(assetCont));
     }
 
@@ -75,7 +75,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
         wb::IWindowContainer &windowContainer = containerStorage_->GetContainer<wb::IWindowContainer>();
         for (const size_t &id : config.createWindowIDs_)
         {
-            if (id > wb::gWindowCollection.GetMaxID())
+            if (id > wb::gWindowRegistry.GetMaxID())
             {
                 std::string err = CreateErrorMessage
                 (
@@ -89,7 +89,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
             }
 
             // Get the factory for the window facade
-            wb::IWindowFacadeFactory &factory = wb::gWindowCollection.GetFacadeFactory(id);
+            wb::IWindowFacadeFactory &factory = wb::gWindowRegistry.GetFacadeFactory(id);
 
             // Create the window facade using the factory
             std::unique_ptr<wb::IWindowFacade> facade = factory.Create();
@@ -107,7 +107,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
         wb::IMonitorContainer &monitorContainer = containerStorage_->GetContainer<wb::IMonitorContainer>();
         for (const size_t &id : config.createMonitorIDs_)
         {
-            if (id > wb::gMonitorCollection.GetMaxID())
+            if (id > wb::gMonitorRegistry.GetMaxID())
             {
                 std::string err = CreateErrorMessage
                 (
@@ -121,7 +121,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
             }
 
             // Get the factory for the monitor
-            wb::IMonitorFactory &factory = wb::gMonitorFactoryCollection.GetFactory(id);
+            wb::IMonitorFactory &factory = wb::gMonitorFactoryRegistry.GetFactory(id);
 
             // Create the monitor using the factory
             std::unique_ptr<wb::IMonitor> monitor = factory.Create();
@@ -139,7 +139,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
         wb::ISceneContainer &sceneContainer = containerStorage_->GetContainer<wb::ISceneContainer>();
         for (const size_t &id : config.createSceneIDs_)
         {
-            if (id > wb::gSceneFacadeCollection.GetMaxID())
+            if (id > wb::gSceneFacadeRegistry.GetMaxID())
             {
                 std::string err = CreateErrorMessage
                 (
@@ -153,7 +153,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
             }
 
             // Get the factory for the scene facade
-            wb::ISceneFacadeFactory &factory = wb::gSceneFacadeCollection.GetFactory(id);
+            wb::ISceneFacadeFactory &factory = wb::gSceneFacadeRegistry.GetFactory(id);
 
             // Create the scene facade using the factory
             std::unique_ptr<wb::ISceneFacade> facade = factory.Create();
@@ -164,28 +164,17 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
     }
 
     /*******************************************************************************************************************
-     * Create shared facades
+     * Create all shared facades
     /******************************************************************************************************************/
 
     {
         wb::ISharedContainer &sharedContainer = containerStorage_->GetContainer<wb::ISharedContainer>();
-        for (const size_t &id : config.createSharedIDs_)
+        std::vector<size_t> keys = wb::gSharedFacadeRegistry.GetKeys();
+
+        for (const size_t &id : keys)
         {
-            if (id > wb::gSharedFacadeCollection.GetMaxID())
-            {
-                std::string err = CreateErrorMessage
-                (
-                    __FILE__, __LINE__, __FUNCTION__,
-                    {"Shared facade ID is invalid: ", std::to_string(id)}
-                );
-
-                ConsoleLogErr(err);
-                ErrorNotify("WINDOWS_BASE", err);
-                ThrowRuntimeError(err);
-            }
-
             // Get the factory for the shared facade
-            wb::ISharedFacadeFactory &factory = wb::gSharedFacadeCollection.GetFactory(id);
+            wb::ISharedFacadeFactory &factory = wb::gSharedFacadeRegistry.GetFactory(id);
 
             // Create the shared facade using the factory
             std::unique_ptr<wb::ISharedFacade> facade = factory.Create();
@@ -248,7 +237,7 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
         for (const size_t &id : config.createWindowIDs_)
         {
             // Get the event factory for the window
-            wb::IWindowEventFactory &eventFactory = wb::gWindowCollection.GetEventFactory(id);
+            wb::IWindowEventFactory &eventFactory = wb::gWindowRegistry.GetEventFactory(id);
 
             // Create a window event using the factory
             std::unique_ptr<wb::IWindowEvent> windowEvent = eventFactory.Create();
@@ -308,4 +297,9 @@ inline void wb::WindowsBaseLibrary::HandleWindowProc(HWND hWnd, UINT msg, WPARAM
             lParam
         );
     }
+}
+
+void wb::WindowsBaseLibrary::Shutdown()
+{
+    
 }

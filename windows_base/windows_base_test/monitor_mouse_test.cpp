@@ -1,9 +1,9 @@
 ﻿#include "pch.h"
 
 #include "windows_base/include/monitor_mouse.h"
-#include "windows_base/include/monitor_factory_collection.h"
+#include "windows_base/include/monitor_factory_registry.h"
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/monitor_collection.h"
+#include "windows_base/include/monitor_registry.h"
 #pragma comment(lib, "windows_base.lib")
 
 namespace
@@ -68,11 +68,11 @@ TEST(MouseMonitor, UseMouseCodeTable)
 TEST(MouseMonitor, Create)
 {
     // Get the monitor factory id
-    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+    const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockMouseMonitorID());
     EXPECT_EQ(factoryID, wb::DefaultMouseMonitorFactoryID());
 
     // Get the monitor factory
-    wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+    wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
     EXPECT_NE(&monitorFactory, nullptr);
 
     // Create a monitor using the factory
@@ -84,11 +84,11 @@ TEST(MouseMonitor, Create)
 TEST(MouseMonitor, Use)
 {
     // Get the monitor factory id
-    const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+    const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockMouseMonitorID());
     EXPECT_EQ(factoryID, wb::DefaultMouseMonitorFactoryID());
 
     // Get the monitor factory
-    wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+    wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
     EXPECT_NE(&monitorFactory, nullptr);
 
     // Create a monitor using the factory

@@ -5,20 +5,20 @@
 
 #include "windows_base/include/monitor_mouse.h"
 #include "windows_base/include/monitor_keyboard.h"
-#include "windows_base/include/monitor_factory_collection.h"
-#include "windows_base/include/monitor_collection.h"
+#include "windows_base/include/monitor_factory_registry.h"
+#include "windows_base/include/monitor_registry.h"
 
 #include "windows_base/include/scene.h"
 #include "windows_base/include/entity.h"
 #include "windows_base/include/asset_group.h"
-#include "windows_base/include/file_loader_collection.h"
-#include "windows_base/include/asset_factory_collection.h"
-#include "windows_base/include/asset_collection.h"
+#include "windows_base/include/file_loader_registry.h"
+#include "windows_base/include/asset_factory_registry.h"
+#include "windows_base/include/asset_registry.h"
 #include "windows_base/include/container_storage.h"
 #include "windows_base/include/system.h"
-#include "windows_base/include/scene_facade_collection.h"
+#include "windows_base/include/scene_facade_registry.h"
 
-#include "windows_base/include/window_collection.h"
+#include "windows_base/include/window_registry.h"
 #include "windows_base/include/window.h"
 
 #include "windows_base/include/event.h"
@@ -38,7 +38,7 @@ namespace
         MockAssetFactory() = default;
         virtual ~MockAssetFactory() override = default;
 
-        std::unique_ptr<wb::IAsset> Create(const wb::IFileData &fileData) const override
+        std::unique_ptr<wb::IAsset> Create(wb::IFileData &fileData) const override
         {
             // Mock implementation for testing purposes
             return nullptr;
@@ -284,7 +284,7 @@ static LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 TEST(Window, Create)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -318,7 +318,7 @@ TEST(Window, Create)
 TEST(Window, Hide)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -352,7 +352,7 @@ TEST(Window, Hide)
 TEST(Window, Resize)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -391,7 +391,7 @@ TEST(Window, Resize)
 TEST(Window, Focus)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -428,7 +428,7 @@ TEST(Window, Focus)
 TEST(Window, Maximize)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -465,7 +465,7 @@ TEST(Window, Maximize)
 TEST(Window, Minimize)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -502,7 +502,7 @@ TEST(Window, Minimize)
 TEST(Window, FullScreen)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -539,7 +539,7 @@ TEST(Window, FullScreen)
 TEST(Window, Restore)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -576,7 +576,7 @@ TEST(Window, Restore)
 TEST(Window, Move)
 {
     // Get the facade factory
-    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+    wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
     EXPECT_NE(&facadeFactory, nullptr);
 
     // Create a window facade using the factory
@@ -638,29 +638,29 @@ TEST(Window, Event)
     {
         // Create window container
         std::unique_ptr<wb::IWindowContainer> windowCont = std::make_unique<wb::WindowContainer>();
-        windowCont->Create(wb::gWindowCollection.GetMaxID() + 1);
+        windowCont->Create(wb::gWindowRegistry.GetMaxID() + 1);
         gContainerStorage.SetContainer<wb::IWindowContainer>(std::move(windowCont));
 
         // Create monitor container
         std::unique_ptr<wb::IMonitorContainer> monitorCont = std::make_unique<wb::MonitorContainer>();
-        monitorCont->Create(wb::gMonitorCollection.GetMaxID() + 1);
+        monitorCont->Create(wb::gMonitorRegistry.GetMaxID() + 1);
         gContainerStorage.SetContainer<wb::IMonitorContainer>(std::move(monitorCont));
 
         // Create asset container
         std::unique_ptr<wb::IAssetContainer> assetCont = std::make_unique<wb::AssetContainer>();
-        assetCont->Create(wb::gAssetCollection.GetMaxID() + 1);
+        assetCont->Create(wb::gAssetRegistry.GetMaxID() + 1);
         gContainerStorage.SetContainer<wb::IAssetContainer>(std::move(assetCont));
 
         // Create scene container
         std::unique_ptr<wb::ISceneContainer> sceneCont = std::make_unique<wb::SceneContainer>();
-        sceneCont->Create(wb::gSceneFacadeCollection.GetMaxID() + 1);
+        sceneCont->Create(wb::gSceneFacadeRegistry.GetMaxID() + 1);
         gContainerStorage.SetContainer<wb::ISceneContainer>(std::move(sceneCont));
     }
 
     // Create window
     {
         // Get the facade factory
-        wb::IWindowFacadeFactory &facadeFactory = wb::gWindowCollection.GetFacadeFactory(MockWindowID());
+        wb::IWindowFacadeFactory &facadeFactory = wb::gWindowRegistry.GetFacadeFactory(MockWindowID());
         EXPECT_NE(&facadeFactory, nullptr);
 
         // Create a window facade using the factory
@@ -695,7 +695,7 @@ TEST(Window, Event)
                 =std::make_unique<wb::EventInstTable<HWND, wb::IWindowEvent>>();
 
             // Get the event factory
-            wb::IWindowEventFactory &eventFactory = wb::gWindowCollection.GetEventFactory(MockWindowID());
+            wb::IWindowEventFactory &eventFactory = wb::gWindowRegistry.GetEventFactory(MockWindowID());
 
             // Create a window event using the factory
             std::unique_ptr<wb::IWindowEvent> windowEvent = eventFactory.Create();
@@ -726,10 +726,10 @@ TEST(Window, Event)
     // Create a mock monitor mouse
     {
         // Get the factory id
-        const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+        const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockMouseMonitorID());
 
         // Get the mouse factory
-        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
 
         // Create a monitor mouse using the factory
         std::unique_ptr<wb::IMonitor> mouseMonitor = monitorFactory.Create();
@@ -744,10 +744,10 @@ TEST(Window, Event)
     // Create a mock monitor keyboard
     {
         // Get the factory id
-        const size_t &factoryID = wb::gMonitorCollection.GetFactoryID(MockMouseMonitorID());
+        const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(MockMouseMonitorID());
 
         // Get the keyboard factory
-        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryCollection.GetFactory(factoryID);
+        wb::IMonitorFactory &monitorFactory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
 
         // Create a monitor keyboard using the factory
         std::unique_ptr<wb::IMonitor> keyboardMonitor = monitorFactory.Create();
@@ -762,7 +762,7 @@ TEST(Window, Event)
     // Create a mock scene
     {
         // Get the scene facade factory
-        wb::ISceneFacadeFactory &sceneFacadeFactory = wb::gSceneFacadeCollection.GetFactory(MockSceneFacadeID());
+        wb::ISceneFacadeFactory &sceneFacadeFactory = wb::gSceneFacadeRegistry.GetFactory(MockSceneFacadeID());
 
         // Create a SceneFacade using the factory
         std::unique_ptr<wb::ISceneFacade> sceneFacade = sceneFacadeFactory.Create();

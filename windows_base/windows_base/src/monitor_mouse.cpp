@@ -6,7 +6,7 @@
 #include "windows_base/include/type_cast.h"
 
 #include "windows_base/include/id_factory.h"
-#include "windows_base/include/monitor_factory_collection.h"
+#include "windows_base/include/monitor_factory_registry.h"
 
 void wb::MouseInputTypeTable::Create()
 {

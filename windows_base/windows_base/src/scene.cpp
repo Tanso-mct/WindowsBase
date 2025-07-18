@@ -3,9 +3,9 @@
 
 #include "windows_base/include/type_cast.h"
 
-#include "windows_base/include/asset_collection.h"
-#include "windows_base/include/asset_factory_collection.h"
-#include "windows_base/include/file_loader_collection.h"
+#include "windows_base/include/asset_registry.h"
+#include "windows_base/include/asset_factory_registry.h"
+#include "windows_base/include/file_loader_registry.h"
 
 #include "windows_base/include/container_impl.h"
 #include "windows_base/include/system.h"
@@ -263,12 +263,12 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
     // Load file datas and create assets
     for (const size_t &assetID : assetGroup_->GetAssetIDs())
     {
-        std::string_view filePath = gAssetCollection.GetFilePath(assetID);
+        std::string_view filePath = gAssetRegistry.GetFilePath(assetID);
         if (fileDatas.find(filePath.data()) == fileDatas.end())
         {
             // Get the file loader
-            const size_t &fileLoaderID = gAssetCollection.GetFileLoaderID(assetID);
-            IFileLoader &fileLoader = gFileLoaderCollection.GetLoader(fileLoaderID);
+            const size_t &fileLoaderID = gAssetRegistry.GetFileLoaderID(assetID);
+            IFileLoader &fileLoader = gFileLoaderRegistry.GetLoader(fileLoaderID);
 
             // Load the file data
             std::unique_ptr<IFileData> fileData = fileLoader.Load(filePath);
@@ -278,8 +278,8 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
         }
 
         // Get the asset factory
-        const size_t &assetFactoryID = gAssetCollection.GetFactoryID(assetID);
-        IAssetFactory &assetFactory = gAssetFactoryCollection.GetFactory(assetFactoryID);
+        const size_t &assetFactoryID = gAssetRegistry.GetFactoryID(assetID);
+        IAssetFactory &assetFactory = gAssetFactoryRegistry.GetFactory(assetFactoryID);
 
         // Create the asset using the factory and the loaded file data
         std::unique_ptr<IAsset> asset = assetFactory.Create(*fileDatas[filePath.data()]);

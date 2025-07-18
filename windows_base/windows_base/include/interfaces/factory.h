@@ -27,7 +27,7 @@ namespace wb
     using IEntityIDViewFactory = IFactory<std::unique_ptr<IEntityIDView>>;
 
     class IFileData;
-    using IAssetFactory = IFactory<std::unique_ptr<IAsset>, const IFileData &>;
+    using IAssetFactory = IFactory<std::unique_ptr<IAsset>, IFileData&>;
 
     class ISceneFacade;
     using ISceneFacadeFactory = IFactory<std::unique_ptr<ISceneFacade>>;

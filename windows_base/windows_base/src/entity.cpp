@@ -1,7 +1,7 @@
 ﻿#include "windows_base/src/pch.h"
 #include "windows_base/include/entity.h"
 
-#include "windows_base/include/component_collection.h"
+#include "windows_base/include/component_registry.h"
 #include "windows_base/include/container_static.h"
 #include "windows_base/include/optional_value.h"
 
@@ -11,7 +11,7 @@
 wb::Entity::Entity()
 {
     componentIndicesInCont_ = std::make_unique<wb::StaticContainer<wb::IOptionalValue>>();
-    componentIndicesInCont_->Create(gComponentCollection.GetMaxID() + 1);
+    componentIndicesInCont_->Create(gComponentRegistry.GetMaxID() + 1);
 }
 
 void wb::Entity::Destroy(IComponentContainer &componentCont)
@@ -64,7 +64,7 @@ const wb::IOptionalValue &wb::Entity::GetID() const
 
 void wb::Entity::AddComponent(size_t componentID, IComponentContainer &componentCont)
 {
-    wb::IComponentFactory &componentFactory = gComponentCollection.GetFactory(componentID);
+    wb::IComponentFactory &componentFactory = gComponentRegistry.GetFactory(componentID);
 
     // Create a new component using the factory
     std::unique_ptr<wb::IComponent> component = componentFactory.Create();
@@ -95,7 +95,7 @@ wb::IComponent *wb::Entity::GetComponent(size_t componentID, IComponentContainer
 wb::EntityIDView::EntityIDView()
 {
     // Resize the vector with a size based on the maximum component ID available.
-    entityIDsPerComponent_.resize(gComponentCollection.GetMaxID() + 1);
+    entityIDsPerComponent_.resize(gComponentRegistry.GetMaxID() + 1);
 }
 
 void wb::EntityIDView::RegisterEntity(IEntity &entity)
