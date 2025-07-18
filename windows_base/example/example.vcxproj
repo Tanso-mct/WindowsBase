@@ -144,6 +144,15 @@
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\asset_factory_data.h" />
+    <ClInclude Include="include\file_loader_text.h" />
+    <ClInclude Include="include\scene_example\asset_group.h" />
+    <ClInclude Include="include\scene_example\entities_factory.h" />
+    <ClInclude Include="include\scene_example\scene_example.h" />
+    <ClInclude Include="include\scene_example\system_scheduler.h" />
+    <ClInclude Include="include\window_example\window.h" />
+    <ClInclude Include="include\window_example\window_event_factory.h" />
+    <ClInclude Include="include\window_example\window_facade_factory.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
