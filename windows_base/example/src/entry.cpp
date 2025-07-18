@@ -2,8 +2,6 @@
 #pragma comment(lib, "windows_base.lib")
 
 #include "example/include/window_example/window.h"
-#include "example/include/window_example/monitor_keyboard.h"
-#include "example/include/window_example/monitor_mouse.h"
 #include "example/include/scene_example/scene.h"
 
 static LRESULT CALLBACK WindowProcWithEvent(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
