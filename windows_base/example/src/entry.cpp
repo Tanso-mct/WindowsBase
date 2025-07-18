@@ -31,22 +31,8 @@ int APIENTRY wWinMain
 ){
     wb::LibraryConfig config;
     config.windowProc_ = WindowProcWithEvent;
-
-    config.createWindowIDs_ = 
-    { 
-        example::ExampleWindowID() 
-    };
-
-    config.createMonitorIDs_ = 
-    { 
-        example::ExampleKeyboardMonitorID(), 
-        example::ExampleMouseMonitorID() 
-    };
-
-    config.createSceneIDs_ = 
-    { 
-        example::ExampleSceneFacadeID() 
-    };
+    config.createWindowIDs_ = { example::ExampleWindowID() };
+    config.createSceneIDs_ = { example::ExampleSceneFacadeID() };
 
     // Initialize the Windows Base Library
     wb::WindowsBaseLibrary::Initialize(config);

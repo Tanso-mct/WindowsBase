@@ -91,7 +91,6 @@ namespace wb
         WNDPROC windowProc_ = nullptr;
 
         std::vector<size_t> createWindowIDs_;
-        std::vector<size_t> createMonitorIDs_;
         std::vector<size_t> createSceneIDs_;
     };
 

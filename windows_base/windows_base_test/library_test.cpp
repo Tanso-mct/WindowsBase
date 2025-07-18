@@ -262,12 +262,8 @@ TEST(WindowsBaseLibrary, Use)
     // Initialize the WindowsBaseLibrary
     wb::LibraryConfig config;
     config.windowProc_ = WindowProcWithEvent;
-
-    // Add window, monitor, scene, and shared IDs to the config
-    config.createWindowIDs_.push_back(MockWindowID());
-    config.createMonitorIDs_.push_back(MockMouseMonitorID());
-    config.createMonitorIDs_.push_back(MockKeyboardMonitorID());
-    config.createSceneIDs_.push_back(MockSceneFacadeID());
+    config.createWindowIDs_ = { MockWindowID() };
+    config.createSceneIDs_ = { MockSceneFacadeID() };
 
     wb::WindowsBaseLibrary::Initialize(config);
 

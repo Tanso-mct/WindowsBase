@@ -104,30 +104,41 @@ inline void wb::WindowsBaseLibrary::Initialize(LibraryConfig &config)
     /******************************************************************************************************************/
 
     {
+        wb::IWindowContainer &windowContainer = containerStorage_->GetContainer<wb::IWindowContainer>();
         wb::IMonitorContainer &monitorContainer = containerStorage_->GetContainer<wb::IMonitorContainer>();
-        for (const size_t &id : config.createMonitorIDs_)
+
+        for (const size_t &id : config.createWindowIDs_)
         {
-            if (id > wb::gMonitorRegistry.GetMaxID())
+            // Get the window facade from the container
+            wb::IWindowFacade &windowFacade = windowContainer.Get(id);
+
+            for (const size_t &monitorID : windowFacade.GetMonitorIDs())
             {
-                std::string err = CreateErrorMessage
-                (
-                    __FILE__, __LINE__, __FUNCTION__,
-                    {"Monitor ID is invalid: ", std::to_string(id)}
-                );
+                if (monitorID > wb::gMonitorRegistry.GetMaxID())
+                {
+                    std::string err = CreateErrorMessage
+                    (
+                        __FILE__, __LINE__, __FUNCTION__,
+                        {"Monitor ID is invalid: ", std::to_string(monitorID)}
+                    );
 
-                ConsoleLogErr(err);
-                ErrorNotify("WINDOWS_BASE", err);
-                ThrowRuntimeError(err);
+                    ConsoleLogErr(err);
+                    ErrorNotify("WINDOWS_BASE", err);
+                    ThrowRuntimeError(err);
+                }
+
+                // Get the factory id for the monitor
+                const size_t &factoryID = wb::gMonitorRegistry.GetFactoryID(monitorID);
+
+                // Get the factory for the monitor
+                wb::IMonitorFactory &factory = wb::gMonitorFactoryRegistry.GetFactory(factoryID);
+
+                // Create the monitor using the factory
+                std::unique_ptr<wb::IMonitor> monitor = factory.Create();
+
+                // Set the monitor in the monitor container
+                monitorContainer.Set(monitorID, std::move(monitor));
             }
-
-            // Get the factory for the monitor
-            wb::IMonitorFactory &factory = wb::gMonitorFactoryRegistry.GetFactory(id);
-
-            // Create the monitor using the factory
-            std::unique_ptr<wb::IMonitor> monitor = factory.Create();
-
-            // Set the monitor in the monitor container
-            monitorContainer.Set(id, std::move(monitor));
         }
     }
 
