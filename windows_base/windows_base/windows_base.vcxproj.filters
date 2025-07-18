@@ -242,5 +242,8 @@
     <ClInclude Include="windows_base.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="include\interfaces\prefab.h">
+      <Filter>ヘッダー ファイル\interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

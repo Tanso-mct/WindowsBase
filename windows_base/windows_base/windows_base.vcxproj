@@ -188,6 +188,7 @@
     <ClInclude Include="include\file_loader_registry.h" />
     <ClInclude Include="include\id_factory.h" />
     <ClInclude Include="include\interfaces\asset.h" />
+    <ClInclude Include="include\interfaces\prefab.h" />
     <ClInclude Include="include\interfaces\registry.h" />
     <ClInclude Include="include\interfaces\component.h" />
     <ClInclude Include="include\interfaces\container.h" />
