@@ -26,6 +26,7 @@
     <ClInclude Include="include\dll_config.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="plugin.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

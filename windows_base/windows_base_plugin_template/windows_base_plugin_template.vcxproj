@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dll_config.h" />
+    <ClInclude Include="plugin.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
