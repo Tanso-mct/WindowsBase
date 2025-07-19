@@ -13,3 +13,6 @@ PLUGIN_NAME is not the project name, but rather the name without WindowsBaseLibr
 
 - `$PLUGIN_NAME$`
   - Replace Plugin's name with SNAKE_CASE
+
+## About preprocessor
+Add the EXPORT macro on line 3 of [dll_config.h](include/dll_config.h) from Visual Studio to the project's preprocessor.
