@@ -536,8 +536,6 @@ void wb::DefaultWindowFacade::Destroy()
         wb::ErrorNotify("WINDOWS_BASE", err);
         wb::ThrowRuntimeError(err);
     }
-
-    context_->IsCreated() = false;
 }
 
 void wb::DefaultWindowFacade::Destroyed()
@@ -563,6 +561,12 @@ void wb::DefaultWindowFacade::Destroyed()
         wb::ErrorNotify("WINDOWS_BASE", err);
         wb::ThrowRuntimeError(err);
     }
+
+    /*******************************************************************************************************************
+     * Reset the created flag
+    /******************************************************************************************************************/
+
+    context_->IsCreated() = false;
 }
 
 void wb::DefaultWindowFacade::Resize(UINT width, UINT height)
