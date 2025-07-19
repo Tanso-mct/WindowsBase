@@ -146,11 +146,11 @@
     <ClCompile Include="src\scene_$scene_name$\entities_factory.cpp" />
     <ClCompile Include="src\scene_$scene_name$\scene.cpp" />
     <ClCompile Include="src\scene_$scene_name$\system_scheduler.cpp" />
-    <ClCompile Include="src\window$window_name$\event_factory.cpp" />
-    <ClCompile Include="src\window$window_name$\facade_factory.cpp" />
-    <ClCompile Include="src\window$window_name$\monitor_keyboard.cpp" />
-    <ClCompile Include="src\window$window_name$\monitor_mouse.cpp" />
-    <ClCompile Include="src\window$window_name$\window.cpp" />
+    <ClCompile Include="src\window_$window_name$\event_factory.cpp" />
+    <ClCompile Include="src\window_$window_name$\facade_factory.cpp" />
+    <ClCompile Include="src\window_$window_name$\monitor_keyboard.cpp" />
+    <ClCompile Include="src\window_$window_name$\monitor_mouse.cpp" />
+    <ClCompile Include="src\window_$window_name$\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\scene_$scene_name$\asset_group.h" />
