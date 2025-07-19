@@ -69,7 +69,7 @@ namespace wb
 
     class WINDOWS_BASE_API DefaultWindowFacade : public IWindowFacade
     {
-    private:
+    protected:
         std::unique_ptr<IWindowContext> context_;
 
         std::vector<size_t> monitorIDs_;
