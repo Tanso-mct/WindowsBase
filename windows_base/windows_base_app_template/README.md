@@ -6,7 +6,7 @@ This template needs to replace these string. Project name is the full project na
 - `$project_name$`
   - Replace Project's name with snake_case
 
-- `$windowName$`
+- `$WindowName$`
   - Replace window name with camelCase
 
 - `$window_name$`
@@ -19,6 +19,7 @@ This template needs to replace these string. Project name is the full project na
   - Replace scene name with snake_case
 
 ## Required folder name replacement
+After changing the folder name, it is necessary to exclude the files in the already added folder from Visual Studio and add them again in the appropriate filter.
 - [widnow_folder_header](include/window_$window_name$), [window_folder_source](src/window$window_name$)
   - Replace $window_name$ to the window name which dose not have 'window' at the front
 
