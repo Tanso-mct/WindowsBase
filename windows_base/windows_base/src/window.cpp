@@ -1278,7 +1278,7 @@ void wb::DefaultWindowEvent::OnEvent(ContainerStorage &contStorage, UINT msg, WP
         }
         else if (wParam == SIZE_RESTORED)
         {
-            windowFacade.Resized();
+            windowFacade.Restored();
         }
 
         break;
