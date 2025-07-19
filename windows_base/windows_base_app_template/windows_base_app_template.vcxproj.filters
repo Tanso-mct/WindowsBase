@@ -26,4 +26,74 @@
       <UniqueIdentifier>{43b3712b-bdd6-4a92-b313-7fb95bd60871}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\scene_$scene_name$\asset_group.cpp">
+      <Filter>ソース ファイル\scene_%24scene_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_$scene_name$\entities_factory.cpp">
+      <Filter>ソース ファイル\scene_%24scene_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_$scene_name$\scene.cpp">
+      <Filter>ソース ファイル\scene_%24scene_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_$scene_name$\system_scheduler.cpp">
+      <Filter>ソース ファイル\scene_%24scene_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window$window_name$\event_factory.cpp">
+      <Filter>ソース ファイル\window_%24window_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window$window_name$\facade_factory.cpp">
+      <Filter>ソース ファイル\window_%24window_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window$window_name$\monitor_keyboard.cpp">
+      <Filter>ソース ファイル\window_%24window_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window$window_name$\monitor_mouse.cpp">
+      <Filter>ソース ファイル\window_%24window_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window$window_name$\window.cpp">
+      <Filter>ソース ファイル\window_%24window_name%24</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entry.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\scene_$scene_name$\asset_group.h">
+      <Filter>ヘッダー ファイル\scene_%24scene_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene_$scene_name$\entities_factory.h">
+      <Filter>ヘッダー ファイル\scene_%24scene_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene_$scene_name$\scene.h">
+      <Filter>ヘッダー ファイル\scene_%24scene_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene_$scene_name$\system_scheduler.h">
+      <Filter>ヘッダー ファイル\scene_%24scene_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_$window_name$\event_factory.h">
+      <Filter>ヘッダー ファイル\window_%24window_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_$window_name$\facade_factory.h">
+      <Filter>ヘッダー ファイル\window_%24window_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_$window_name$\monitor_keyboard.h">
+      <Filter>ヘッダー ファイル\window_%24window_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_$window_name$\monitor_mouse.h">
+      <Filter>ヘッダー ファイル\window_%24window_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window_$window_name$\window.h">
+      <Filter>ヘッダー ファイル\window_%24window_name%24</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
 </Project>
