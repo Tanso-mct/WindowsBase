@@ -573,6 +573,7 @@ void wb::SceneUpdator::UpdateCurrentScene(ContainerStorage &contStorage)
 
     // Calculate the delta time
     std::chrono::duration<double> deltaTime = currentUpdateTime_ - lastUpdateTime_;
+    lastUpdateTime_ = currentUpdateTime_;
 
     wb::ISceneContainer &sceneCont = contStorage.GetContainer<ISceneContainer>();
     wb::ISceneFacade *currentScene = sceneCont.PtrGet(currentSceneID_);
