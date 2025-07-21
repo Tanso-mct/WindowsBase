@@ -643,6 +643,12 @@ void wb::DefaultWindowFacade::Resized()
             context_->ClientHeight() = wb::MINIMUM_WINDOW_HEIGHT;
         }
     }
+
+    /*******************************************************************************************************************
+     * Reset the resize flag
+    /******************************************************************************************************************/
+
+    context_->NeedsResize() = false;
 }
 
 void wb::DefaultWindowFacade::Focus()
