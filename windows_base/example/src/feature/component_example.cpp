@@ -38,5 +38,5 @@ void example::ExampleComponent::SetDataAssetID(size_t dataAssetID)
 
 namespace example
 {
-    WB_REGISTER_COMPONENT(ExampleComponent, ExampleComponentID());
+    WB_REGISTER_COMPONENT(ExampleComponentID(), ExampleComponent);
 }

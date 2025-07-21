@@ -25,7 +25,7 @@ namespace
         }
     };
 
-    WB_REGISTER_COMPONENT(MockComponent, MockComponentID());
+    WB_REGISTER_COMPONENT(MockComponentID(), MockComponent);
 }
 
 TEST(ComponentRegistry, GetFactory)
