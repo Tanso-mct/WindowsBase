@@ -260,6 +260,9 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
     // The file datas which is already loaded
     std::unordered_map<std::string, std::unique_ptr<IFileData>> fileDatas;
 
+    // Store all asset factory IDs
+    std::vector<size_t> assetFactoryIDs;
+
     // Load file datas and create assets
     for (const size_t &assetID : assetGroup_->GetAssetIDs())
     {
@@ -286,6 +289,20 @@ void wb::SceneFacade::Load(IAssetContainer &assetCont)
 
         // Add the asset to the asset container
         assetCont.Set(assetID, std::move(asset));
+
+        // Store the asset factory ID
+        if (std::find(assetFactoryIDs.begin(), assetFactoryIDs.end(), assetFactoryID) == assetFactoryIDs.end())
+        {
+            assetFactoryIDs.push_back(assetFactoryID);
+        }
+    }
+
+    for (const size_t &assetFactoryID : assetFactoryIDs)
+    {
+        // Get the asset factory
+        IAssetFactory &assetFactory = gAssetFactoryRegistry.GetFactory(assetFactoryID);
+        
+        assetFactory.CreateAfter();
     }
 
     // Clean up the file datas

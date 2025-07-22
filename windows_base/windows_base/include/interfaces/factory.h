@@ -27,7 +27,12 @@ namespace wb
     using IEntityIDViewFactory = IFactory<std::unique_ptr<IEntityIDView>>;
 
     class IFileData;
-    using IAssetFactory = IFactory<std::unique_ptr<IAsset>, IFileData&>;
+    class IAssetFactory : public IFactory<std::unique_ptr<IAsset>, IFileData&>
+    {
+    public:
+        virtual ~IAssetFactory() = default;
+        virtual void CreateAfter() {} // This method can be overridden to perform actions after asset creation
+    };
 
     class ISceneFacade;
     using ISceneFacadeFactory = IFactory<std::unique_ptr<ISceneFacade>>;
